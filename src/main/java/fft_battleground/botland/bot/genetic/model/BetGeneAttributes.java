@@ -22,10 +22,15 @@ extends GeneAttributes
 implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5502967701083946211L;
-	
+
+	/** Trainer-written bet-table bounds (V3 writes 1..1000; V2 wrote 200..1000).
+	 *  Parsed and round-tripped so /genefile shows them; absent in old files. */
+	private Double minValue;
+	private Double maxValue;
+
 	@JsonIgnore
 	private transient Map<Integer, Double> betGeneMap;
 	

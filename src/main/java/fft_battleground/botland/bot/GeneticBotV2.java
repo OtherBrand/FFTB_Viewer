@@ -50,7 +50,7 @@ implements BotCanBetBelowMinimum, BotContainsPersonality, BotCanInverse, BotUses
 	private static final String USE_BET_GENES_PARAM = "use_bet_genes";
 	
 	private String name;
-	private BotGenome genes;
+	protected BotGenome genes;
 	private String filename;
 	@Getter private boolean canBetBelowMinimum;
 	@Getter private boolean useBetGenes;

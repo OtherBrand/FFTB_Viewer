@@ -24,15 +24,19 @@ public class BotGenome implements Serializable {
 	private PlayerDataGeneAttributes playerDataGeneAttributes;
 	private SideGeneAttributes sideGeneAttributes;
 	private BetGeneAttributes betGeneAttributes;
+	/** V3 policy curve genes (Oct 23 2026); null in V2 and older V3 files. */
+	private PolicyGeneAttributes policyGeneAttributes;
 	private MissingGeneAttributes missingGeneAttributes;
-	
+
 	public void init() throws BotConfigException {
-		List<GeneAttributes> geneAttributes = List.of(this.mapGeneAttributes, this.braveFaithAttributes, 
-			this.potGeneAttributes, this.playerDataGeneAttributes, this.sideGeneAttributes, this.betGeneAttributes, 
-			this.missingGeneAttributes);
+		List<GeneAttributes> geneAttributes = java.util.Arrays.asList(this.mapGeneAttributes, this.braveFaithAttributes,
+			this.potGeneAttributes, this.playerDataGeneAttributes, this.sideGeneAttributes, this.betGeneAttributes,
+			this.policyGeneAttributes, this.missingGeneAttributes);
 		for(GeneAttributes geneAttribute : geneAttributes) {
-			geneAttribute.init();
+			if(geneAttribute != null) {
+				geneAttribute.init();
+			}
 		}
-		
+
 	}
 }

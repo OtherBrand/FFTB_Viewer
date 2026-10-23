@@ -651,6 +651,31 @@
 		<param id="inverse" description="reverse team chosen">true</param>
 		<param id="use_bet_genes">false</param>
 	</bot>
+	<bot id="genebotv2-10-12-26" classname="genebotV2"
+		canPrimary="true"
+		description="Bot that uses genetic attributes to find a winner (October 2026 genome, 80481 gil on 46 tournaments)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-12-2026.txt</param>
+		<param id="personality" description="personality of bot">nerd</param>
+		<param id="use_bet_genes">false</param>
+	</bot>
+	<bot id="genebotv2-10-12-26smartbet" classname="genebotV2"
+		canPrimary="true"
+		description="Bot that uses genetic attributes to find a winner (October 2026 genome, 80481 gil on 46 tournaments)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-12-2026.txt</param>
+		<param id="personality" description="personality of bot">nerd</param>
+		<param id="use_bet_genes">true</param>
+	</bot>
+	<bot id="genebotv2-10-12-26inverse" classname="genebotV2"
+		canPrimary="true"
+		description="Bot that uses genetic attributes to find a winner (October 2026 genome, 80481 gil on 46 tournaments)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-12-2026.txt</param>
+		<param id="personality" description="personality of bot">inverse</param>
+		<param id="inverse" description="reverse team chosen">true</param>
+		<param id="use_bet_genes">false</param>
+	</bot>
 	<bot id="birbbrainsbotreference" classname="reference"
 		canPrimary="true"
 		description="Bot that mimics birbbrainsbot">
@@ -675,5 +700,48 @@
 		description="Bot that mimics getthemoneyz">
 		<param id="reference_player">getthemoneyz</param>
 		<param id="personality" description="personality of bot">getthemoneyz</param>
+	</bot>
+	<bot id="genebotv3-10-18-26" classname="genebotV3"
+		canPrimary="true"
+		description="V3 Rust trainer genome, clean semantics (47197 gil on 46 tournaments, 368 matches)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-18-2026.txt</param>
+		<param id="personality" description="personality of bot">nerd</param>
+		<param id="use_bet_genes">false</param>
+	</bot>
+	<bot id="genebotv3-10-18-26smartbet" classname="genebotV3"
+		canPrimary="true"
+		description="V3 genome with confidence-table bet sizing (1..1000 bounds; bets below the 200 floor allowed to match trainer semantics)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-18-2026.txt</param>
+		<param id="personality" description="personality of bot">nerd</param>
+		<param id="use_bet_genes">true</param>
+		<param id="bet_below_minimum">true</param>
+	</bot>
+	<bot id="genebotv3-10-18-26inverse" classname="genebotV3"
+		canPrimary="false"
+		description="V3 genome betting the opposite side (control benchmark)">
+		<param id="geneFile"
+			description="file location that contains the genes">winner10-18-2026.txt</param>
+		<param id="personality" description="personality of bot">nerd</param>
+		<param id="use_bet_genes">false</param>
+		<param id="inverse">true</param>
+	</bot>
+	<bot id="genebotV3-10-23-26-policy" classname="genebotV3"
+		canPrimary="true"
+		description="V3 policy genome (value bettor) - 2.31M window / 1.41M holdout gil in training replay">
+		<param id="geneFile">winner10-23-2026.txt</param>
+		<param id="use_bet_genes">true</param>
+		<param id="betMode">policy</param>
+		<param id="bet_below_minimum">true</param>
+	</bot>
+	<bot id="genebotV3-10-23-26-policyinverse" classname="genebotV3"
+		canPrimary="false"
+		description="Policy genome control (bets the opposite side)">
+		<param id="geneFile">winner10-23-2026.txt</param>
+		<param id="use_bet_genes">true</param>
+		<param id="betMode">policy</param>
+		<param id="bet_below_minimum">true</param>
+		<param id="inverse">true</param>
 	</bot>
 </bots>

@@ -22,19 +22,22 @@ implements Serializable {
 	public static final String BRAVEFAITH_KEY = "BraveFaith";
 	public static final String RAIDBOSS_KEY = "RaidBoss";
 	
+	/** Null-safe lookups: a gene absent from the file (V3 files carry no
+	 *  BraveFaith shared multiplier) contributes 0 instead of NPEing the
+	 *  bet cycle. */
 	public Double brave() {
-		return this.attributeNameMap.get(BRAVE_KEY);
+		return this.attributeNameMap.getOrDefault(BRAVE_KEY, 0.0d);
 	}
-	
+
 	public Double faith() {
-		return this.attributeNameMap.get(FAITH_KEY);
+		return this.attributeNameMap.getOrDefault(FAITH_KEY, 0.0d);
 	}
-	
+
 	public Double braveFaith() {
-		return this.attributeNameMap.get(BRAVEFAITH_KEY);
+		return this.attributeNameMap.getOrDefault(BRAVEFAITH_KEY, 0.0d);
 	}
-	
+
 	public Double raidBoss() {
-		return this.attributeNameMap.get(RAIDBOSS_KEY);
+		return this.attributeNameMap.getOrDefault(RAIDBOSS_KEY, 0.0d);
 	}
 }

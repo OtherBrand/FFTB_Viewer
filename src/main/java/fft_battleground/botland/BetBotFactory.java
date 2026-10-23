@@ -22,6 +22,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import fft_battleground.botland.bot.DataBetBot;
 import fft_battleground.botland.bot.GeneticBot;
 import fft_battleground.botland.bot.GeneticBotV2;
+import fft_battleground.botland.bot.GeneticBotV3;
 import fft_battleground.botland.bot.ArbitraryBot;
 import fft_battleground.botland.bot.BetCountBot;
 import fft_battleground.botland.bot.BraveFaithBot;
@@ -33,6 +34,7 @@ import fft_battleground.botland.bot.exception.BotConfigException;
 import fft_battleground.botland.bot.genetic.GeneFileCache;
 import fft_battleground.botland.bot.genetic.GeneFileV1Cache;
 import fft_battleground.botland.bot.genetic.GeneFileV2Cache;
+import fft_battleground.botland.bot.genetic.GeneFileV3Cache;
 import fft_battleground.botland.bot.genetic.model.GeneTrainerV2BotData;
 import fft_battleground.botland.bot.util.BetterBetBot;
 import fft_battleground.botland.model.BotData;
@@ -120,6 +122,8 @@ public class BetBotFactory {
 	
 	@Autowired
 	@Getter private GeneFileCache<GeneTrainerV2BotData> geneFileV2Cache;
+
+	@Getter private GeneFileCache<GeneTrainerV2BotData> geneFileV3Cache;
 	
 	private Timer botlandTimer = new Timer();
 	private Cache<String, Map<String, BotData>> botDataCache;
@@ -131,6 +135,7 @@ public class BetBotFactory {
 				  .build();
 		this.geneFileCache = new GeneFileV1Cache();
 		this.geneFileV2Cache = new GeneFileV2Cache();
+		this.geneFileV3Cache = new GeneFileV3Cache();
 	}
 	
 	public BotLand createBotLand(Integer currentAmountToBetWith, List<BetEvent> otherPlayerBets, Set<UnitInfoEvent> currentUnits, BettingBeginsEvent beginEvent) {
@@ -270,6 +275,10 @@ public class BetBotFactory {
 			break;
 		case GENE_V2:
 			betBot = new GeneticBotV2(currentAmountToBetWith, beginEvent.getTeam1(), beginEvent.getTeam2(), this.geneFileV2Cache,
+					this.botCache.getSet(), this.noisyWebhookManager);
+			break;
+		case GENE_V3:
+			betBot = new GeneticBotV3(currentAmountToBetWith, beginEvent.getTeam1(), beginEvent.getTeam2(), this.geneFileV3Cache,
 					this.botCache.getSet(), this.noisyWebhookManager);
 			break;
 		case BRAVEFAITH:

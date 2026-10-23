@@ -9,6 +9,7 @@ public enum BotNames {
 	ARBITRARY("arbitrarybot"),
 	GENE("genebot"),
 	GENE_V2("genebotV2"),
+	GENE_V3("genebotV3"),
 	BRAVEFAITH("bravefaithbot"),
 	TEAMVALUE("teamvalue"),
 	UNIT("unitawarebot"),

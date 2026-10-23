@@ -32,8 +32,10 @@ implements Serializable {
 			.collect(Collectors.toMap(this::getTeamKeyFromGeneAttributePair, GeneAttributePair::getValue));
 	}
 	
+	/** Null-safe: teams without a gene in the file (V3 files carry no
+	 *  LEFT/RIGHT side genes) contribute 0 instead of NPEing. */
 	public Double getAttributeByTeam(BattleGroundTeam team) {
-		return this.teamAttributeMap.get(team);
+		return this.teamAttributeMap.getOrDefault(team, 0.0d);
 	}
 	
 	private BattleGroundTeam getTeamKeyFromGeneAttributePair(GeneAttributePair geneAttribute) {

@@ -102,6 +102,7 @@ public class BotlandController extends AbstractHomeController {
 	public ResponseEntity<String> getGeneFile(@PathVariable("genefile") String genefile) throws BotConfigException, JsonProcessingException {
 		GeneFileCache<ResultData> v1Cache = this.betBotFactory.getGeneFileCache();
 		GeneFileCache<GeneTrainerV2BotData> v2Cache = this.betBotFactory.getGeneFileV2Cache();
+		GeneFileCache<GeneTrainerV2BotData> v3Cache = this.betBotFactory.getGeneFileV3Cache();
 		if(v1Cache.hasFile(genefile)) {
 			ResultData genefileData = v1Cache.getGeneData(genefile);
 			ObjectMapper mapper = new ObjectMapper();
@@ -109,6 +110,11 @@ public class BotlandController extends AbstractHomeController {
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 		} else if(v2Cache.hasFile(genefile)) {
 			GeneTrainerV2BotData data = v2Cache.getGeneData(genefile);
+			ObjectMapper mapper = new ObjectMapper();
+			String json = mapper.writeValueAsString(data);
+			return new ResponseEntity<String>(json, HttpStatus.OK);
+		} else if(v3Cache.hasFile(genefile)) {
+			GeneTrainerV2BotData data = v3Cache.getGeneData(genefile);
 			ObjectMapper mapper = new ObjectMapper();
 			String json = mapper.writeValueAsString(data);
 			return new ResponseEntity<String>(json, HttpStatus.OK);
