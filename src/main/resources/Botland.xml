@@ -733,6 +733,7 @@
 		<param id="geneFile">winner10-23-2026.txt</param>
 		<param id="use_bet_genes">true</param>
 		<param id="betMode">policy</param>
+		<param id="personality">facts</param>
 		<param id="bet_below_minimum">true</param>
 	</bot>
 	<bot id="genebotV3-10-23-26-policyinverse" classname="genebotV3"
@@ -741,6 +742,7 @@
 		<param id="geneFile">winner10-23-2026.txt</param>
 		<param id="use_bet_genes">true</param>
 		<param id="betMode">policy</param>
+		<param id="personality">facts</param>
 		<param id="bet_below_minimum">true</param>
 		<param id="inverse">true</param>
 	</bot>

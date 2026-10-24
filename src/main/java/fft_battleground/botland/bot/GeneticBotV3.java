@@ -74,6 +74,20 @@ extends GeneticBotV2 {
 				.orElse(false);
 	}
 
+	/**
+	 * Personality is OPTIONAL for V3 entries (Oct 23 2026 prod incident: the
+	 * inherited required-param check killed every genebotV3 init at its
+	 * first betting cycle, primary included — nothing bet). A present
+	 * personality param is still honored; absent means no personality
+	 * messages, betting unaffected. generatePersonalityResponse is already
+	 * null-safe downstream.
+	 */
+	@Override
+	public String readPersonalityParam(BotParameterReader reader) {
+		return reader.readStringParam(fft_battleground.botland.bot.util.BotContainsPersonality.PERSONALITY_PARAM)
+				.orElse(null);
+	}
+
 	@Override
 	protected Bet determineBet() throws BotConfigException {
 		return this.policyMode ? this.policyDetermineBet() : this.ladderDetermineBet();
