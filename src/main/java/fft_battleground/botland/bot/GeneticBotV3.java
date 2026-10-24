@@ -82,6 +82,20 @@ extends GeneticBotV2 {
 	 * messages, betting unaffected. generatePersonalityResponse is already
 	 * null-safe downstream.
 	 */
+	/**
+	 * The inverse twin bets the opposite side of what the base scorer
+	 * narrates, so its inherited rationale text lies in chat ("Betting on
+	 * Yellow" while betting White — deployer observation, Oct 24 2026).
+	 * Silence the mirror: the canary's bets speak for it.
+	 */
+	@Override
+	public fft_battleground.botland.personality.model.PersonalityResponse generatePersonalityResponse() {
+		if (this.inverse) {
+			return null;
+		}
+		return super.generatePersonalityResponse();
+	}
+
 	@Override
 	public String readPersonalityParam(BotParameterReader reader) {
 		return reader.readStringParam(fft_battleground.botland.bot.util.BotContainsPersonality.PERSONALITY_PARAM)
