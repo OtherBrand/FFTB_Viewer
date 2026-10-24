@@ -30,8 +30,10 @@ public class ExceptionController {
 	@ExceptionHandler(CacheMissException.class)
 	public ResponseEntity<GenericResponse<String>> cacheMissExceptionHandler(CacheMissException e) {
 		this.noisyWebhookManager.sendException(e, "error accessing cache");
+		//the String-only constructor leaves the key null (e.g. MusicController), so fall back to the message
+		String detail = e.getKey() != null ? e.getKey().toString() : e.getMessage();
 		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-				.body(new GenericResponse<String>("cache not ready: " + e.getKey().toString(), null));
+				.body(new GenericResponse<String>("cache not ready: " + detail, null));
 	}
 
 }

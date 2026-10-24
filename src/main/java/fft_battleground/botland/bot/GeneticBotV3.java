@@ -51,6 +51,12 @@ extends GeneticBotV2 {
 
 	private static final String BET_MODE_PARAM = "betMode";
 	private static final String BET_MODE_POLICY = "policy";
+	/**
+	 * The policy path's minimum stake (owner rule, Oct 23 2026): it always
+	 * bets — never sits out, never dust. The bots are part of the show:
+	 * the bet is the proof of life. Mirrors Rust POLICY_MIN_STAKE.
+	 */
+	private static final int POLICY_MIN_STAKE = 100;
 
 	@Getter
 	private boolean policyMode;
@@ -130,15 +136,22 @@ extends GeneticBotV2 {
 		double pPick = clamp((1.0 - mEff) * pModelPick + mEff * pImpliedPick, 0.02, 0.98);
 		double pOther = clamp((1.0 - mEff) * (1.0 - pModelPick) + mEff * pImpliedOther, 0.02, 0.98);
 
-		// Stage 2 — value: best-EV side wins; below minEdge: no bet.
+		// Stage 2 — value: best-EV side wins. Owner rule (Oct 23 2026): the
+		// policy path ALWAYS bets — below minEdge or a dust-sized ladder
+		// stake, the bet is the floor (100, bounded by bankroll) on the
+		// best-EV side. No sit-outs, no 1-gil bets: the bet is the proof
+		// of life for the stream.
 		double evPick = pPick * oddsPick - (1.0 - pPick);
 		double evOther = pOther * oddsOther - (1.0 - pOther);
 		boolean betPickSide = evPick >= evOther;
 		double ev = betPickSide ? evPick : evOther;
 		double theta = clamp(policy.geneOrZero(PolicyGeneAttributes::minEdge) / 100.0, -1.0, 1.0);
-		if (ev < theta) {
-			return null;
+
+		int budget = Math.min(this.currentAmountToBetWith, GambleUtil.MAX_BET);
+		if (budget <= 0) {
+			return null; // genuinely broke — nothing to bet with
 		}
+		double floor = Math.min(POLICY_MIN_STAKE, budget);
 
 		BattleGroundTeam team = this.sideTeam(pickLeft);
 		if (!betPickSide) {
@@ -151,10 +164,9 @@ extends GeneticBotV2 {
 		// Stake: edge ladder; the x-axis saturates at EV 2.0.
 		double x = Math.min(Math.max(ev, 0.0) / 2.0, 1.0) * 100.0;
 		double fraction = clamp(PolicyGeneAttributes.anchorAt(policy.edgeAnchors(), x) / 100.0, 0.0, 1.0);
-		int budget = Math.min(this.currentAmountToBetWith, GambleUtil.MAX_BET);
 		long rounded = Math.round(fraction * budget);
-		int stake = (int) Math.max(1, Math.min(budget, rounded));
-		return new Bet(team, stake, this.isBotSubscriber);
+		long stake = ev < theta ? Math.round(floor) : Math.max(Math.round(floor), Math.min(budget, rounded));
+		return new Bet(team, (int) stake, this.isBotSubscriber);
 	}
 
 	private BattleGroundTeam sideTeam(boolean left) {

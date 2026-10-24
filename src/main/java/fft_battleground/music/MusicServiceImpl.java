@@ -203,33 +203,51 @@ public class MusicServiceImpl implements MusicService {
 	
 	@Override
 	public Set<Music> loadMusicDataFromDump() throws DumpException {
-		Set<Music> musicSet = new HashSet<>();
-		String xmlData = this.dumpDataProvider.getMusicXmlString();
-		
-		try {
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder;
-			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(new InputSource(new StringReader(xmlData)));
-			doc.getDocumentElement().normalize();
-			
-			NodeList leafs = doc.getElementsByTagName("leaf");
-			for(int i = 0; i < leafs.getLength(); i++) {
-				Node node = leafs.item(i);
-				if(node.getNodeType() == Node.ELEMENT_NODE) {
-					Element element = (Element) node;
-					String name = element.getAttribute("uri");
-					name = StringUtils.substringAfterLast(name, "/");
-					name = StringUtils.substringBefore(name, ".mp3");
-					name = URLDecoder.decode(name, StandardCharsets.UTF_8.toString());
-					musicSet.add(new Music(name, element.getAttribute("id"), element.getAttribute("duration")));
+		//playlist.xml is ~9MB over plain HTTP and occasionally truncates mid-transfer; a cut stream
+		//reads as a clean EOF so the parser just sees a fragment and throws, so retry fetch+parse
+		DumpException lastFailure = null;
+		for(int attempt = 1; attempt <= 3; attempt++) {
+			try {
+				Set<Music> musicSet = this.parseMusicXml(this.dumpDataProvider.getMusicXmlString());
+				if(!musicSet.isEmpty()) {
+					return musicSet;
 				}
+				log.warn("playlist.xml returned no songs (attempt {})", attempt);
+			} catch (IOException|SAXException|ParserConfigurationException e) {
+				log.error("error updating music data from cache (attempt {})", attempt, e);
+				lastFailure = new DumpException(e, "error updating music data from cache (attempt " + attempt + ")");
 			}
-		} catch (IOException|SAXException|ParserConfigurationException e) {
-			log.error("error updating music data from cache", e);
-			throw new DumpException(e, "error updating music data from cache");
+			try {
+				Thread.sleep(2000L * attempt);
+			} catch (InterruptedException ie) {
+				Thread.currentThread().interrupt();
+				break;
+			}
 		}
-		
+		throw lastFailure != null ? lastFailure : new DumpException("playlist.xml returned no usable data after 3 attempts");
+	}
+
+	private Set<Music> parseMusicXml(String xmlData) throws IOException, SAXException, ParserConfigurationException {
+		Set<Music> musicSet = new HashSet<>();
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(new InputSource(new StringReader(xmlData)));
+		doc.getDocumentElement().normalize();
+
+		NodeList leafs = doc.getElementsByTagName("leaf");
+		for(int i = 0; i < leafs.getLength(); i++) {
+			Node node = leafs.item(i);
+			if(node.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) node;
+				String name = element.getAttribute("uri");
+				name = StringUtils.substringAfterLast(name, "/");
+				name = StringUtils.substringBefore(name, ".mp3");
+				name = URLDecoder.decode(name, StandardCharsets.UTF_8.toString());
+				musicSet.add(new Music(name, element.getAttribute("id"), element.getAttribute("duration")));
+			}
+		}
+
 		return musicSet;
 	}
 	
