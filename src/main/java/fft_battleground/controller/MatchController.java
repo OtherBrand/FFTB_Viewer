@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,13 +40,22 @@ public class MatchController {
 
 	@Autowired
 	private AccessTracker accessTracker;
-	
+
 	@RequestMapping(value= "/health", method = RequestMethod.GET)
 	public ResponseEntity<GenericResponse<Boolean>> healthCheck(@RequestHeader(value = "User-Agent") String userAgent, Model model, HttpServletRequest request) {
 		//this.logAccess("health check", userAgent, request);
 		Boolean result = true;
 		return GenericResponse.createGenericResponseEntity(result);
 	}
+
+	//retired 2026-10-25: the advisor-v2 oracle serves POST /api/matches/forecast
+	@ApiIgnore
+	@RequestMapping(value = "/advisor", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<GenericResponse<String>> retiredAdvisor() {
+		GenericResponse<String> body = new GenericResponse<>("retired: use POST /api/matches/forecast (advisor v2)", null);
+		return ResponseEntity.status(HttpStatus.GONE).body(body);
+	}
+
 
 	@ApiIgnore
 	@RequestMapping(value = "/currentData", method = RequestMethod.GET)

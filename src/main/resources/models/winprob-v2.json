@@ -1,0 +1,4354 @@
+{
+  "version": 2,
+  "model": "logistic-v2-fullhistory",
+  "trained_at": "2026-11-03",
+  "train_samples": 398484,
+  "feature_count": 1069,
+  "holdout": {
+    "samples": 110690,
+    "accuracy": 0.6300659499503117,
+    "log_loss": 0.6408823935881999,
+    "brier": 0.22506244690301994,
+    "calibration": [
+      {
+        "bin": 0,
+        "predicted": 0.0802548507090983,
+        "observed": 0.12080536912751678,
+        "count": 149
+      },
+      {
+        "bin": 1,
+        "predicted": 0.16537116293859955,
+        "observed": 0.16369636963696368,
+        "count": 3030
+      },
+      {
+        "bin": 2,
+        "predicted": 0.25664374265483825,
+        "observed": 0.26186164433176384,
+        "count": 11044
+      },
+      {
+        "bin": 3,
+        "predicted": 0.35305074727851754,
+        "observed": 0.3600366916373643,
+        "count": 19623
+      },
+      {
+        "bin": 4,
+        "predicted": 0.45052167373557983,
+        "observed": 0.4479064039408867,
+        "count": 24360
+      },
+      {
+        "bin": 5,
+        "predicted": 0.5486178658409553,
+        "observed": 0.5484839514526155,
+        "count": 23647
+      },
+      {
+        "bin": 6,
+        "predicted": 0.6462449734715209,
+        "observed": 0.6451202590194265,
+        "count": 17296
+      },
+      {
+        "bin": 7,
+        "predicted": 0.7423326475081219,
+        "observed": 0.7390546721847092,
+        "count": 9182
+      },
+      {
+        "bin": 8,
+        "predicted": 0.8330438609762915,
+        "observed": 0.8469969311705392,
+        "count": 2281
+      },
+      {
+        "bin": 9,
+        "predicted": 0.9159103196400863,
+        "observed": 0.9230769230769231,
+        "count": 78
+      }
+    ]
+  },
+  "intercept": -0.027011828,
+  "weights": [
+    {
+      "name": "agg:brave",
+      "weight": 0.003341053
+    },
+    {
+      "name": "agg:faith",
+      "weight": 0.0006530997
+    },
+    {
+      "name": "agg:raidBoss",
+      "weight": -0.06324617
+    },
+    {
+      "name": "attr:108 Gems",
+      "weight": -0.05029946
+    },
+    {
+      "name": "attr:3",
+      "weight": 0.05783441
+    },
+    {
+      "name": "attr:4",
+      "weight": 0.03823622
+    },
+    {
+      "name": "attr:48",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:5",
+      "weight": 0.025142813
+    },
+    {
+      "name": "attr:69",
+      "weight": -0.23813267
+    },
+    {
+      "name": "attr:Abandon",
+      "weight": -0.02028416
+    },
+    {
+      "name": "attr:Absorb Used MP",
+      "weight": -0.07852206
+    },
+    {
+      "name": "attr:Abyss Skill",
+      "weight": -0.081236586
+    },
+    {
+      "name": "attr:Academic Tome",
+      "weight": 0.025256718
+    },
+    {
+      "name": "attr:Accumulate",
+      "weight": -0.020703865
+    },
+    {
+      "name": "attr:Adaman Vest",
+      "weight": -0.019647403
+    },
+    {
+      "name": "attr:Adamant Vest",
+      "weight": -0.02190042
+    },
+    {
+      "name": "attr:Aegis Shield",
+      "weight": -0.045092728
+    },
+    {
+      "name": "attr:Aevis Skill",
+      "weight": -2.0625172
+    },
+    {
+      "name": "attr:Ahriman",
+      "weight": -0.21841882
+    },
+    {
+      "name": "attr:Air Knife",
+      "weight": 0.07118687
+    },
+    {
+      "name": "attr:All Heaven Magic",
+      "weight": -0.33099625
+    },
+    {
+      "name": "attr:All-Ultima",
+      "weight": 0.0116939815
+    },
+    {
+      "name": "attr:Ancient Sword",
+      "weight": 0.032619283
+    },
+    {
+      "name": "attr:Angel",
+      "weight": -0.7696393
+    },
+    {
+      "name": "attr:Angel Ring",
+      "weight": 0.112470284
+    },
+    {
+      "name": "attr:Angel Song",
+      "weight": -0.004814741
+    },
+    {
+      "name": "attr:Animal Skill",
+      "weight": 0.17057337
+    },
+    {
+      "name": "attr:Another disguised goblin",
+      "weight": -0.9954801
+    },
+    {
+      "name": "attr:Antidote",
+      "weight": -0.012104613
+    },
+    {
+      "name": "attr:Apanda",
+      "weight": 0.32543054
+    },
+    {
+      "name": "attr:Aqua Soul",
+      "weight": -0.07939199
+    },
+    {
+      "name": "attr:Arbalest",
+      "weight": 0.32412362
+    },
+    {
+      "name": "attr:Archaic Demon",
+      "weight": 0.4868293
+    },
+    {
+      "name": "attr:Archer",
+      "weight": 0.05833164
+    },
+    {
+      "name": "attr:Arm Aim",
+      "weight": 0.04417992
+    },
+    {
+      "name": "attr:Armor Break",
+      "weight": -0.015307754
+    },
+    {
+      "name": "attr:Arrow Guard",
+      "weight": -0.040597253
+    },
+    {
+      "name": "attr:Assassin Dagger",
+      "weight": -0.014785842
+    },
+    {
+      "name": "attr:Asura",
+      "weight": -0.012582198
+    },
+    {
+      "name": "attr:Asura Knife",
+      "weight": 0.08065248
+    },
+    {
+      "name": "attr:Auto Potion",
+      "weight": 0.10051226
+    },
+    {
+      "name": "attr:Axe",
+      "weight": 0.07634851
+    },
+    {
+      "name": "attr:Bad Breath",
+      "weight": 0.035169665
+    },
+    {
+      "name": "attr:Bahamut",
+      "weight": 0.007463934
+    },
+    {
+      "name": "attr:Barbuta",
+      "weight": -0.09430784
+    },
+    {
+      "name": "attr:Bard",
+      "weight": -0.11247954
+    },
+    {
+      "name": "attr:Barette",
+      "weight": -0.10377033
+    },
+    {
+      "name": "attr:Basic Skill",
+      "weight": -0.04859175
+    },
+    {
+      "name": "attr:Basilisk Skill",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Battle Axe",
+      "weight": 0.009898013
+    },
+    {
+      "name": "attr:Battle Bamboo",
+      "weight": 0.016614432
+    },
+    {
+      "name": "attr:Battle Boots",
+      "weight": 0.03851209
+    },
+    {
+      "name": "attr:Battle Folio",
+      "weight": 0.006180123
+    },
+    {
+      "name": "attr:Battle Skill",
+      "weight": -0.10545705
+    },
+    {
+      "name": "attr:Battle Song",
+      "weight": -0.022951005
+    },
+    {
+      "name": "attr:Beak",
+      "weight": -0.013000094
+    },
+    {
+      "name": "attr:Beam",
+      "weight": -0.037668947
+    },
+    {
+      "name": "attr:Beast Skill",
+      "weight": 0.11240343
+    },
+    {
+      "name": "attr:Behemoth",
+      "weight": 0.21333677
+    },
+    {
+      "name": "attr:Behemoth Skill",
+      "weight": 0.36522472
+    },
+    {
+      "name": "attr:Bequeath Bacon",
+      "weight": -0.010063491
+    },
+    {
+      "name": "attr:Bestiary",
+      "weight": 0.046205167
+    },
+    {
+      "name": "attr:Bio",
+      "weight": 0.020390974
+    },
+    {
+      "name": "attr:Bio Immortuos",
+      "weight": -0.022321198
+    },
+    {
+      "name": "attr:Bio Immortuous",
+      "weight": -1.4904422
+    },
+    {
+      "name": "attr:Bio Insanis",
+      "weight": 0.0049032914
+    },
+    {
+      "name": "attr:Bio Lapis",
+      "weight": 0.002865881
+    },
+    {
+      "name": "attr:Bio Mortem",
+      "weight": -0.005547877
+    },
+    {
+      "name": "attr:Bio Oleum",
+      "weight": 0.013563484
+    },
+    {
+      "name": "attr:Bio Ranae",
+      "weight": -0.010352798
+    },
+    {
+      "name": "attr:Bio Sanctus",
+      "weight": -0.080506906
+    },
+    {
+      "name": "attr:Bio Silentium",
+      "weight": -0.038152426
+    },
+    {
+      "name": "attr:Bio Tardus",
+      "weight": -0.019363316
+    },
+    {
+      "name": "attr:Bio Tenebris",
+      "weight": -0.052803233
+    },
+    {
+      "name": "attr:Bio Venemum",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Bio Venenum",
+      "weight": -0.038152426
+    },
+    {
+      "name": "attr:Bird Skill",
+      "weight": -0.23571108
+    },
+    {
+      "name": "attr:BirdBot Skill",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Bite",
+      "weight": -0.046373453
+    },
+    {
+      "name": "attr:Bizen Boat",
+      "weight": -0.0017459787
+    },
+    {
+      "name": "attr:Bizen Boat-Item",
+      "weight": 0.047400028
+    },
+    {
+      "name": "attr:Black Chocobo",
+      "weight": 0.12963481
+    },
+    {
+      "name": "attr:Black Costume",
+      "weight": 0.026940722
+    },
+    {
+      "name": "attr:Black Goblin",
+      "weight": -0.35219678
+    },
+    {
+      "name": "attr:Black Hood",
+      "weight": 0.023938987
+    },
+    {
+      "name": "attr:Black Ink",
+      "weight": 0.0008659895
+    },
+    {
+      "name": "attr:Black Magic",
+      "weight": -0.045456305
+    },
+    {
+      "name": "attr:Black Robe",
+      "weight": -0.010451233
+    },
+    {
+      "name": "attr:Blade Beam",
+      "weight": 0.027883148
+    },
+    {
+      "name": "attr:Blade Grasp",
+      "weight": 0.16298696
+    },
+    {
+      "name": "attr:Blast Gun",
+      "weight": 0.2887417
+    },
+    {
+      "name": "attr:Blastar Punch",
+      "weight": -0.0075365524
+    },
+    {
+      "name": "attr:Blaster",
+      "weight": 0.008827574
+    },
+    {
+      "name": "attr:Blaze Gun",
+      "weight": 0.26416945
+    },
+    {
+      "name": "attr:Blind",
+      "weight": -0.027466966
+    },
+    {
+      "name": "attr:Blind Knife",
+      "weight": -0.045626577
+    },
+    {
+      "name": "attr:Blind Rage",
+      "weight": -0.0031349752
+    },
+    {
+      "name": "attr:Blizzard",
+      "weight": -0.001763761
+    },
+    {
+      "name": "attr:Blood Suck",
+      "weight": -0.012682311
+    },
+    {
+      "name": "attr:Blood Sword",
+      "weight": 0.07693861
+    },
+    {
+      "name": "attr:Bloody Strings",
+      "weight": 0.18930876
+    },
+    {
+      "name": "attr:Blow Fire",
+      "weight": -0.090232305
+    },
+    {
+      "name": "attr:Blue Dragon",
+      "weight": 0.43834102
+    },
+    {
+      "name": "attr:Blue Magic",
+      "weight": 0.24526337
+    },
+    {
+      "name": "attr:Bolt",
+      "weight": 0.0050878134
+    },
+    {
+      "name": "attr:Bolt 1",
+      "weight": 0.8698262
+    },
+    {
+      "name": "attr:Bolt 2",
+      "weight": 0.020318078
+    },
+    {
+      "name": "attr:Bolt 3",
+      "weight": 0.007577908
+    },
+    {
+      "name": "attr:Bolt 4",
+      "weight": 0.03446637
+    },
+    {
+      "name": "attr:Bolt2",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Bolt3",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Bomb",
+      "weight": 0.00963679
+    },
+    {
+      "name": "attr:Bomb Skill",
+      "weight": -1.7134097
+    },
+    {
+      "name": "attr:Bone Skill",
+      "weight": 0.73927593
+    },
+    {
+      "name": "attr:Book",
+      "weight": 0.7305007
+    },
+    {
+      "name": "attr:Bow Gun",
+      "weight": -0.07615194
+    },
+    {
+      "name": "attr:Bracer-Item",
+      "weight": 0.004900335
+    },
+    {
+      "name": "attr:Brave Save",
+      "weight": -0.077240914
+    },
+    {
+      "name": "attr:Brave Up",
+      "weight": -0.13994342
+    },
+    {
+      "name": "attr:Braver",
+      "weight": 0.027883148
+    },
+    {
+      "name": "attr:Brigandine",
+      "weight": -0.023753751
+    },
+    {
+      "name": "attr:Broad Sword",
+      "weight": -0.037569385
+    },
+    {
+      "name": "attr:Bronze Armor",
+      "weight": -0.094392404
+    },
+    {
+      "name": "attr:Bronze Helmet",
+      "weight": -0.12625301
+    },
+    {
+      "name": "attr:Bronze Shield",
+      "weight": -0.069319494
+    },
+    {
+      "name": "attr:Buckler",
+      "weight": -0.057279676
+    },
+    {
+      "name": "attr:Bull Demon",
+      "weight": 0.11960627
+    },
+    {
+      "name": "attr:Byblos",
+      "weight": 0.39856625
+    },
+    {
+      "name": "attr:Byblos Skill",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:CT",
+      "weight": 0.10737066
+    },
+    {
+      "name": "attr:Cachusha",
+      "weight": -0.12673464
+    },
+    {
+      "name": "attr:Calculator",
+      "weight": -0.3365624
+    },
+    {
+      "name": "attr:Calm Spirit",
+      "weight": -0.02887009
+    },
+    {
+      "name": "attr:Carabini Mail",
+      "weight": 0.014673629
+    },
+    {
+      "name": "attr:Carbuncle",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Carbunkle",
+      "weight": 0.010854295
+    },
+    {
+      "name": "attr:Cashmere",
+      "weight": 0.09204611
+    },
+    {
+      "name": "attr:Cat Kick",
+      "weight": -0.034982137
+    },
+    {
+      "name": "attr:Cat Skill",
+      "weight": -1.4195554
+    },
+    {
+      "name": "attr:Catch",
+      "weight": -0.06693991
+    },
+    {
+      "name": "attr:Catfish Skill",
+      "weight": -0.057697322
+    },
+    {
+      "name": "attr:Caution",
+      "weight": -0.06968814
+    },
+    {
+      "name": "attr:Cerberus Skill",
+      "weight": 0.1346087
+    },
+    {
+      "name": "attr:Chain Mail",
+      "weight": -0.08962086
+    },
+    {
+      "name": "attr:Chain Shirt",
+      "weight": -0.08366545
+    },
+    {
+      "name": "attr:Chain Vest",
+      "weight": -0.076219164
+    },
+    {
+      "name": "attr:Chakra",
+      "weight": 0.04373186
+    },
+    {
+      "name": "attr:Chameleon Robe",
+      "weight": -0.027111026
+    },
+    {
+      "name": "attr:Chantage",
+      "weight": 0.20967497
+    },
+    {
+      "name": "attr:Chaos Blade",
+      "weight": 0.52724135
+    },
+    {
+      "name": "attr:Chaos Skill",
+      "weight": -0.039445393
+    },
+    {
+      "name": "attr:Charge",
+      "weight": -0.038846932
+    },
+    {
+      "name": "attr:Charge+1",
+      "weight": 0.013176812
+    },
+    {
+      "name": "attr:Charge+10",
+      "weight": -0.012778425
+    },
+    {
+      "name": "attr:Charge+2",
+      "weight": 0.01762692
+    },
+    {
+      "name": "attr:Charge+20",
+      "weight": 0.00955405
+    },
+    {
+      "name": "attr:Charge+3",
+      "weight": 0.014862112
+    },
+    {
+      "name": "attr:Charge+4",
+      "weight": -0.0049655037
+    },
+    {
+      "name": "attr:Charge+5",
+      "weight": 0.003817936
+    },
+    {
+      "name": "attr:Charge+7",
+      "weight": -0.0038584557
+    },
+    {
+      "name": "attr:Cheer Song",
+      "weight": 0.05234181
+    },
+    {
+      "name": "attr:Cheer Up",
+      "weight": -0.017391862
+    },
+    {
+      "name": "attr:Chemist",
+      "weight": -0.15435798
+    },
+    {
+      "name": "attr:Cherche",
+      "weight": -0.016206149
+    },
+    {
+      "name": "attr:Cherry Blossom",
+      "weight": 0.027883148
+    },
+    {
+      "name": "attr:Chicken",
+      "weight": -0.0012657216
+    },
+    {
+      "name": "attr:Chirijiraden",
+      "weight": 0.19863082
+    },
+    {
+      "name": "attr:Chirijiraden-Item",
+      "weight": 0.26940325
+    },
+    {
+      "name": "attr:Choco Attack",
+      "weight": 0.018590134
+    },
+    {
+      "name": "attr:Choco Ball",
+      "weight": 0.0027133531
+    },
+    {
+      "name": "attr:Choco Cure",
+      "weight": -0.030606743
+    },
+    {
+      "name": "attr:Choco Esuna",
+      "weight": -0.00783646
+    },
+    {
+      "name": "attr:Choco Meteor",
+      "weight": 0.018590134
+    },
+    {
+      "name": "attr:Chocobo",
+      "weight": -0.2270128
+    },
+    {
+      "name": "attr:Circlet",
+      "weight": -0.017500943
+    },
+    {
+      "name": "attr:Climhazzard",
+      "weight": 0.027883148
+    },
+    {
+      "name": "attr:Clothes",
+      "weight": -0.07153367
+    },
+    {
+      "name": "attr:Cockatrice",
+      "weight": 0.20340149
+    },
+    {
+      "name": "attr:Coeurl",
+      "weight": 0.10408162
+    },
+    {
+      "name": "attr:Compress",
+      "weight": 0.0117482785
+    },
+    {
+      "name": "attr:Confuse",
+      "weight": 0.07831981
+    },
+    {
+      "name": "attr:Confusion",
+      "weight": 0.6769061
+    },
+    {
+      "name": "attr:Confusion Song",
+      "weight": 0.036761053
+    },
+    {
+      "name": "attr:Coral Sword",
+      "weight": 0.059631173
+    },
+    {
+      "name": "attr:Counter",
+      "weight": -0.047864337
+    },
+    {
+      "name": "attr:Counter Flood",
+      "weight": -0.0025708715
+    },
+    {
+      "name": "attr:Counter Magic",
+      "weight": -0.072109714
+    },
+    {
+      "name": "attr:Counter Tackle",
+      "weight": -0.06879085
+    },
+    {
+      "name": "attr:Critical Quick",
+      "weight": -0.05801557
+    },
+    {
+      "name": "attr:Cross Bow",
+      "weight": 0.21158831
+    },
+    {
+      "name": "attr:Cross Helmet",
+      "weight": -0.06237069
+    },
+    {
+      "name": "attr:Cross-Slash",
+      "weight": 0.029176604
+    },
+    {
+      "name": "attr:Cross-slash",
+      "weight": -0.3786203
+    },
+    {
+      "name": "attr:Crypt Skill",
+      "weight": -0.10619765
+    },
+    {
+      "name": "attr:Crystal Helm",
+      "weight": -1.6588111
+    },
+    {
+      "name": "attr:Crystal Helmet",
+      "weight": -0.019882724
+    },
+    {
+      "name": "attr:Crystal Mail",
+      "weight": 0.01304239
+    },
+    {
+      "name": "attr:Crystal Shield",
+      "weight": -0.0040766145
+    },
+    {
+      "name": "attr:Cultist Dagger",
+      "weight": 0.016902262
+    },
+    {
+      "name": "attr:Cultist Dsgger",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Cure",
+      "weight": 0.012507126
+    },
+    {
+      "name": "attr:Cure 1",
+      "weight": -1.1739811
+    },
+    {
+      "name": "attr:Cure 2",
+      "weight": -0.00043871268
+    },
+    {
+      "name": "attr:Cure 3",
+      "weight": 0.007506527
+    },
+    {
+      "name": "attr:Cure 4",
+      "weight": -0.02463865
+    },
+    {
+      "name": "attr:Cure2",
+      "weight": -0.2002703
+    },
+    {
+      "name": "attr:Cure3",
+      "weight": -0.2002703
+    },
+    {
+      "name": "attr:Curse Skill",
+      "weight": -0.052820887
+    },
+    {
+      "name": "attr:Cursed Ring",
+      "weight": 0.021832844
+    },
+    {
+      "name": "attr:Cute Bag",
+      "weight": 0.009096741
+    },
+    {
+      "name": "attr:Cyclops",
+      "weight": -0.007902267
+    },
+    {
+      "name": "attr:Cypress Pole",
+      "weight": 0.05975785
+    },
+    {
+      "name": "attr:Cypress Rod",
+      "weight": -0.032526847
+    },
+    {
+      "name": "attr:Dagger",
+      "weight": 0.13648261
+    },
+    {
+      "name": "attr:Damage Split",
+      "weight": 0.1401731
+    },
+    {
+      "name": "attr:Dance",
+      "weight": -0.04533858
+    },
+    {
+      "name": "attr:Dancer",
+      "weight": -0.15904479
+    },
+    {
+      "name": "attr:Dark Behemoth",
+      "weight": 0.61533356
+    },
+    {
+      "name": "attr:Dark Holy",
+      "weight": 0.087472014
+    },
+    {
+      "name": "attr:Dark Skill",
+      "weight": 0.15334369
+    },
+    {
+      "name": "attr:Dark Sword",
+      "weight": -0.013778502
+    },
+    {
+      "name": "attr:Dark Whisper",
+      "weight": -0.0057584313
+    },
+    {
+      "name": "attr:Dash",
+      "weight": -0.0148704285
+    },
+    {
+      "name": "attr:Death",
+      "weight": -0.06789484
+    },
+    {
+      "name": "attr:Death Sentence",
+      "weight": -0.0038856217
+    },
+    {
+      "name": "attr:Defender",
+      "weight": 0.1394296
+    },
+    {
+      "name": "attr:Defense Armlet",
+      "weight": -0.06370533
+    },
+    {
+      "name": "attr:Defense Ring",
+      "weight": -0.082708664
+    },
+    {
+      "name": "attr:Demi",
+      "weight": 0.0072834445
+    },
+    {
+      "name": "attr:Demi 2",
+      "weight": -0.0014071155
+    },
+    {
+      "name": "attr:Demi 3",
+      "weight": 0.064337745
+    },
+    {
+      "name": "attr:Demon Skill",
+      "weight": -0.004981431
+    },
+    {
+      "name": "attr:Despair",
+      "weight": -0.038878005
+    },
+    {
+      "name": "attr:Despair 2",
+      "weight": -0.038878005
+    },
+    {
+      "name": "attr:Destroy",
+      "weight": 0.0117482785
+    },
+    {
+      "name": "attr:Diamond Armlet",
+      "weight": -0.058598563
+    },
+    {
+      "name": "attr:Diamond Armor",
+      "weight": -0.037294596
+    },
+    {
+      "name": "attr:Diamond Blade",
+      "weight": 0.041045412
+    },
+    {
+      "name": "attr:Diamond Helmet",
+      "weight": -0.046955522
+    },
+    {
+      "name": "attr:Diamond Shield",
+      "weight": -0.027244342
+    },
+    {
+      "name": "attr:Diamond Sword",
+      "weight": 0.10706222
+    },
+    {
+      "name": "attr:Dictionary",
+      "weight": -0.002567916
+    },
+    {
+      "name": "attr:Dinosaur Skill",
+      "weight": -0.038149357
+    },
+    {
+      "name": "attr:Disease Skill",
+      "weight": -0.050073393
+    },
+    {
+      "name": "attr:Disillusion",
+      "weight": -0.022924526
+    },
+    {
+      "name": "attr:Dispel Magic",
+      "weight": -0.0030110532
+    },
+    {
+      "name": "attr:Dispose",
+      "weight": 0.0117482785
+    },
+    {
+      "name": "attr:Distribute",
+      "weight": -0.064700544
+    },
+    {
+      "name": "attr:Doom",
+      "weight": -0.015164379
+    },
+    {
+      "name": "attr:Doublehand",
+      "weight": -1.1871989
+    },
+    {
+      "name": "attr:Doubt Faith",
+      "weight": -0.02336014
+    },
+    {
+      "name": "attr:Dracolich Skill",
+      "weight": -0.42288798
+    },
+    {
+      "name": "attr:Dracula Mantle",
+      "weight": -0.0022137663
+    },
+    {
+      "name": "attr:Dragon",
+      "weight": 0.43572348
+    },
+    {
+      "name": "attr:Dragon Pit",
+      "weight": 0.05686592
+    },
+    {
+      "name": "attr:Dragon Rod",
+      "weight": 0.25134766
+    },
+    {
+      "name": "attr:Dragon Skill",
+      "weight": 0.23512572
+    },
+    {
+      "name": "attr:Dragon Spirit",
+      "weight": 0.00527839
+    },
+    {
+      "name": "attr:Dragon Whisker",
+      "weight": 0.5951872
+    },
+    {
+      "name": "attr:Drain Touch",
+      "weight": -0.013856062
+    },
+    {
+      "name": "attr:Draugr",
+      "weight": -0.07564649
+    },
+    {
+      "name": "attr:Draw Out",
+      "weight": 0.06626305
+    },
+    {
+      "name": "attr:Dryad",
+      "weight": -0.1911664
+    },
+    {
+      "name": "attr:Dual Wield",
+      "weight": -1.1871989
+    },
+    {
+      "name": "attr:Dungeon Skill",
+      "weight": -0.19139396
+    },
+    {
+      "name": "attr:Earplug",
+      "weight": -0.08652036
+    },
+    {
+      "name": "attr:Earth Clothes",
+      "weight": 0.04346128
+    },
+    {
+      "name": "attr:Earth Skill",
+      "weight": -0.32842538
+    },
+    {
+      "name": "attr:Earth Slash",
+      "weight": 0.123917975
+    },
+    {
+      "name": "attr:Echo Grass",
+      "weight": 0.016405445
+    },
+    {
+      "name": "attr:Elemental",
+      "weight": -0.010726767
+    },
+    {
+      "name": "attr:Elf Mantle",
+      "weight": 0.03542114
+    },
+    {
+      "name": "attr:Elixir",
+      "weight": 0.14566338
+    },
+    {
+      "name": "attr:Empower",
+      "weight": 0.024648393
+    },
+    {
+      "name": "attr:Energize",
+      "weight": -0.04733219
+    },
+    {
+      "name": "attr:Enrage",
+      "weight": -0.005605995
+    },
+    {
+      "name": "attr:Ensuna",
+      "weight": -1.4570785
+    },
+    {
+      "name": "attr:Escutcheon",
+      "weight": 0.015111632
+    },
+    {
+      "name": "attr:Esuna",
+      "weight": -0.000263724
+    },
+    {
+      "name": "attr:Ether",
+      "weight": -0.0074520395
+    },
+    {
+      "name": "attr:Excalibur",
+      "weight": 0.5141076
+    },
+    {
+      "name": "attr:Explosion Sword",
+      "weight": 0.12920178
+    },
+    {
+      "name": "attr:Explosive",
+      "weight": -0.023117712
+    },
+    {
+      "name": "attr:Eye Drop",
+      "weight": 0.01577455
+    },
+    {
+      "name": "attr:Eye Drops",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Eye Gouge",
+      "weight": -0.017101025
+    },
+    {
+      "name": "attr:Eye Skill",
+      "weight": -0.8228249
+    },
+    {
+      "name": "attr:Fairy",
+      "weight": 0.0004960461
+    },
+    {
+      "name": "attr:Fairy Harp",
+      "weight": 0.22472598
+    },
+    {
+      "name": "attr:Faith Rod",
+      "weight": 0.26074484
+    },
+    {
+      "name": "attr:Faith Save",
+      "weight": -0.078363225
+    },
+    {
+      "name": "attr:Faith Up",
+      "weight": -0.09231589
+    },
+    {
+      "name": "attr:Familiar Skill",
+      "weight": -0.034677207
+    },
+    {
+      "name": "attr:Farm Skill",
+      "weight": 0.06510346
+    },
+    {
+      "name": "attr:Feather Bomb",
+      "weight": -0.07041432
+    },
+    {
+      "name": "attr:Feather Boots",
+      "weight": -0.08418289
+    },
+    {
+      "name": "attr:Feather Hat",
+      "weight": -0.08589172
+    },
+    {
+      "name": "attr:Feather Mantle",
+      "weight": 0.028213121
+    },
+    {
+      "name": "attr:Female",
+      "weight": 1.0434616
+    },
+    {
+      "name": "attr:Finish Touch",
+      "weight": 0.06409216
+    },
+    {
+      "name": "attr:Fire",
+      "weight": 0.014880492
+    },
+    {
+      "name": "attr:Fire 2",
+      "weight": 0.0090550985
+    },
+    {
+      "name": "attr:Fire 3",
+      "weight": 0.031266898
+    },
+    {
+      "name": "attr:Fire 4",
+      "weight": 0.023790555
+    },
+    {
+      "name": "attr:Fire Breath",
+      "weight": -0.0647467
+    },
+    {
+      "name": "attr:Fire Skill",
+      "weight": 0.43235704
+    },
+    {
+      "name": "attr:Fire2",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Fire3",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Fist",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Flail",
+      "weight": -0.03202258
+    },
+    {
+      "name": "attr:Flame Attack",
+      "weight": -0.046373453
+    },
+    {
+      "name": "attr:Flame Rod",
+      "weight": 0.047983874
+    },
+    {
+      "name": "attr:Flame Shield",
+      "weight": 0.00393618
+    },
+    {
+      "name": "attr:Flame Whip",
+      "weight": 0.012557226
+    },
+    {
+      "name": "attr:Flare",
+      "weight": 0.14686373
+    },
+    {
+      "name": "attr:Flare 2",
+      "weight": 0.031615555
+    },
+    {
+      "name": "attr:Flash Hat",
+      "weight": 0.12660153
+    },
+    {
+      "name": "attr:Float",
+      "weight": -0.009830634
+    },
+    {
+      "name": "attr:Floating Eye",
+      "weight": -0.44781104
+    },
+    {
+      "name": "attr:Fly",
+      "weight": -0.01052327
+    },
+    {
+      "name": "attr:Forest Skill",
+      "weight": -0.07440484
+    },
+    {
+      "name": "attr:Foul Skill",
+      "weight": 0.058754325
+    },
+    {
+      "name": "attr:Foxbird",
+      "weight": -0.008193663
+    },
+    {
+      "name": "attr:Frog",
+      "weight": 0.025592512
+    },
+    {
+      "name": "attr:Frost Soul",
+      "weight": -0.04199172
+    },
+    {
+      "name": "attr:Frozen Cry",
+      "weight": 0.046404593
+    },
+    {
+      "name": "attr:Fury",
+      "weight": 0.02148953
+    },
+    {
+      "name": "attr:Galaxy Stop",
+      "weight": 0.14559054
+    },
+    {
+      "name": "attr:Gastrafitis",
+      "weight": 0.3960693
+    },
+    {
+      "name": "attr:Gastrophetes",
+      "weight": 0.43774596
+    },
+    {
+      "name": "attr:Gather Power",
+      "weight": -0.07117577
+    },
+    {
+      "name": "attr:Genji Armor",
+      "weight": 0.054307662
+    },
+    {
+      "name": "attr:Genji Gauntlet",
+      "weight": 0.0043273703
+    },
+    {
+      "name": "attr:Genji Helm",
+      "weight": -0.10035377
+    },
+    {
+      "name": "attr:Genji Helmet",
+      "weight": 0.026689181
+    },
+    {
+      "name": "attr:Genji Shield",
+      "weight": -0.009045319
+    },
+    {
+      "name": "attr:Geomancer",
+      "weight": 0.054825623
+    },
+    {
+      "name": "attr:Germinas Boots",
+      "weight": -0.05134161
+    },
+    {
+      "name": "attr:Ghost",
+      "weight": -0.08331075
+    },
+    {
+      "name": "attr:Ghost Skill",
+      "weight": -1.0400815
+    },
+    {
+      "name": "attr:Ghoul",
+      "weight": -0.1706028
+    },
+    {
+      "name": "attr:Giant Axe",
+      "weight": 0.035918277
+    },
+    {
+      "name": "attr:Giant Skill",
+      "weight": -0.09043724
+    },
+    {
+      "name": "attr:Giga Flare",
+      "weight": 0.05646251
+    },
+    {
+      "name": "attr:Gil Taking",
+      "weight": -0.004133369
+    },
+    {
+      "name": "attr:Glacier Gun",
+      "weight": 0.27452454
+    },
+    {
+      "name": "attr:Gladius",
+      "weight": 0.63859004
+    },
+    {
+      "name": "attr:Glutton Skill",
+      "weight": 0.090920776
+    },
+    {
+      "name": "attr:Gobbledeguck",
+      "weight": -0.26093656
+    },
+    {
+      "name": "attr:Goblin",
+      "weight": -0.40050215
+    },
+    {
+      "name": "attr:Goblin Punch",
+      "weight": -0.011699632
+    },
+    {
+      "name": "attr:Goblin Skill",
+      "weight": -0.83859205
+    },
+    {
+      "name": "attr:Goblin in disguise here",
+      "weight": 0.14603265
+    },
+    {
+      "name": "attr:Gokuu Pole",
+      "weight": 0.036954667
+    },
+    {
+      "name": "attr:Gokuu Rod",
+      "weight": 0.07362936
+    },
+    {
+      "name": "attr:Gold Armor",
+      "weight": -0.052833118
+    },
+    {
+      "name": "attr:Gold Helmet",
+      "weight": -0.081363276
+    },
+    {
+      "name": "attr:Gold Shield",
+      "weight": -0.04178624
+    },
+    {
+      "name": "attr:Gold Staff",
+      "weight": 0.031466283
+    },
+    {
+      "name": "attr:Golden Hairpin",
+      "weight": 0.0028514005
+    },
+    {
+      "name": "attr:Golem",
+      "weight": 0.0040281876
+    },
+    {
+      "name": "attr:Goo",
+      "weight": 0.03295813
+    },
+    {
+      "name": "attr:Gore Skill",
+      "weight": 0.117684804
+    },
+    {
+      "name": "attr:Grand Cross",
+      "weight": 0.031615555
+    },
+    {
+      "name": "attr:Grand Helm",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Grand Helmet",
+      "weight": 0.045002155
+    },
+    {
+      "name": "attr:Gravi 2",
+      "weight": -0.5434856
+    },
+    {
+      "name": "attr:Grease Touch",
+      "weight": 0.0016326759
+    },
+    {
+      "name": "attr:Great Malboro",
+      "weight": -0.23543087
+    },
+    {
+      "name": "attr:Green Beret",
+      "weight": 0.08032949
+    },
+    {
+      "name": "attr:Grenade",
+      "weight": -0.01393435
+    },
+    {
+      "name": "attr:Griffin Skill",
+      "weight": -0.24426842
+    },
+    {
+      "name": "attr:Gungnir",
+      "weight": 0.55108744
+    },
+    {
+      "name": "attr:Gusty Wind",
+      "weight": -0.010475328
+    },
+    {
+      "name": "attr:HP Restore",
+      "weight": 0.020435553
+    },
+    {
+      "name": "attr:Halberd",
+      "weight": 0.07588106
+    },
+    {
+      "name": "attr:Hallowed Ground",
+      "weight": 0.05820377
+    },
+    {
+      "name": "attr:Hamedo",
+      "weight": 0.04792429
+    },
+    {
+      "name": "attr:Hammer",
+      "weight": 0.10176002
+    },
+    {
+      "name": "attr:Haste",
+      "weight": 0.0964482
+    },
+    {
+      "name": "attr:Haste 2",
+      "weight": 0.094102785
+    },
+    {
+      "name": "attr:Haste2",
+      "weight": 0.9983128
+    },
+    {
+      "name": "attr:Havoc Skill",
+      "weight": -0.071194455
+    },
+    {
+      "name": "attr:Head Break",
+      "weight": 0.0072865244
+    },
+    {
+      "name": "attr:Headgear",
+      "weight": -0.06692924
+    },
+    {
+      "name": "attr:Heal",
+      "weight": 0.006086391
+    },
+    {
+      "name": "attr:Healing Staff",
+      "weight": 0.048231855
+    },
+    {
+      "name": "attr:Heaven's Cloud",
+      "weight": 0.06450223
+    },
+    {
+      "name": "attr:Heaven's Cloud-Item",
+      "weight": 0.037134152
+    },
+    {
+      "name": "attr:Height",
+      "weight": 0.09348783
+    },
+    {
+      "name": "attr:Hell Ivy",
+      "weight": 0.03169409
+    },
+    {
+      "name": "attr:Hellcry Crush",
+      "weight": -0.053158995
+    },
+    {
+      "name": "attr:Hellcry Punch",
+      "weight": -0.06502689
+    },
+    {
+      "name": "attr:Hero Shield",
+      "weight": 0.06863204
+    },
+    {
+      "name": "attr:Hex Skill",
+      "weight": -0.07590117
+    },
+    {
+      "name": "attr:Hi-Ether",
+      "weight": 0.00037831534
+    },
+    {
+      "name": "attr:Hi-Potion",
+      "weight": 0.008466869
+    },
+    {
+      "name": "attr:Hidden Knife",
+      "weight": 0.11173096
+    },
+    {
+      "name": "attr:Holy",
+      "weight": 0.16887724
+    },
+    {
+      "name": "attr:Holy Breath",
+      "weight": -0.02962851
+    },
+    {
+      "name": "attr:Holy Dragon",
+      "weight": 0.561593
+    },
+    {
+      "name": "attr:Holy Lance",
+      "weight": 0.36555687
+    },
+    {
+      "name": "attr:Holy Miter",
+      "weight": 0.010811263
+    },
+    {
+      "name": "attr:Holy Skill",
+      "weight": -1.8622372
+    },
+    {
+      "name": "attr:Holy Water",
+      "weight": -0.0032384067
+    },
+    {
+      "name": "attr:Horror Skill",
+      "weight": -0.44017985
+    },
+    {
+      "name": "attr:Hunting Bow",
+      "weight": 0.04731547
+    },
+    {
+      "name": "attr:Hurricane",
+      "weight": 0.058906034
+    },
+    {
+      "name": "attr:Hydra",
+      "weight": 0.3815915
+    },
+    {
+      "name": "attr:Hydra Bag",
+      "weight": 0.07865138
+    },
+    {
+      "name": "attr:Hydra Pit",
+      "weight": 0.046603628
+    },
+    {
+      "name": "attr:Hydra Skill",
+      "weight": -0.7799782
+    },
+    {
+      "name": "attr:Ice",
+      "weight": -0.0021722382
+    },
+    {
+      "name": "attr:Ice 2",
+      "weight": -0.00266625
+    },
+    {
+      "name": "attr:Ice 3",
+      "weight": 0.020970458
+    },
+    {
+      "name": "attr:Ice 4",
+      "weight": 0.030621585
+    },
+    {
+      "name": "attr:Ice Bow",
+      "weight": 0.02994761
+    },
+    {
+      "name": "attr:Ice Brand",
+      "weight": 0.14952247
+    },
+    {
+      "name": "attr:Ice Breath",
+      "weight": -0.08810676
+    },
+    {
+      "name": "attr:Ice Rod",
+      "weight": 0.045576703
+    },
+    {
+      "name": "attr:Ice Shield",
+      "weight": -0.019893477
+    },
+    {
+      "name": "attr:Ice Skill",
+      "weight": -0.59949195
+    },
+    {
+      "name": "attr:Ice Soul",
+      "weight": -0.011027898
+    },
+    {
+      "name": "attr:Ice2",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Ice3",
+      "weight": 0.36194003
+    },
+    {
+      "name": "attr:Icewolf Bite",
+      "weight": -0.04193045
+    },
+    {
+      "name": "attr:Ifrit",
+      "weight": 0.03357742
+    },
+    {
+      "name": "attr:Iga Knife",
+      "weight": 0.20251334
+    },
+    {
+      "name": "attr:Ignore Height",
+      "weight": -0.03289145
+    },
+    {
+      "name": "attr:Ignore Terrain",
+      "weight": -0.061870076
+    },
+    {
+      "name": "attr:Immobilize",
+      "weight": 0.007158222
+    },
+    {
+      "name": "attr:Imp Skill",
+      "weight": -0.12053701
+    },
+    {
+      "name": "attr:Insult",
+      "weight": -0.0070063006
+    },
+    {
+      "name": "attr:Invitation",
+      "weight": 0.007994957
+    },
+    {
+      "name": "attr:Iron Armlet",
+      "weight": -0.07766163
+    },
+    {
+      "name": "attr:Iron Fan",
+      "weight": 0.1378087
+    },
+    {
+      "name": "attr:Iron Hawk",
+      "weight": -0.16796577
+    },
+    {
+      "name": "attr:Iron Helmet",
+      "weight": -0.08921683
+    },
+    {
+      "name": "attr:Iron Sword",
+      "weight": -0.06540013
+    },
+    {
+      "name": "attr:Item",
+      "weight": 0.02937915
+    },
+    {
+      "name": "attr:Ivory Cane",
+      "weight": 0.08873254
+    },
+    {
+      "name": "attr:Ivory Rod",
+      "weight": 0.07563115
+    },
+    {
+      "name": "attr:Jade Armlet",
+      "weight": -0.0802379
+    },
+    {
+      "name": "attr:Javelin",
+      "weight": -0.029484477
+    },
+    {
+      "name": "attr:Judo Outfit",
+      "weight": 0.013759221
+    },
+    {
+      "name": "attr:Jump",
+      "weight": 0.0010651564
+    },
+    {
+      "name": "attr:Jump +1",
+      "weight": -0.534033
+    },
+    {
+      "name": "attr:Jump+1",
+      "weight": -0.060913067
+    },
+    {
+      "name": "attr:Jump+2",
+      "weight": -0.048520237
+    },
+    {
+      "name": "attr:Jump+3",
+      "weight": -0.04892069
+    },
+    {
+      "name": "attr:Juravis",
+      "weight": -0.17906325
+    },
+    {
+      "name": "attr:Justice Sword",
+      "weight": 0.08315343
+    },
+    {
+      "name": "attr:Kaiser Plate",
+      "weight": 0.018999863
+    },
+    {
+      "name": "attr:Kikuichimoji",
+      "weight": 0.14375159
+    },
+    {
+      "name": "attr:Kikuichimonji",
+      "weight": 0.123254284
+    },
+    {
+      "name": "attr:Kikuichimonji-Item",
+      "weight": 0.113614306
+    },
+    {
+      "name": "attr:King Behemoth",
+      "weight": 0.40757468
+    },
+    {
+      "name": "attr:Kiyomori",
+      "weight": -0.022467114
+    },
+    {
+      "name": "attr:Kiyomori-Item",
+      "weight": 0.09322459
+    },
+    {
+      "name": "attr:Knife",
+      "weight": 0.0047270656
+    },
+    {
+      "name": "attr:Knife Hand",
+      "weight": -0.04380627
+    },
+    {
+      "name": "attr:Knight",
+      "weight": -0.043146957
+    },
+    {
+      "name": "attr:Koga Knife",
+      "weight": 0.23021987
+    },
+    {
+      "name": "attr:Koutetsu",
+      "weight": 0.01372397
+    },
+    {
+      "name": "attr:Koutetsu Knife",
+      "weight": 0.06446251
+    },
+    {
+      "name": "attr:Kunai",
+      "weight": 0.01770018
+    },
+    {
+      "name": "attr:Labyrinth Skill",
+      "weight": 0.042595793
+    },
+    {
+      "name": "attr:Lamia Harp",
+      "weight": 0.05764525
+    },
+    {
+      "name": "attr:Lancer",
+      "weight": 0.032804355
+    },
+    {
+      "name": "attr:Landlocked",
+      "weight": 0.23906362
+    },
+    {
+      "name": "attr:Last Dance",
+      "weight": -0.0065626
+    },
+    {
+      "name": "attr:Last Song",
+      "weight": -0.0032385592
+    },
+    {
+      "name": "attr:Lava Ball",
+      "weight": 0.017368758
+    },
+    {
+      "name": "attr:Lava Walking",
+      "weight": -0.06897307
+    },
+    {
+      "name": "attr:Leaf Dance",
+      "weight": -0.025940388
+    },
+    {
+      "name": "attr:Leather Armor",
+      "weight": -0.040297076
+    },
+    {
+      "name": "attr:Leather Cap",
+      "weight": -0.06099711
+    },
+    {
+      "name": "attr:Leather Hat",
+      "weight": -0.06830607
+    },
+    {
+      "name": "attr:Leather Helmet",
+      "weight": -0.05992051
+    },
+    {
+      "name": "attr:Leather Mantle",
+      "weight": 0.021929253
+    },
+    {
+      "name": "attr:Leather Outfit",
+      "weight": -0.05952028
+    },
+    {
+      "name": "attr:Leather Vest",
+      "weight": 0.13114919
+    },
+    {
+      "name": "attr:Leech Skill",
+      "weight": 0.19597787
+    },
+    {
+      "name": "attr:Leg Aim",
+      "weight": 0.005769477
+    },
+    {
+      "name": "attr:Level Blast",
+      "weight": -0.021736076
+    },
+    {
+      "name": "attr:Level Jump 5",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Level Jump 7",
+      "weight": 0.3023383
+    },
+    {
+      "name": "attr:Level Jump2",
+      "weight": -0.058146466
+    },
+    {
+      "name": "attr:Level Jump3",
+      "weight": -0.027784068
+    },
+    {
+      "name": "attr:Level Jump4",
+      "weight": -0.0042152246
+    },
+    {
+      "name": "attr:Level Jump5",
+      "weight": 0.04127819
+    },
+    {
+      "name": "attr:Level Jump6",
+      "weight": 0.07599376
+    },
+    {
+      "name": "attr:Level Jump7",
+      "weight": 0.1105362
+    },
+    {
+      "name": "attr:Level Jump8",
+      "weight": 0.17212228
+    },
+    {
+      "name": "attr:Leviathan",
+      "weight": 0.054802746
+    },
+    {
+      "name": "attr:Levitate",
+      "weight": -0.04840084
+    },
+    {
+      "name": "attr:Lich",
+      "weight": -0.037062533
+    },
+    {
+      "name": "attr:Lick",
+      "weight": 0.03295813
+    },
+    {
+      "name": "attr:Life Drain",
+      "weight": 0.038977046
+    },
+    {
+      "name": "attr:Life Song",
+      "weight": 0.04104132
+    },
+    {
+      "name": "attr:Life Spirit",
+      "weight": 0.04835895
+    },
+    {
+      "name": "attr:Lifebreak",
+      "weight": -0.038878005
+    },
+    {
+      "name": "attr:Lifefont",
+      "weight": 0.033372574
+    },
+    {
+      "name": "attr:Light Robe",
+      "weight": 0.05851513
+    },
+    {
+      "name": "attr:Lightning Bow",
+      "weight": 0.16480869
+    },
+    {
+      "name": "attr:Lightning Skill",
+      "weight": 0.07623774
+    },
+    {
+      "name": "attr:Limit",
+      "weight": 0.018364644
+    },
+    {
+      "name": "attr:Linen Cuirass",
+      "weight": -0.005480653
+    },
+    {
+      "name": "attr:Linen Robe",
+      "weight": -0.013264992
+    },
+    {
+      "name": "attr:Local Quake",
+      "weight": 0.01745212
+    },
+    {
+      "name": "attr:Local Squake",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Long Bow",
+      "weight": -0.060889497
+    },
+    {
+      "name": "attr:Long Sword",
+      "weight": -0.032410197
+    },
+    {
+      "name": "attr:Look of Devil",
+      "weight": -0.030399496
+    },
+    {
+      "name": "attr:Look of Fright",
+      "weight": -0.037668947
+    },
+    {
+      "name": "attr:Lucavi Skill",
+      "weight": 0.055739425
+    },
+    {
+      "name": "attr:MA Save",
+      "weight": -0.062169354
+    },
+    {
+      "name": "attr:MP Restore",
+      "weight": -0.069472976
+    },
+    {
+      "name": "attr:Mace of Zeus",
+      "weight": 0.1284139
+    },
+    {
+      "name": "attr:Madlemgen",
+      "weight": 0.12982965
+    },
+    {
+      "name": "attr:Mage Masher",
+      "weight": 0.0067559313
+    },
+    {
+      "name": "attr:Magic Barrier",
+      "weight": 0.24361022
+    },
+    {
+      "name": "attr:Magic Break",
+      "weight": -0.022326697
+    },
+    {
+      "name": "attr:Magic Gauntlet",
+      "weight": -0.022781981
+    },
+    {
+      "name": "attr:Magic Ring",
+      "weight": -0.082852565
+    },
+    {
+      "name": "attr:Magic Song",
+      "weight": -0.022616258
+    },
+    {
+      "name": "attr:Magic Spirit",
+      "weight": -0.025940388
+    },
+    {
+      "name": "attr:Maiden's Kiss",
+      "weight": 0.008842967
+    },
+    {
+      "name": "attr:Maidens Kiss",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Main Gauche",
+      "weight": -0.016107196
+    },
+    {
+      "name": "attr:Malboro",
+      "weight": -0.41083232
+    },
+    {
+      "name": "attr:Malboro Skill",
+      "weight": -1.9559065
+    },
+    {
+      "name": "attr:Male",
+      "weight": 0.5516138
+    },
+    {
+      "name": "attr:Mana Shield",
+      "weight": 0.1474451
+    },
+    {
+      "name": "attr:Manaburn",
+      "weight": -0.052563284
+    },
+    {
+      "name": "attr:Manafont",
+      "weight": -0.04019852
+    },
+    {
+      "name": "attr:Marsh Skill",
+      "weight": 0.029518984
+    },
+    {
+      "name": "attr:Martial Arts",
+      "weight": 1.2036057
+    },
+    {
+      "name": "attr:Masamune",
+      "weight": 0.30775127
+    },
+    {
+      "name": "attr:Masamune-Item",
+      "weight": 0.32317936
+    },
+    {
+      "name": "attr:Materia Blade",
+      "weight": 0.28047797
+    },
+    {
+      "name": "attr:Math Skill",
+      "weight": 0.13936234
+    },
+    {
+      "name": "attr:Maximillian",
+      "weight": 0.25020015
+    },
+    {
+      "name": "attr:Meatbone Slash",
+      "weight": -0.049569886
+    },
+    {
+      "name": "attr:Mediator",
+      "weight": -0.13013309
+    },
+    {
+      "name": "attr:Meditate",
+      "weight": -0.23826496
+    },
+    {
+      "name": "attr:Medusa Skill",
+      "weight": -0.11380947
+    },
+    {
+      "name": "attr:Melt",
+      "weight": 0.043051243
+    },
+    {
+      "name": "attr:Meteor",
+      "weight": -0.08395421
+    },
+    {
+      "name": "attr:Meteorain",
+      "weight": 0.01346934
+    },
+    {
+      "name": "attr:Midgar Swarm",
+      "weight": 0.10945407
+    },
+    {
+      "name": "attr:Mighty Sword",
+      "weight": 0.012812126
+    },
+    {
+      "name": "attr:Mime",
+      "weight": 2.2653627e-05
+    },
+    {
+      "name": "attr:Mimic",
+      "weight": 0.13064791
+    },
+    {
+      "name": "attr:Mimic Daravon",
+      "weight": 0.04831691
+    },
+    {
+      "name": "attr:Mimic Titan",
+      "weight": -0.08146989
+    },
+    {
+      "name": "attr:Mind Blast",
+      "weight": -0.006113437
+    },
+    {
+      "name": "attr:Mind Break",
+      "weight": -0.0047335094
+    },
+    {
+      "name": "attr:Mindflayer",
+      "weight": -0.015656097
+    },
+    {
+      "name": "attr:Minotaur",
+      "weight": 0.092663
+    },
+    {
+      "name": "attr:Minotaur Skill",
+      "weight": -0.2228469
+    },
+    {
+      "name": "attr:Mirage Vest",
+      "weight": 0.011613458
+    },
+    {
+      "name": "attr:Missile Skill",
+      "weight": 0.09677717
+    },
+    {
+      "name": "attr:Moldball Virus",
+      "weight": 0.03295813
+    },
+    {
+      "name": "attr:Monk",
+      "weight": 0.048617136
+    },
+    {
+      "name": "attr:Moogle",
+      "weight": 0.00034918357
+    },
+    {
+      "name": "attr:Morning Star",
+      "weight": 0.028728507
+    },
+    {
+      "name": "attr:Move +1",
+      "weight": -1.0646975
+    },
+    {
+      "name": "attr:Move+1",
+      "weight": 0.019190714
+    },
+    {
+      "name": "attr:Move+2",
+      "weight": 0.08390675
+    },
+    {
+      "name": "attr:Move+3",
+      "weight": 0.1607929
+    },
+    {
+      "name": "attr:Move-HP UP",
+      "weight": -1.628477
+    },
+    {
+      "name": "attr:Move-HP Up",
+      "weight": 0.01813939
+    },
+    {
+      "name": "attr:Move-MP UP",
+      "weight": -0.534033
+    },
+    {
+      "name": "attr:Move-MP Up",
+      "weight": -0.035169024
+    },
+    {
+      "name": "attr:Move-Mp Up",
+      "weight": -1.5492867
+    },
+    {
+      "name": "attr:Muramasa",
+      "weight": 0.16319251
+    },
+    {
+      "name": "attr:Muramasa-Item",
+      "weight": 0.05941697
+    },
+    {
+      "name": "attr:Murasame",
+      "weight": 0.05721599
+    },
+    {
+      "name": "attr:Murasame-Item",
+      "weight": 0.09850808
+    },
+    {
+      "name": "attr:Musk Rod",
+      "weight": 0.019917645
+    },
+    {
+      "name": "attr:Musk Stick",
+      "weight": 0.04865351
+    },
+    {
+      "name": "attr:Mute",
+      "weight": 0.0048695244
+    },
+    {
+      "name": "attr:Mutilate",
+      "weight": -0.011699632
+    },
+    {
+      "name": "attr:Mystic Vest",
+      "weight": -0.079880334
+    },
+    {
+      "name": "attr:Mythril Armor",
+      "weight": 0.026411077
+    },
+    {
+      "name": "attr:Mythril Bow",
+      "weight": 0.16314702
+    },
+    {
+      "name": "attr:Mythril Gun",
+      "weight": 0.41127488
+    },
+    {
+      "name": "attr:Mythril Helmet",
+      "weight": -0.0082498295
+    },
+    {
+      "name": "attr:Mythril Knife",
+      "weight": 0.021061057
+    },
+    {
+      "name": "attr:Mythril Shield",
+      "weight": 0.041902542
+    },
+    {
+      "name": "attr:Mythril Spear",
+      "weight": 0.2506212
+    },
+    {
+      "name": "attr:Mythril Sword",
+      "weight": 0.042066168
+    },
+    {
+      "name": "attr:Mythril Vest",
+      "weight": 0.008877126
+    },
+    {
+      "name": "attr:N-Kai Armlet",
+      "weight": -0.07892794
+    },
+    {
+      "name": "attr:Nagrarock",
+      "weight": 0.03177334
+    },
+    {
+      "name": "attr:Nagrarok",
+      "weight": -1.5796613
+    },
+    {
+      "name": "attr:Nameless Dance",
+      "weight": 0.06825957
+    },
+    {
+      "name": "attr:Nameless Song",
+      "weight": -0.06228788
+    },
+    {
+      "name": "attr:Nanoflare",
+      "weight": -0.038878005
+    },
+    {
+      "name": "attr:Negotiate",
+      "weight": -0.01781596
+    },
+    {
+      "name": "attr:Nether Demon",
+      "weight": 0.047697984
+    },
+    {
+      "name": "attr:Nether Skill",
+      "weight": -0.06332905
+    },
+    {
+      "name": "attr:Night Killer",
+      "weight": -0.0140239345
+    },
+    {
+      "name": "attr:Night Sword",
+      "weight": 0.08542726
+    },
+    {
+      "name": "attr:Nightmare Skill",
+      "weight": 0.23475173
+    },
+    {
+      "name": "attr:Ninja",
+      "weight": 0.0297391
+    },
+    {
+      "name": "attr:Ninja Blade",
+      "weight": 0.5328743
+    },
+    {
+      "name": "attr:Ninja Edge",
+      "weight": 0.07638457
+    },
+    {
+      "name": "attr:Ninja Sword",
+      "weight": 0.017563548
+    },
+    {
+      "name": "attr:Noxious Gas",
+      "weight": -0.00022603215
+    },
+    {
+      "name": "attr:Oak Staff",
+      "weight": -0.0027797779
+    },
+    {
+      "name": "attr:Obelisk",
+      "weight": 0.24722452
+    },
+    {
+      "name": "attr:Obsidian Blade",
+      "weight": 0.048650503
+    },
+    {
+      "name": "attr:Ochu",
+      "weight": -0.21098681
+    },
+    {
+      "name": "attr:Octagon Rod",
+      "weight": 0.1424
+    },
+    {
+      "name": "attr:Odd Soundwave",
+      "weight": -0.006113437
+    },
+    {
+      "name": "attr:Odin",
+      "weight": 0.044347204
+    },
+    {
+      "name": "attr:Oink",
+      "weight": -0.034529496
+    },
+    {
+      "name": "attr:Old",
+      "weight": -0.027190892
+    },
+    {
+      "name": "attr:Omnislash",
+      "weight": 0.027883148
+    },
+    {
+      "name": "attr:Oracle",
+      "weight": -0.052785378
+    },
+    {
+      "name": "attr:Orichalcum",
+      "weight": 0.112650014
+    },
+    {
+      "name": "attr:PA Save",
+      "weight": -0.05978797
+    },
+    {
+      "name": "attr:Panther Bag",
+      "weight": 0.07681262
+    },
+    {
+      "name": "attr:Papyrus Codex",
+      "weight": 0.043050252
+    },
+    {
+      "name": "attr:Paralyze",
+      "weight": 0.06568751
+    },
+    {
+      "name": "attr:Parasite",
+      "weight": -0.052563284
+    },
+    {
+      "name": "attr:Parry",
+      "weight": -0.0319402
+    },
+    {
+      "name": "attr:Partisan",
+      "weight": 0.1937407
+    },
+    {
+      "name": "attr:Peck",
+      "weight": -0.0026912014
+    },
+    {
+      "name": "attr:Perseus Bow",
+      "weight": 0.6060236
+    },
+    {
+      "name": "attr:Persia",
+      "weight": 0.062896624
+    },
+    {
+      "name": "attr:Persuade",
+      "weight": 0.014815605
+    },
+    {
+      "name": "attr:Pet Skill",
+      "weight": -0.0053792554
+    },
+    {
+      "name": "attr:Petrify",
+      "weight": 0.05833661
+    },
+    {
+      "name": "attr:Phantom Skill",
+      "weight": -0.2540691
+    },
+    {
+      "name": "attr:Pheonix Down",
+      "weight": -1.5939158
+    },
+    {
+      "name": "attr:Phoenix Down",
+      "weight": 0.13621636
+    },
+    {
+      "name": "attr:Pilgrimage",
+      "weight": -0.04233093
+    },
+    {
+      "name": "attr:Pirate Skill",
+      "weight": -0.12321779
+    },
+    {
+      "name": "attr:Pisces",
+      "weight": -1.4129082
+    },
+    {
+      "name": "attr:Pisco Demon",
+      "weight": -0.34813958
+    },
+    {
+      "name": "attr:Pitfall",
+      "weight": 0.0038380006
+    },
+    {
+      "name": "attr:Plague",
+      "weight": -0.051212765
+    },
+    {
+      "name": "attr:Plate Mail",
+      "weight": -0.024953626
+    },
+    {
+      "name": "attr:Platinum Armor",
+      "weight": -0.021064226
+    },
+    {
+      "name": "attr:Platinum Helmet",
+      "weight": -0.03991847
+    },
+    {
+      "name": "attr:Platinum Shield",
+      "weight": -0.027457198
+    },
+    {
+      "name": "attr:Platinum Sword",
+      "weight": 0.16013268
+    },
+    {
+      "name": "attr:Poison",
+      "weight": 0.012206807
+    },
+    {
+      "name": "attr:Poison Bow",
+      "weight": 0.08738271
+    },
+    {
+      "name": "attr:Poison Nail",
+      "weight": -0.0005121083
+    },
+    {
+      "name": "attr:Poison Rod",
+      "weight": 0.038826022
+    },
+    {
+      "name": "attr:Polka Polka",
+      "weight": -0.035352364
+    },
+    {
+      "name": "attr:Porky",
+      "weight": -0.25990957
+    },
+    {
+      "name": "attr:Potion",
+      "weight": -0.010394966
+    },
+    {
+      "name": "attr:Potion, X-Potion, Hi-Ether, Elixir, Holy Water, Phoenix Down",
+      "weight": -0.7576617
+    },
+    {
+      "name": "attr:Power Break",
+      "weight": 0.0012138884
+    },
+    {
+      "name": "attr:Power Sleeve",
+      "weight": 0.05546701
+    },
+    {
+      "name": "attr:Power Staff",
+      "weight": 0.022219298
+    },
+    {
+      "name": "attr:Power Wrist",
+      "weight": -0.061950844
+    },
+    {
+      "name": "attr:Praise",
+      "weight": -0.0240123
+    },
+    {
+      "name": "attr:Pray Faith",
+      "weight": -0.027378643
+    },
+    {
+      "name": "attr:Preach",
+      "weight": 0.00517747
+    },
+    {
+      "name": "attr:Priest",
+      "weight": -0.09451132
+    },
+    {
+      "name": "attr:Prime",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Prime Number",
+      "weight": 0.034589954
+    },
+    {
+      "name": "attr:Protect",
+      "weight": -0.018755753
+    },
+    {
+      "name": "attr:Protect 2",
+      "weight": 0.009073963
+    },
+    {
+      "name": "attr:Protect Spirit",
+      "weight": -0.02887009
+    },
+    {
+      "name": "attr:Pummel",
+      "weight": 0.024731465
+    },
+    {
+      "name": "attr:Punch Art",
+      "weight": -0.07928708
+    },
+    {
+      "name": "attr:Purification",
+      "weight": -0.0008126164
+    },
+    {
+      "name": "attr:Quake",
+      "weight": 0.023884006
+    },
+    {
+      "name": "attr:Quick",
+      "weight": -0.0023830796
+    },
+    {
+      "name": "attr:Quicksand",
+      "weight": -6.5700304e-05
+    },
+    {
+      "name": "attr:Ragnarok",
+      "weight": 0.34612748
+    },
+    {
+      "name": "attr:Raie 2",
+      "weight": -0.534033
+    },
+    {
+      "name": "attr:Rainbow Staff",
+      "weight": 0.042440675
+    },
+    {
+      "name": "attr:Raise",
+      "weight": 0.12011059
+    },
+    {
+      "name": "attr:Raise 2",
+      "weight": 0.0093591055
+    },
+    {
+      "name": "attr:Ramesh",
+      "weight": 0.9190844
+    },
+    {
+      "name": "attr:Ramia Harp",
+      "weight": 0.040884633
+    },
+    {
+      "name": "attr:Ramuh",
+      "weight": 0.029287461
+    },
+    {
+      "name": "attr:Ranch Skill",
+      "weight": -0.099575184
+    },
+    {
+      "name": "attr:Re-Raise",
+      "weight": -0.534033
+    },
+    {
+      "name": "attr:Reaper",
+      "weight": -0.012549238
+    },
+    {
+      "name": "attr:Red Chocobo",
+      "weight": 0.4890597
+    },
+    {
+      "name": "attr:Red Dragon",
+      "weight": 0.47791043
+    },
+    {
+      "name": "attr:Red Hood",
+      "weight": -0.11589222
+    },
+    {
+      "name": "attr:Red Panther",
+      "weight": -0.22461934
+    },
+    {
+      "name": "attr:Red Shoes",
+      "weight": -0.00029196776
+    },
+    {
+      "name": "attr:Reflect",
+      "weight": -0.0276994
+    },
+    {
+      "name": "attr:Reflect Mail",
+      "weight": 0.045668356
+    },
+    {
+      "name": "attr:Reflect Ring",
+      "weight": -0.017460873
+    },
+    {
+      "name": "attr:Refute",
+      "weight": 0.010778697
+    },
+    {
+      "name": "attr:Regen",
+      "weight": 0.009288627
+    },
+    {
+      "name": "attr:Regenerator",
+      "weight": -0.028852036
+    },
+    {
+      "name": "attr:Rehabilitate",
+      "weight": 0.003920742
+    },
+    {
+      "name": "attr:Remedy",
+      "weight": 0.015952246
+    },
+    {
+      "name": "attr:Repair",
+      "weight": 0.0117482785
+    },
+    {
+      "name": "attr:Reraise",
+      "weight": -0.0031183683
+    },
+    {
+      "name": "attr:Reraise Esuna",
+      "weight": 0.4560896
+    },
+    {
+      "name": "attr:Retreat",
+      "weight": -0.05424926
+    },
+    {
+      "name": "attr:Revenant",
+      "weight": -0.1607604
+    },
+    {
+      "name": "attr:Revive",
+      "weight": 0.039373673
+    },
+    {
+      "name": "attr:Rhea",
+      "weight": -0.23813267
+    },
+    {
+      "name": "attr:Ribbon",
+      "weight": -0.05922113
+    },
+    {
+      "name": "attr:Robe of Lords",
+      "weight": 0.24793912
+    },
+    {
+      "name": "attr:Robosnake Skill",
+      "weight": 0.08051603
+    },
+    {
+      "name": "attr:Robot Skill",
+      "weight": -0.24305235
+    },
+    {
+      "name": "attr:Roc Skill",
+      "weight": -0.26047707
+    },
+    {
+      "name": "attr:Rod",
+      "weight": 0.037716795
+    },
+    {
+      "name": "attr:Romanda Gun",
+      "weight": 0.09410598
+    },
+    {
+      "name": "attr:Round Shield",
+      "weight": -0.069569215
+    },
+    {
+      "name": "attr:Rubber Costume",
+      "weight": 0.10235312
+    },
+    {
+      "name": "attr:Rubber Shoes",
+      "weight": -0.020612856
+    },
+    {
+      "name": "attr:Rune Axe",
+      "weight": 0.030700814
+    },
+    {
+      "name": "attr:Rune Blade",
+      "weight": 0.22552387
+    },
+    {
+      "name": "attr:Ryozan Silk",
+      "weight": 0.21991187
+    },
+    {
+      "name": "attr:Sage Staff",
+      "weight": 0.22301286
+    },
+    {
+      "name": "attr:Salamander",
+      "weight": 0.022210615
+    },
+    {
+      "name": "attr:Salty Rage",
+      "weight": 0.16976486
+    },
+    {
+      "name": "attr:Samurai",
+      "weight": -0.11970899
+    },
+    {
+      "name": "attr:Sand Storm",
+      "weight": -0.00565676
+    },
+    {
+      "name": "attr:Sasuke Knife",
+      "weight": 0.119269766
+    },
+    {
+      "name": "attr:Save the Queen",
+      "weight": 0.32711557
+    },
+    {
+      "name": "attr:Scholar Outfit",
+      "weight": 0.0059709614
+    },
+    {
+      "name": "attr:Scorpio",
+      "weight": 2.15134
+    },
+    {
+      "name": "attr:Scorpion Tail",
+      "weight": 0.13956457
+    },
+    {
+      "name": "attr:Scratch",
+      "weight": -0.012682311
+    },
+    {
+      "name": "attr:Scratch Up",
+      "weight": -0.018807704
+    },
+    {
+      "name": "attr:Scream",
+      "weight": 0.02945334
+    },
+    {
+      "name": "attr:Seal Evil",
+      "weight": 0.029074525
+    },
+    {
+      "name": "attr:Secret Clothes",
+      "weight": 0.06634748
+    },
+    {
+      "name": "attr:Secret Fist",
+      "weight": 0.021145908
+    },
+    {
+      "name": "attr:Sekhret",
+      "weight": 0.24500899
+    },
+    {
+      "name": "attr:Self Destruct",
+      "weight": -0.046373453
+    },
+    {
+      "name": "attr:Serpentarius",
+      "weight": 0.52654546
+    },
+    {
+      "name": "attr:Setiemson",
+      "weight": 0.18705237
+    },
+    {
+      "name": "attr:Shake Off",
+      "weight": -0.08146989
+    },
+    {
+      "name": "attr:Shell",
+      "weight": 0.0035509637
+    },
+    {
+      "name": "attr:Shell 2",
+      "weight": -0.0028760512
+    },
+    {
+      "name": "attr:Shellburst Stab",
+      "weight": -0.10427016
+    },
+    {
+      "name": "attr:Shellbust Stab",
+      "weight": 0.0074360953
+    },
+    {
+      "name": "attr:Shield Break",
+      "weight": -0.0065963413
+    },
+    {
+      "name": "attr:Shine Lover",
+      "weight": -0.0026912014
+    },
+    {
+      "name": "attr:Shiva",
+      "weight": 0.06065184
+    },
+    {
+      "name": "attr:Short Blade",
+      "weight": 0.049786817
+    },
+    {
+      "name": "attr:Short Edge",
+      "weight": 0.038947195
+    },
+    {
+      "name": "attr:Shreddreas",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Shuriken",
+      "weight": 0.02279469
+    },
+    {
+      "name": "attr:Silence",
+      "weight": -0.0044940193
+    },
+    {
+      "name": "attr:Silence Song",
+      "weight": 0.0061629126
+    },
+    {
+      "name": "attr:Silf",
+      "weight": 0.034315214
+    },
+    {
+      "name": "attr:Silk Robe",
+      "weight": -0.040648054
+    },
+    {
+      "name": "attr:Silver Bow",
+      "weight": 0.0606429
+    },
+    {
+      "name": "attr:Silver Vest",
+      "weight": 0.26125598
+    },
+    {
+      "name": "attr:Sing",
+      "weight": -0.06523919
+    },
+    {
+      "name": "attr:Skeleton",
+      "weight": -0.12908125
+    },
+    {
+      "name": "attr:Sky Demon",
+      "weight": 0.0640265
+    },
+    {
+      "name": "attr:Slam",
+      "weight": 0.1215082
+    },
+    {
+      "name": "attr:Slasher",
+      "weight": 0.09662748
+    },
+    {
+      "name": "attr:Sleep",
+      "weight": 0.023448106
+    },
+    {
+      "name": "attr:Sleep Sword",
+      "weight": 0.043771587
+    },
+    {
+      "name": "attr:Sleep Touch",
+      "weight": -0.013856062
+    },
+    {
+      "name": "attr:Slow",
+      "weight": 0.010045388
+    },
+    {
+      "name": "attr:Slow 2",
+      "weight": 0.008877625
+    },
+    {
+      "name": "attr:Slow Dance",
+      "weight": 0.045137495
+    },
+    {
+      "name": "attr:Small Bomb",
+      "weight": -0.02008405
+    },
+    {
+      "name": "attr:Small Mantle",
+      "weight": 0.014347272
+    },
+    {
+      "name": "attr:Snake Carrier",
+      "weight": 0.09149301
+    },
+    {
+      "name": "attr:Snipe Bow",
+      "weight": 0.2724784
+    },
+    {
+      "name": "attr:Snort",
+      "weight": -0.010063491
+    },
+    {
+      "name": "attr:Soft",
+      "weight": 0.002249245
+    },
+    {
+      "name": "attr:Solution",
+      "weight": 0.020437537
+    },
+    {
+      "name": "attr:Song",
+      "weight": -0.11319897
+    },
+    {
+      "name": "attr:Sonic Step",
+      "weight": -0.045043144
+    },
+    {
+      "name": "attr:Space Storage",
+      "weight": 0.022184428
+    },
+    {
+      "name": "attr:Spark",
+      "weight": -0.046373453
+    },
+    {
+      "name": "attr:Spear",
+      "weight": 0.037265323
+    },
+    {
+      "name": "attr:Spear-Item",
+      "weight": 0.038211867
+    },
+    {
+      "name": "attr:Speed Break",
+      "weight": 0.0031084698
+    },
+    {
+      "name": "attr:Speed Save",
+      "weight": -0.025555935
+    },
+    {
+      "name": "attr:Spell Absorb",
+      "weight": -0.011266693
+    },
+    {
+      "name": "attr:Spell Edge",
+      "weight": 0.12609161
+    },
+    {
+      "name": "attr:Spike Shoes",
+      "weight": -0.030854186
+    },
+    {
+      "name": "attr:Spin",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Spin Fist",
+      "weight": 0.017752247
+    },
+    {
+      "name": "attr:Spirit Skill",
+      "weight": -0.041979156
+    },
+    {
+      "name": "attr:Spirit of Life",
+      "weight": -0.078047395
+    },
+    {
+      "name": "attr:Sprint Shoes",
+      "weight": 0.045948863
+    },
+    {
+      "name": "attr:Squid Skill",
+      "weight": -1.3580549
+    },
+    {
+      "name": "attr:Squidraken",
+      "weight": -0.2835857
+    },
+    {
+      "name": "attr:Squire",
+      "weight": -0.044613004
+    },
+    {
+      "name": "attr:Stab Up",
+      "weight": 0.0321813
+    },
+    {
+      "name": "attr:Stabilize Time",
+      "weight": 0.00030807324
+    },
+    {
+      "name": "attr:StabilizeTime",
+      "weight": 0.7302183
+    },
+    {
+      "name": "attr:Staff",
+      "weight": 0.0059572677
+    },
+    {
+      "name": "attr:Star Bag",
+      "weight": 0.032080535
+    },
+    {
+      "name": "attr:Stasis Sword",
+      "weight": 0.08456246
+    },
+    {
+      "name": "attr:Static Shock",
+      "weight": 0.029996121
+    },
+    {
+      "name": "attr:Steal",
+      "weight": -0.063947506
+    },
+    {
+      "name": "attr:Steal Accessory",
+      "weight": -0.0008884305
+    },
+    {
+      "name": "attr:Steal Armor",
+      "weight": -0.015406505
+    },
+    {
+      "name": "attr:Steal Gil",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Steal Heart",
+      "weight": 0.12893577
+    },
+    {
+      "name": "attr:Steal Helmet",
+      "weight": -0.013428633
+    },
+    {
+      "name": "attr:Steal Shield",
+      "weight": -0.019633817
+    },
+    {
+      "name": "attr:Steal Status",
+      "weight": 0.011047381
+    },
+    {
+      "name": "attr:Steal Weapon",
+      "weight": -0.00025770612
+    },
+    {
+      "name": "attr:Steel Giant",
+      "weight": 0.53938264
+    },
+    {
+      "name": "attr:Stick",
+      "weight": 0.02340382
+    },
+    {
+      "name": "attr:Stone Gun",
+      "weight": 0.44936284
+    },
+    {
+      "name": "attr:Stop",
+      "weight": -0.016634945
+    },
+    {
+      "name": "attr:Storm Around",
+      "weight": 0.046014246
+    },
+    {
+      "name": "attr:Straight Dash",
+      "weight": -0.010063491
+    },
+    {
+      "name": "attr:Suck Blood",
+      "weight": 0.0
+    },
+    {
+      "name": "attr:Sudden Cry",
+      "weight": -0.023242021
+    },
+    {
+      "name": "attr:Summon Magic",
+      "weight": -0.034257255
+    },
+    {
+      "name": "attr:Summoner",
+      "weight": 0.031058028
+    },
+    {
+      "name": "attr:Sunken State",
+      "weight": -0.062212393
+    },
+    {
+      "name": "attr:Surging Sword",
+      "weight": 0.058422808
+    },
+    {
+      "name": "attr:Swim",
+      "weight": -0.056374922
+    },
+    {
+      "name": "attr:Swine",
+      "weight": -0.36217344
+    },
+    {
+      "name": "attr:Sword",
+      "weight": 0.06757945
+    },
+    {
+      "name": "attr:Sylph",
+      "weight": 0.025046092
+    },
+    {
+      "name": "attr:Tackle",
+      "weight": -0.011699632
+    },
+    {
+      "name": "attr:Taiju",
+      "weight": 0.08312406
+    },
+    {
+      "name": "attr:Tail Swing",
+      "weight": -0.030429628
+    },
+    {
+      "name": "attr:Talk",
+      "weight": -1.1173154
+    },
+    {
+      "name": "attr:Talk Skill",
+      "weight": -0.015643828
+    },
+    {
+      "name": "attr:Teleport",
+      "weight": -0.026449068
+    },
+    {
+      "name": "attr:Teleport 2",
+      "weight": 0.24933891
+    },
+    {
+      "name": "attr:Tendrils",
+      "weight": -0.006288771
+    },
+    {
+      "name": "attr:Tentacle",
+      "weight": -0.006113437
+    },
+    {
+      "name": "attr:Tentacle Skill",
+      "weight": 0.010376596
+    },
+    {
+      "name": "attr:Thief",
+      "weight": -0.06534774
+    },
+    {
+      "name": "attr:Thief Cap",
+      "weight": 0.11124061
+    },
+    {
+      "name": "attr:Thief Hat",
+      "weight": 0.11694432
+    },
+    {
+      "name": "attr:Thief Knife",
+      "weight": -0.022295235
+    },
+    {
+      "name": "attr:Thow Stone",
+      "weight": -1.4862139
+    },
+    {
+      "name": "attr:Threaten",
+      "weight": 0.0052268584
+    },
+    {
+      "name": "attr:Throw",
+      "weight": -0.015447975
+    },
+    {
+      "name": "attr:Throw Item",
+      "weight": -1.4029891
+    },
+    {
+      "name": "attr:Throw Spirit",
+      "weight": -0.013856062
+    },
+    {
+      "name": "attr:Throw Stone",
+      "weight": -0.00133914
+    },
+    {
+      "name": "attr:Thunder Breath",
+      "weight": -0.021859283
+    },
+    {
+      "name": "attr:Thunder Rod",
+      "weight": 0.045535166
+    },
+    {
+      "name": "attr:Thunder Soul",
+      "weight": -0.025820006
+    },
+    {
+      "name": "attr:Tiamat",
+      "weight": 0.62286365
+    },
+    {
+      "name": "attr:Tickle",
+      "weight": 0.00022377953
+    },
+    {
+      "name": "attr:Time Mage",
+      "weight": -0.049196366
+    },
+    {
+      "name": "attr:Time Magic",
+      "weight": 0.0011011001
+    },
+    {
+      "name": "attr:Titan",
+      "weight": 0.049063228
+    },
+    {
+      "name": "attr:Toot",
+      "weight": -0.0077471794
+    },
+    {
+      "name": "attr:Tornado",
+      "weight": 0.033502985
+    },
+    {
+      "name": "attr:Toxic Frog",
+      "weight": 0.066624
+    },
+    {
+      "name": "attr:Treant",
+      "weight": -0.115235925
+    },
+    {
+      "name": "attr:Tree Skill",
+      "weight": -0.43372232
+    },
+    {
+      "name": "attr:Trent",
+      "weight": -0.17797244
+    },
+    {
+      "name": "attr:Triangle Hat",
+      "weight": -0.032369792
+    },
+    {
+      "name": "attr:Triple Attack",
+      "weight": -0.012856204
+    },
+    {
+      "name": "attr:Triple Breath",
+      "weight": -0.012856204
+    },
+    {
+      "name": "attr:Triple Flame",
+      "weight": 0.002233638
+    },
+    {
+      "name": "attr:Triple Thunder",
+      "weight": -0.008117518
+    },
+    {
+      "name": "attr:Troll Skill",
+      "weight": 0.10397533
+    },
+    {
+      "name": "attr:Turn Punch",
+      "weight": -0.011699632
+    },
+    {
+      "name": "attr:Twist Headband",
+      "weight": -0.006938677
+    },
+    {
+      "name": "attr:Ulmaguest",
+      "weight": 0.05646251
+    },
+    {
+      "name": "attr:Ultima",
+      "weight": 0.07895245
+    },
+    {
+      "name": "attr:Ultima Demon",
+      "weight": 0.59536535
+    },
+    {
+      "name": "attr:Ultimus Bow",
+      "weight": 0.33177727
+    },
+    {
+      "name": "attr:Undeath Skill",
+      "weight": -0.15187238
+    },
+    {
+      "name": "attr:Vampire",
+      "weight": 0.069108
+    },
+    {
+      "name": "attr:Vanish Mantle",
+      "weight": 0.048736036
+    },
+    {
+      "name": "attr:Venetian Shield",
+      "weight": 0.042403232
+    },
+    {
+      "name": "attr:Vengeance",
+      "weight": -0.044916797
+    },
+    {
+      "name": "attr:Venom Bow",
+      "weight": 0.14098202
+    },
+    {
+      "name": "attr:Vertical Jump 7",
+      "weight": 0.3023383
+    },
+    {
+      "name": "attr:Vertical Jump2",
+      "weight": -0.011236491
+    },
+    {
+      "name": "attr:Vertical Jump3",
+      "weight": -0.018586906
+    },
+    {
+      "name": "attr:Vertical Jump4",
+      "weight": -0.015338536
+    },
+    {
+      "name": "attr:Vertical Jump5",
+      "weight": 0.005569861
+    },
+    {
+      "name": "attr:Vertical Jump6",
+      "weight": 0.014038225
+    },
+    {
+      "name": "attr:Vertical Jump7",
+      "weight": 0.013802471
+    },
+    {
+      "name": "attr:Vertical Jump8",
+      "weight": 0.034840785
+    },
+    {
+      "name": "attr:Vine Skill",
+      "weight": 0.02812412
+    },
+    {
+      "name": "attr:Void Storage",
+      "weight": 0.040800996
+    },
+    {
+      "name": "attr:Wall",
+      "weight": -0.0025489293
+    },
+    {
+      "name": "attr:Wand",
+      "weight": 0.0028477458
+    },
+    {
+      "name": "attr:Water Ball",
+      "weight": 0.020590343
+    },
+    {
+      "name": "attr:Water Skill",
+      "weight": -0.38999972
+    },
+    {
+      "name": "attr:Water Walking",
+      "weight": -0.534033
+    },
+    {
+      "name": "attr:Waterball",
+      "weight": 0.4556331
+    },
+    {
+      "name": "attr:Waterbreathing",
+      "weight": -0.067902334
+    },
+    {
+      "name": "attr:Waterwalking",
+      "weight": -0.059566956
+    },
+    {
+      "name": "attr:Wave Around",
+      "weight": -0.18602198
+    },
+    {
+      "name": "attr:Wave Fist",
+      "weight": 0.06702751
+    },
+    {
+      "name": "attr:Weapon Break",
+      "weight": -0.01351422
+    },
+    {
+      "name": "attr:Whale Whisker",
+      "weight": 0.24533972
+    },
+    {
+      "name": "attr:White Magic",
+      "weight": -0.046778105
+    },
+    {
+      "name": "attr:White Robe",
+      "weight": 0.023508359
+    },
+    {
+      "name": "attr:White Staff",
+      "weight": -0.038331717
+    },
+    {
+      "name": "attr:Wild Boar",
+      "weight": -0.06741846
+    },
+    {
+      "name": "attr:Wildfire Skill",
+      "weight": -0.02467338
+    },
+    {
+      "name": "attr:Will-O-Wisp",
+      "weight": 0.036111448
+    },
+    {
+      "name": "attr:Wind Skill",
+      "weight": 0.122273974
+    },
+    {
+      "name": "attr:Wind Soul",
+      "weight": -0.028403778
+    },
+    {
+      "name": "attr:Windslash Bow",
+      "weight": 0.18497136
+    },
+    {
+      "name": "attr:Wing Attack",
+      "weight": -0.03500952
+    },
+    {
+      "name": "attr:Wish",
+      "weight": 0.0058152876
+    },
+    {
+      "name": "attr:Witch Hunt",
+      "weight": -0.011153871
+    },
+    {
+      "name": "attr:Wizard",
+      "weight": 0.018688584
+    },
+    {
+      "name": "attr:Wizard Mantle",
+      "weight": -0.0018611213
+    },
+    {
+      "name": "attr:Wizard Outfit",
+      "weight": -0.014556826
+    },
+    {
+      "name": "attr:Wizard Robe",
+      "weight": -0.025846863
+    },
+    {
+      "name": "attr:Wizard Rod",
+      "weight": 0.12685987
+    },
+    {
+      "name": "attr:Wizard Staff",
+      "weight": 0.032716136
+    },
+    {
+      "name": "attr:Wiznaibus",
+      "weight": 0.06419402
+    },
+    {
+      "name": "attr:Wyvern",
+      "weight": 0.21298091
+    },
+    {
+      "name": "attr:X-Potion",
+      "weight": 0.08062254
+    },
+    {
+      "name": "attr:Yell",
+      "weight": 0.025106277
+    },
+    {
+      "name": "attr:Yin Yang",
+      "weight": -1.1739811
+    },
+    {
+      "name": "attr:Yin Yang Magic",
+      "weight": -0.028720988
+    },
+    {
+      "name": "attr:Yoichi Bow",
+      "weight": 0.5879292
+    },
+    {
+      "name": "attr:Zodiac",
+      "weight": 0.047214814
+    },
+    {
+      "name": "attr:Zombie",
+      "weight": -0.016490022
+    },
+    {
+      "name": "attr:Zombie Touch",
+      "weight": -0.013856062
+    },
+    {
+      "name": "attr:Zorlin Shape",
+      "weight": 0.16788758
+    },
+    {
+      "name": "attr:being worn as a costume",
+      "weight": -0.9954801
+    },
+    {
+      "name": "attr:in a mutilated hallowed out human corpse",
+      "weight": -0.9954801
+    },
+    {
+      "name": "map:0",
+      "weight": 0.020468935
+    },
+    {
+      "name": "map:1",
+      "weight": -0.05801044
+    },
+    {
+      "name": "map:10",
+      "weight": -0.040733453
+    },
+    {
+      "name": "map:100",
+      "weight": 0.01840886
+    },
+    {
+      "name": "map:101",
+      "weight": -0.0015097358
+    },
+    {
+      "name": "map:102",
+      "weight": -0.029342102
+    },
+    {
+      "name": "map:103",
+      "weight": -0.04191179
+    },
+    {
+      "name": "map:104",
+      "weight": 0.022033539
+    },
+    {
+      "name": "map:105",
+      "weight": -0.014809591
+    },
+    {
+      "name": "map:106",
+      "weight": -0.013685646
+    },
+    {
+      "name": "map:107",
+      "weight": -0.06516333
+    },
+    {
+      "name": "map:108",
+      "weight": -0.004253591
+    },
+    {
+      "name": "map:109",
+      "weight": -0.02744251
+    },
+    {
+      "name": "map:11",
+      "weight": 0.005139062
+    },
+    {
+      "name": "map:110",
+      "weight": 0.02891524
+    },
+    {
+      "name": "map:111",
+      "weight": 0.09915059
+    },
+    {
+      "name": "map:112",
+      "weight": 0.023923585
+    },
+    {
+      "name": "map:113",
+      "weight": 0.028264357
+    },
+    {
+      "name": "map:114",
+      "weight": -0.06317133
+    },
+    {
+      "name": "map:115",
+      "weight": -0.07214946
+    },
+    {
+      "name": "map:116",
+      "weight": 0.005208192
+    },
+    {
+      "name": "map:117",
+      "weight": 0.006680263
+    },
+    {
+      "name": "map:118",
+      "weight": 0.0044689323
+    },
+    {
+      "name": "map:119",
+      "weight": -0.0030694446
+    },
+    {
+      "name": "map:12",
+      "weight": 0.021521002
+    },
+    {
+      "name": "map:120",
+      "weight": -0.003226808
+    },
+    {
+      "name": "map:121",
+      "weight": 0.014043244
+    },
+    {
+      "name": "map:122",
+      "weight": 0.061160147
+    },
+    {
+      "name": "map:123",
+      "weight": 0.0059483615
+    },
+    {
+      "name": "map:124",
+      "weight": 0.011348016
+    },
+    {
+      "name": "map:125",
+      "weight": -0.026541477
+    },
+    {
+      "name": "map:126",
+      "weight": -0.017033784
+    },
+    {
+      "name": "map:127",
+      "weight": -0.064086
+    },
+    {
+      "name": "map:13",
+      "weight": 0.044050142
+    },
+    {
+      "name": "map:14",
+      "weight": -0.03985856
+    },
+    {
+      "name": "map:15",
+      "weight": -0.060638268
+    },
+    {
+      "name": "map:16",
+      "weight": -0.012294904
+    },
+    {
+      "name": "map:17",
+      "weight": 0.028333064
+    },
+    {
+      "name": "map:18",
+      "weight": -0.03302534
+    },
+    {
+      "name": "map:19",
+      "weight": -0.025022922
+    },
+    {
+      "name": "map:2",
+      "weight": 0.009633117
+    },
+    {
+      "name": "map:20",
+      "weight": 0.00922472
+    },
+    {
+      "name": "map:21",
+      "weight": -0.033157464
+    },
+    {
+      "name": "map:22",
+      "weight": -0.022090187
+    },
+    {
+      "name": "map:23",
+      "weight": 0.013887228
+    },
+    {
+      "name": "map:24",
+      "weight": -0.032788254
+    },
+    {
+      "name": "map:25",
+      "weight": -0.039886963
+    },
+    {
+      "name": "map:26",
+      "weight": -0.032881018
+    },
+    {
+      "name": "map:27",
+      "weight": -0.017558292
+    },
+    {
+      "name": "map:28",
+      "weight": -0.023090506
+    },
+    {
+      "name": "map:29",
+      "weight": -0.0034079626
+    },
+    {
+      "name": "map:3",
+      "weight": 0.021268219
+    },
+    {
+      "name": "map:30",
+      "weight": 0.006060086
+    },
+    {
+      "name": "map:31",
+      "weight": 0.023881111
+    },
+    {
+      "name": "map:32",
+      "weight": 0.03062224
+    },
+    {
+      "name": "map:33",
+      "weight": -0.036259845
+    },
+    {
+      "name": "map:34",
+      "weight": -0.03379936
+    },
+    {
+      "name": "map:35",
+      "weight": -0.010481961
+    },
+    {
+      "name": "map:36",
+      "weight": -0.08079431
+    },
+    {
+      "name": "map:37",
+      "weight": -0.01211971
+    },
+    {
+      "name": "map:38",
+      "weight": -0.09286994
+    },
+    {
+      "name": "map:39",
+      "weight": 0.038239278
+    },
+    {
+      "name": "map:4",
+      "weight": 0.012595627
+    },
+    {
+      "name": "map:40",
+      "weight": -0.009172792
+    },
+    {
+      "name": "map:41",
+      "weight": -0.058853008
+    },
+    {
+      "name": "map:42",
+      "weight": 0.021287067
+    },
+    {
+      "name": "map:43",
+      "weight": -0.014496588
+    },
+    {
+      "name": "map:44",
+      "weight": 0.074658535
+    },
+    {
+      "name": "map:45",
+      "weight": -0.009362836
+    },
+    {
+      "name": "map:46",
+      "weight": -0.030559003
+    },
+    {
+      "name": "map:47",
+      "weight": -0.027140588
+    },
+    {
+      "name": "map:48",
+      "weight": -0.03494978
+    },
+    {
+      "name": "map:49",
+      "weight": 0.010891067
+    },
+    {
+      "name": "map:5",
+      "weight": -0.007888668
+    },
+    {
+      "name": "map:50",
+      "weight": 0.0077158893
+    },
+    {
+      "name": "map:51",
+      "weight": -0.017115438
+    },
+    {
+      "name": "map:52",
+      "weight": -0.022826549
+    },
+    {
+      "name": "map:53",
+      "weight": -0.012914836
+    },
+    {
+      "name": "map:54",
+      "weight": 0.011781469
+    },
+    {
+      "name": "map:55",
+      "weight": 0.011437556
+    },
+    {
+      "name": "map:56",
+      "weight": -0.022426154
+    },
+    {
+      "name": "map:57",
+      "weight": 0.039048653
+    },
+    {
+      "name": "map:58",
+      "weight": -0.028186446
+    },
+    {
+      "name": "map:59",
+      "weight": -0.03526685
+    },
+    {
+      "name": "map:6",
+      "weight": 0.022735488
+    },
+    {
+      "name": "map:60",
+      "weight": -0.056233384
+    },
+    {
+      "name": "map:61",
+      "weight": 0.08674435
+    },
+    {
+      "name": "map:62",
+      "weight": 0.036769055
+    },
+    {
+      "name": "map:63",
+      "weight": 0.031612996
+    },
+    {
+      "name": "map:64",
+      "weight": -0.023449609
+    },
+    {
+      "name": "map:65",
+      "weight": -0.029412966
+    },
+    {
+      "name": "map:66",
+      "weight": -0.038204785
+    },
+    {
+      "name": "map:67",
+      "weight": -0.05111085
+    },
+    {
+      "name": "map:68",
+      "weight": 0.017870087
+    },
+    {
+      "name": "map:69",
+      "weight": -0.015806701
+    },
+    {
+      "name": "map:7",
+      "weight": 0.0028884972
+    },
+    {
+      "name": "map:70",
+      "weight": 0.025570322
+    },
+    {
+      "name": "map:71",
+      "weight": -0.01171598
+    },
+    {
+      "name": "map:72",
+      "weight": -0.0043298947
+    },
+    {
+      "name": "map:73",
+      "weight": 0.022587314
+    },
+    {
+      "name": "map:74",
+      "weight": 0.009654085
+    },
+    {
+      "name": "map:75",
+      "weight": 0.093785696
+    },
+    {
+      "name": "map:76",
+      "weight": -0.0030729894
+    },
+    {
+      "name": "map:77",
+      "weight": -0.06988696
+    },
+    {
+      "name": "map:78",
+      "weight": 0.0056337733
+    },
+    {
+      "name": "map:79",
+      "weight": 0.0040386873
+    },
+    {
+      "name": "map:8",
+      "weight": 0.0013990382
+    },
+    {
+      "name": "map:80",
+      "weight": -0.031964064
+    },
+    {
+      "name": "map:81",
+      "weight": 0.04526198
+    },
+    {
+      "name": "map:82",
+      "weight": 0.07140761
+    },
+    {
+      "name": "map:83",
+      "weight": -0.030941704
+    },
+    {
+      "name": "map:84",
+      "weight": 0.028072122
+    },
+    {
+      "name": "map:85",
+      "weight": 0.011245838
+    },
+    {
+      "name": "map:86",
+      "weight": -0.040961236
+    },
+    {
+      "name": "map:87",
+      "weight": 0.047906227
+    },
+    {
+      "name": "map:88",
+      "weight": -0.04619035
+    },
+    {
+      "name": "map:89",
+      "weight": -0.04849275
+    },
+    {
+      "name": "map:9",
+      "weight": -0.03983484
+    },
+    {
+      "name": "map:90",
+      "weight": 0.047556445
+    },
+    {
+      "name": "map:91",
+      "weight": 0.028657343
+    },
+    {
+      "name": "map:92",
+      "weight": 0.033938408
+    },
+    {
+      "name": "map:93",
+      "weight": 0.040463928
+    },
+    {
+      "name": "map:94",
+      "weight": 0.008531947
+    },
+    {
+      "name": "map:95",
+      "weight": -0.028665606
+    },
+    {
+      "name": "map:96",
+      "weight": 0.0061111874
+    },
+    {
+      "name": "map:97",
+      "weight": -0.0055166134
+    },
+    {
+      "name": "map:98",
+      "weight": 0.016833065
+    },
+    {
+      "name": "map:99",
+      "weight": -0.0064717387
+    },
+    {
+      "name": "side:Black",
+      "weight": -0.018375812
+    },
+    {
+      "name": "side:Blue",
+      "weight": 0.009169583
+    },
+    {
+      "name": "side:Brown",
+      "weight": -0.15207554
+    },
+    {
+      "name": "side:Green",
+      "weight": 0.032575883
+    },
+    {
+      "name": "side:Purple",
+      "weight": 0.027763642
+    },
+    {
+      "name": "side:Red",
+      "weight": 0.015679562
+    },
+    {
+      "name": "side:White",
+      "weight": 0.036081042
+    },
+    {
+      "name": "side:Yellow",
+      "weight": -0.023883587
+    }
+  ]
+}

@@ -186,7 +186,7 @@ public class EventManager extends Thread {
 						this.betResultsRouter.sendDataToQueues((DatabaseResultsData) event);
 						break;
 					case MATCH_INFO:
-						if(this.botLand!= null) {
+						if(this.botLand != null) {
 							this.botLand.setMatchInfo((MatchInfoEvent) event);
 						}
 						break;
