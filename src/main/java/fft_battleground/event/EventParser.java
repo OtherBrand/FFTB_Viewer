@@ -65,6 +65,9 @@ public class EventParser extends Thread {
 	
 	@Autowired
 	private BlockingQueue<ChatMessage> eventParserMessageQueue;
+
+	@Autowired
+	private fft_battleground.wordcloud.WordIngestionService wordIngestionService;
 	
 	@Autowired
 	private Router<BattleGroundEvent> eventRouter;
@@ -157,6 +160,10 @@ public class EventParser extends Thread {
 					} catch(MissingEventTypeException e) {
 						log.error("Missing event type for event of type: {}", event.getClass().toString(), e);
 					}
+				}
+				//word cloud ingestion (R3a): the drop path — messages no detector claimed are user chatter
+				if(events.isEmpty() && this.wordIngestionService != null) {
+					this.wordIngestionService.ingest(message.getUsername(), message.getMessage(), message.getEmoteCodes());
 				}
 			} catch (InterruptedException e) {
 				log.warn("Interruption exception in EventParser", e);
