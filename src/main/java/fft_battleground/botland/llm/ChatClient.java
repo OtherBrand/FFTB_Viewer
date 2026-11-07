@@ -4,7 +4,7 @@ package fft_battleground.botland.llm;
  * R7 Phase 0 (RELEASE-PLAN): hand-rolled LLM client — deliberately NOT a
  * framework; Java 11 + RestTemplate is the whole stack until R6 (Java 17)
  * reopens library options. Implementations must be cheap to no-op: the
- * kill switch (fft_battleground.llm.enabled, default false) keeps shadow
+ * kill switch (fft_battleground.botland.llm.enabled, default false) keeps shadow
  * mode dark until the owner wires a real endpoint.
  */
 import lombok.Data;

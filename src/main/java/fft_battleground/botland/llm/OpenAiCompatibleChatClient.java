@@ -23,13 +23,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * OpenAI-compatible chat-completions adapter (R7 Phase 0): works against any
  * endpoint speaking the /chat/completions dialect (OpenAI, OpenRouter, vLLM,
  * ollama's compat layer). Properties:
- *   fft_battleground.llm.enabled        — kill switch, default FALSE (shadow stays dark)
- *   fft_battleground.llm.baseUrl        — e.g. https://api.openai.com/v1
- *   fft_battleground.llm.model
- *   fft_battleground.llm.apiKey         — server-side secret, never in git
- *   fft_battleground.llm.maxDailyCost   — dollars/day guard, calls skipped past it
- *   fft_battleground.llm.costPerMillionPrompt / Completion — price table for the guard
- *   fft_battleground.llm.temperature    — default 0 (deterministic-ish predictions)
+ *   fft_battleground.botland.llm.enabled        — kill switch, default FALSE (shadow stays dark)
+ *   fft_battleground.botland.llm.baseUrl        — e.g. https://api.openai.com/v1
+ *   fft_battleground.botland.llm.model
+ *   fft_battleground.botland.llm.apiKey         — server-side secret, never in git
+ *   fft_battleground.botland.llm.maxDailyCost   — dollars/day guard, calls skipped past it
+ *   fft_battleground.botland.llm.costPerMillionPrompt / Completion — price table for the guard
+ *   fft_battleground.botland.llm.temperature    — default 0 (deterministic-ish predictions)
  * Cost accounting resets by date; every call logs model/tokens/latency/cost/daily-total.
  */
 @Component
@@ -37,28 +37,28 @@ public class OpenAiCompatibleChatClient implements ChatClient {
 
 	private static final Logger log = LoggerFactory.getLogger(OpenAiCompatibleChatClient.class);
 
-	@Value("${fft_battleground.llm.enabled:false}")
+	@Value("${fft_battleground.botland.llm.enabled:false}")
 	private boolean enabled;
 
-	@Value("${fft_battleground.llm.baseUrl:}")
+	@Value("${fft_battleground.botland.llm.baseUrl:}")
 	private String baseUrl;
 
-	@Value("${fft_battleground.llm.model:}")
+	@Value("${fft_battleground.botland.llm.model:}")
 	private String model;
 
-	@Value("${fft_battleground.llm.apiKey:}")
+	@Value("${fft_battleground.botland.llm.apiKey:}")
 	private String apiKey;
 
-	@Value("${fft_battleground.llm.maxDailyCost:5.0}")
+	@Value("${fft_battleground.botland.llm.maxDailyCost:5.0}")
 	private double maxDailyCost;
 
-	@Value("${fft_battleground.llm.costPerMillionPrompt:0.0}")
+	@Value("${fft_battleground.botland.llm.costPerMillionPrompt:0.0}")
 	private double costPerMillionPrompt;
 
-	@Value("${fft_battleground.llm.costPerMillionCompletion:0.0}")
+	@Value("${fft_battleground.botland.llm.costPerMillionCompletion:0.0}")
 	private double costPerMillionCompletion;
 
-	@Value("${fft_battleground.llm.temperature:0.0}")
+	@Value("${fft_battleground.botland.llm.temperature:0.0}")
 	private double temperature;
 
 	private final RestTemplate restTemplate;
