@@ -1,4 +1,4 @@
-package fft_battleground.llm;
+package fft_battleground.botland.llm;
 
 import java.time.LocalDate;
 import java.util.HashMap;

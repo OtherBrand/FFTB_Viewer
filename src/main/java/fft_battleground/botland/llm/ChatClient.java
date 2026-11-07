@@ -1,4 +1,4 @@
-package fft_battleground.llm;
+package fft_battleground.botland.llm;
 
 /**
  * R7 Phase 0 (RELEASE-PLAN): hand-rolled LLM client — deliberately NOT a

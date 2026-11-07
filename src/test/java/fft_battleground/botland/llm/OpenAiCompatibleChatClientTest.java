@@ -1,4 +1,4 @@
-package fft_battleground.llm;
+package fft_battleground.botland.llm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

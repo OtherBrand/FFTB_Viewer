@@ -65,6 +65,10 @@ public class BotLand extends TimerTask {
 	protected WebhookManager errorWebhookManager;
 
 	protected fft_battleground.metrics.StatusService statusService;
+
+	protected fft_battleground.botland.llm.LlmShadowBot llmShadowBot;
+
+	protected fft_battleground.botland.llm.MatchStateSerializer matchStateSerializer;
 	protected WebhookManager noisyWebhookManager;
 	private Map<String, Integer> balanceCacheRef;
 	
@@ -174,6 +178,29 @@ public class BotLand extends TimerTask {
 		if(this.statusService != null) {
 			this.statusService.markBotlandCycle();
 		}
+
+		//R7 shadow mode: LLM prediction from the fully-assembled match state —
+		//kill-switched dark; NEVER on the betting path's error surface
+		if(this.llmShadowBot != null) {
+			try {
+				Pair<Integer, Integer> potTotals = Pair.of(
+						helper.getLeftSideTotal() != null ? helper.getLeftSideTotal() : 0,
+						helper.getRightSideTotal() != null ? helper.getRightSideTotal() : 0);
+				Pair<List<BetEvent>, List<BetEvent>> bySide = betsBySide != null ? betsBySide : Pair.of(List.of(), List.of());
+				Pair<Integer, Integer> bettorCounts = Pair.of(bySide.getLeft().size(), bySide.getRight().size());
+				String matchStateJson = this.llmShadowBotSerializer().serialize(
+						helper.getMatchInfo(), helper.getLeft(), helper.getRight(),
+						helper.getUnitsBySide(), potTotals, bettorCounts, helper.getCurrentTournament());
+				this.llmShadowBot.evaluateShadowPrediction(matchStateJson, helper.getCurrentTournamentId(),
+						helper.getLeft(), helper.getRight());
+			} catch(Throwable t) {
+				log.warn("llm shadow evaluation skipped: {}", t.getMessage());
+			}
+		}
+	}
+
+	private fft_battleground.botland.llm.MatchStateSerializer llmShadowBotSerializer() {
+		return this.matchStateSerializer;
 	}
 	
 	public BetResultCollector createCollector() {

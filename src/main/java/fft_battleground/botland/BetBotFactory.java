@@ -90,6 +90,12 @@ public class BetBotFactory {
 	@Autowired
 	private fft_battleground.metrics.StatusService statusService;
 
+	@Autowired
+	private fft_battleground.botland.llm.LlmShadowBot llmShadowBot;
+
+	@Autowired
+	private fft_battleground.botland.llm.MatchStateSerializer matchStateSerializer;
+
 	//counted per createBotLand cycle (EventManager calls it single-threaded on BETTING_BEGINS)
 	private int currentCycleInitFailures = 0;
 	
@@ -153,6 +159,8 @@ public class BetBotFactory {
 		land.setBotsRepo(this.botsRepo);
 		land.setBotBetDataRepo(this.botBetDataRepo);
 		land.setStatusService(this.statusService);
+		land.setLlmShadowBot(this.llmShadowBot);
+		land.setMatchStateSerializer(this.matchStateSerializer);
 		land.setBattleGroundEventBackPropagationRef(this.battleGroundEventBackPropagation);
 		land.setIrcName(this.ircName);
 		land.setEnableBetting(this.enableBetting);
