@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,7 +27,8 @@ import fft_battleground.repo.util.BalanceUpdateSource;
 import lombok.Data;
 
 @Entity
-@Table(name = "balance_history")
+@Table(name = "balance_history", indexes = {
+		@Index(columnList = "player,create_timestamp", name = "balance_history_player_ts_idx")})
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data

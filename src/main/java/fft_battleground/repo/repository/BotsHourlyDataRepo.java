@@ -1,5 +1,6 @@
 package fft_battleground.repo.repository;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +24,12 @@ public interface BotsHourlyDataRepo extends JpaRepository<BotHourlyData, String>
 	@Query("SELECT botHourlyData FROM BotHourlyData botHourlyData WHERE botHourlyData.player = :player")
 	public List<BotHourlyData> getBotHourlyDataForBot(@Param("player") String player);
 	
-	@Query("SELECT botHourlyData FROM BotHourlyData botHourlyData WHERE botHourlyData.player = :player AND botHourlyData.hourValue = :hour_value")
+	@Query("SELECT botHourlyData FROM BotHourlyData botHourlyData WHERE lower(botHourlyData.player) = lower(:player) AND botHourlyData.hourValue = :hour_value")
 	public BotHourlyData getBotHourlyDataForBotAndCurrentTime(@Param("player") String player, @Param("hour_value") Integer hourValue);
+
+	//players with any hourly update since the cutoff (lowercased) — feeds the roster persistence self-check
+	@Query("SELECT DISTINCT lower(botHourlyData.player) FROM BotHourlyData botHourlyData WHERE botHourlyData.updateDateTime >= :cutoff")
+	public List<String> getRecentlyUpdatedPlayers(@Param("cutoff") Date cutoff);
 	
 	@Query("SELECT botHourlyData FROM BotHourlyData botHourlyData WHERE botHourlyData.player IN (:playerList)")
 	public List<BotHourlyData> getBotHourlyDataForBotList(@Param("playerList") List<String> bots);

@@ -19,6 +19,9 @@ public interface BotBetDataRepo extends JpaRepository<BotBetData, Long> {
 	@Query("SELECT botBetData FROM BotBetData botBetData ORDER BY botBetData.createDateTime ASC")
 	public List<BotBetData> getFirstBotBetDataEntry(Pageable page);
 	
+	@Query("SELECT botBetData FROM BotBetData botBetData WHERE botBetData.createDateTime >= :from AND botBetData.createDateTime < :to ORDER BY botBetData.createDateTime ASC")
+	public List<BotBetData> getBotBetDataBetween(@Param("from") java.util.Date from, @Param("to") java.util.Date to);
+
 	@Query("SELECT botBetData FROM BotBetData botBetData WHERE botBetData.tournamentId IN :tournamentIds")
 	public List<BotBetData> getBotBetDataForTournaments(@Param("tournamentIds") List<Long> tournamentIds);
 	

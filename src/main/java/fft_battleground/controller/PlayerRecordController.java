@@ -48,11 +48,19 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class PlayerRecordController {
 
+	protected static final int ELO_HISTORY_WINDOW = 200;
+
 	@Autowired
 	private PlayerRecordRepo playerRecordRepo;
 	
 	@Autowired
 	private BalanceHistoryRepo balanceHistoryRepo;
+
+	@Autowired
+	private fft_battleground.repo.repository.EloHistoryRepo eloHistoryRepo;
+
+	@Autowired
+	private fft_battleground.repo.repository.FighterEloHistoryRepo fighterEloHistoryRepo;
 	
 	@Autowired
 	private TournamentService tournamentService;
@@ -83,9 +91,42 @@ public class PlayerRecordController {
 			return GenericResponse.<PlayerRecord>createGenericResponseEntity(null, "Player could not be found", HttpStatus.NOT_FOUND);
 		}
 	}
+	//ELO history for the player-page card (R4 contract): ascending rating-after points, trailing window
 	@ApiIgnore
-	@GetMapping("/balanceHistory")
-	public @ResponseBody ResponseEntity<GenericResponse<LeaderboardBalanceData>>
+	@GetMapping("/eloHistory")
+	public @ResponseBody ResponseEntity<GenericResponse<List<fft_battleground.controller.response.model.EloHistoryPoint>>>
+	getEloHistory(@RequestParam(name="player", required=true) String player) {
+		String id = StringUtils.lowerCase(StringUtils.trim(player));
+		List<fft_battleground.repo.model.EloHistory> history = this.eloHistoryRepo.findByPlayerOrderByCreateDateTimeAsc(id);
+		//cap to the trailing points so the chart payload stays bounded
+		List<fft_battleground.repo.model.EloHistory> window = history.size() > ELO_HISTORY_WINDOW
+				? history.subList(history.size() - ELO_HISTORY_WINDOW, history.size()) : history;
+		List<fft_battleground.controller.response.model.EloHistoryPoint> points = window.stream()
+				.map(entry -> new fft_battleground.controller.response.model.EloHistoryPoint(
+						entry.getCreateDateTime().getTime(), entry.getRatingAfter()))
+				.collect(Collectors.toList());
+		return GenericResponse.createGenericResponseEntity(points);
+	}
+
+	//fighter ELO history (R4 follow-up): same contract as the bettor chart
+	@ApiIgnore
+	@GetMapping("/fighterEloHistory")
+	public @ResponseBody ResponseEntity<GenericResponse<List<fft_battleground.controller.response.model.EloHistoryPoint>>>
+	getFighterEloHistory(@RequestParam(name="player", required=true) String player) {
+		String id = StringUtils.lowerCase(StringUtils.trim(player));
+		List<fft_battleground.repo.model.FighterEloHistory> history =
+				this.fighterEloHistoryRepo.findByPlayerOrderByCreateDateTimeAsc(id);
+		List<fft_battleground.repo.model.FighterEloHistory> window = history.size() > ELO_HISTORY_WINDOW
+				? history.subList(history.size() - ELO_HISTORY_WINDOW, history.size()) : history;
+		List<fft_battleground.controller.response.model.EloHistoryPoint> points = window.stream()
+				.map(entry -> new fft_battleground.controller.response.model.EloHistoryPoint(
+						entry.getCreateDateTime().getTime(), entry.getRatingAfter()))
+				.collect(Collectors.toList());
+		return GenericResponse.createGenericResponseEntity(points);
+	}
+
+	@ApiIgnore
+	@GetMapping("/balanceHistory")	public @ResponseBody ResponseEntity<GenericResponse<LeaderboardBalanceData>>
 	getBalanceHistory(@RequestParam(name="player", required=true) String player, @RequestParam(name="count", required=true) Integer count) {
 		LinkedList<BalanceHistory> balanceHistories = new LinkedList<>(this.balanceHistoryRepo.getTournamentBalanceHistoryFromPastWeek(player));
 		

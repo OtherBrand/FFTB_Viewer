@@ -20,7 +20,9 @@ import lombok.SneakyThrows;
 @Repository
 public interface BotsRepo extends JpaRepository<Bots, Long> {
 
-	@Query("SELECT Bot FROM Bots Bot WHERE Bot.dateString = :dateString AND Bot.player = :name")
+	//case-insensitive: bot rows are created with the roster's configured case, but some callers
+	//(reportBotWin/Loss) look up with lowercased names — exact '=' silently skipped those bots
+	@Query("SELECT Bot FROM Bots Bot WHERE Bot.dateString = :dateString AND lower(Bot.player) = lower(:name)")
 	public Bots getBotByDateStringAndName(@Param("dateString") String dateString, @Param("name") String name);
 	
 	@Query("SELECT Bot FROM Bots Bot WHERE Bot.dateString = :dateString")
