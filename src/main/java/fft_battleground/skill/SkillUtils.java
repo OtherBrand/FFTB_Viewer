@@ -165,6 +165,30 @@ public class SkillUtils {
 	public List<String> getEliteMonsters() {
 		return ELITE_MONSTERS;
 	}
+
+	/**
+	 * The acquirable skill vocabulary (the prestige checklist universe): every
+	 * category a player can own, excluding prestige-category skills themselves
+	 * (owner exclusion — they're the reward, not the requirement) and legendary
+	 * skills (not normally acquirable). Monster skills come from the live tips
+	 * monster set (cached 24h) plus RandomMonster.
+	 */
+	public Set<String> acquirableVocabulary(Set<String> monsterSet) {
+		Set<String> universe = new java.util.HashSet<>();
+		universe.addAll(JOB_SKILLS);
+		universe.addAll(REACTION_SKILLS);
+		universe.addAll(MOVEMENT_SKILLS);
+		universe.addAll(EQUIPMENT_SKILLS);
+		universe.addAll(SUPPORT_SKILLS);
+		universe.addAll(ENTRY_SKILLS);
+		universe.addAll(ADDITIONAL_MONSTER_SKILLS);
+		if(monsterSet != null) {
+			universe.addAll(monsterSet);
+		}
+		universe.removeAll(PRESTIGE_SKILLS);
+		universe.removeAll(LEGENDARY_SKILLS);
+		return universe;
+	}
 	
 	public List<String> getStrongMonsters() {
 		return STRONG_MONSTERS;
