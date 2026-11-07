@@ -35,8 +35,12 @@ public class StatusService {
 	protected static final long IRC_MESSAGE_STALE_MILLIS = 15 * 60 * 1000L;
 	protected static final long BOTLAND_CYCLE_STALE_MILLIS = 15 * 60 * 1000L;
 
-	@Autowired(required = false)
-	private Twirk twirk;
+	//ObjectProvider (not @Lazy): breaks the Twirk <-> StatusService creation cycle
+	//(the IRC adapter marks messages into this service at construction; this service
+	//only reads Twirk at request time) without proxying — @Lazy needs a CGLIB proxy
+	//and Twirk is a FINAL class, which CGLIB cannot subclass
+	@Autowired
+	private org.springframework.beans.factory.ObjectProvider<Twirk> twirkProvider;
 
 	@Value("${useIrc:true}")
 	private String useIrc;
@@ -131,11 +135,13 @@ public class StatusService {
 
 	//seams: Twirk is final and unmockable — tests override these instead
 	protected boolean isTwirkConnected() {
-		return this.twirk != null && this.twirk.isConnected();
+		Twirk twirk = this.twirkProvider.getIfAvailable();
+		return twirk != null && twirk.isConnected();
 	}
 
 	protected String twirkNick() {
-		return this.twirk != null ? this.twirk.getNick() : "unknown";
+		Twirk twirk = this.twirkProvider.getIfAvailable();
+		return twirk != null ? twirk.getNick() : "unknown";
 	}
 
 	protected boolean isIrcMessageFresh() {

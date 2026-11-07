@@ -49,7 +49,7 @@ public class GeneTrainerV2BotData implements Serializable {
 	
 	private void initPercentileMap() {
 		if(percentiles != null) {
-			this.percentileMap = this.percentiles.stream().collect(Collectors.toMap(Percentile::getKey, Percentile::getRoundedPercentileValue));
+			this.percentileMap = this.percentiles.stream().collect(Collectors.toMap(percentile -> percentile.getKey(), percentile -> percentile.getRoundedPercentileValue()));
 		} else {
 			log.warn("no percentiles data present, not generating map");
 		}

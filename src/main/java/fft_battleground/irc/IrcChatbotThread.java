@@ -37,8 +37,11 @@ public class IrcChatbotThread extends Thread {
     @Autowired
     private DisconnectListener disconnectListener;
     
+    //ObjectProvider: CoreApplication <-> IrcChatbotThread mutual injection predates
+    //Boot 2.6's circular-reference prohibition; the reference is only used at runtime
+    //(shutdown on fatal IRC failure), never during construction
     @Autowired
-    private CoreApplication coreApplication;
+    private org.springframework.beans.factory.ObjectProvider<CoreApplication> coreApplicationProvider;
     
     //should remain locked if IRC connection fails
     @Getter 
@@ -62,7 +65,7 @@ public class IrcChatbotThread extends Thread {
         } catch(IrcConnectionException e) {
         	log.error(e.getMessage(), e);
         	this.errorWebhookManager.sendShutdownNotice(e, e.getMessage());
-        	this.coreApplication.shutdownServer(e);
+        	this.coreApplicationProvider.getIfAvailable().shutdownServer(e);
         }
     }
 

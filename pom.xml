@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.3</version>
+		<version>2.7.18</version>
 	</parent>
 	<properties>
 		<start-class>fft_battleground.App</start-class>
@@ -46,16 +46,6 @@
 	    <dependency>
 		  <groupId>org.springframework.boot</groupId>
 		  <artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-boot-starter</artifactId>
-		    <version>3.0.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -110,11 +100,6 @@
 			<groupId>com.github.gikkman</groupId>
 			<artifactId>Java-Twirk</artifactId>
 			<version>0.7.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
 		<dependency>
@@ -347,8 +332,7 @@
 			<plugin>    
 			    <artifactId>maven-compiler-plugin</artifactId>
 			    <configuration>
-			        <source>11</source>
-			        <target>11</target>
+			        <release>17</release>
 			    </configuration>
 			</plugin>
 		</plugins>
