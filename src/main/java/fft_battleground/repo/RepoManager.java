@@ -60,6 +60,21 @@ public class RepoManager extends Thread {
 
 	@Autowired
 	private RepoTransactionManager repoTransactionManager;
+
+	@Autowired
+	private fft_battleground.elo.EloService eloService;
+
+	@Autowired
+	private fft_battleground.elo.FighterEloService fighterEloService;
+
+	@Autowired
+	private fft_battleground.metrics.PipelineErrorReporter pipelineErrorReporter;
+
+	@Autowired
+	private fft_battleground.metrics.StatusService statusService;
+
+	@Autowired
+	private fft_battleground.tournament.TournamentService tournamentService;
 	
 	@Autowired
 	private BlockingQueue<DatabaseResultsData> betResultsQueue;
@@ -175,12 +190,49 @@ public class RepoManager extends Thread {
 		try {
 			//update player data
 			this.updatePlayerData(newResults);
-			
+
 			//update bot data
 			this.updateBotData(newResults);
 		} catch( NullPointerException e) {
 			log.error("There was an error updating player data due to a NullPointException, skipping match data update", e);
 		}
+
+		//bet ELO: stake-agnostic per-match updates; isolated so ELO can never break the results path
+		try {
+			this.updateBettorElo(newResults);
+			if(this.statusService != null) {
+				this.statusService.markEloGraded();
+			}
+		} catch(Exception e) {
+			log.error("error updating bettor ELO, skipping", e);
+			if(this.pipelineErrorReporter != null) {
+				this.pipelineErrorReporter.reportPipelineFailure("bettor-elo-grading", "match update failed", e);
+			}
+		}
+
+		//fighter ELO: same trigger, rosters from team metadata; same isolation
+		try {
+			this.fighterEloService.updateForMatch(newResults, this.currentTournamentId());
+		} catch(Exception e) {
+			log.error("error updating fighter ELO, skipping", e);
+			if(this.pipelineErrorReporter != null) {
+				this.pipelineErrorReporter.reportPipelineFailure("fighter-elo-grading", "match update failed", e);
+			}
+		}
+	}
+
+	protected Long currentTournamentId() {
+		try {
+			return this.tournamentService.getCurrentTournament() != null ? this.tournamentService.getCurrentTournament().getID() : null;
+		} catch(Exception e) {
+			return null;
+		}
+	}
+
+	protected void updateBettorElo(BetResults newResults) {
+		//advisor v2: p_advisor loads the oracle's logged verdict for this tournament
+		//(pot-implied fallback when none exists); tournament id from the live aggregate
+		this.eloService.updateForMatch(newResults, this.currentTournamentId());
 	}
 	
 	protected void handlePortraitEvent(PortraitEvent event) throws IncorrectTypeException, BattleGroundDataIntegrityViolationException {

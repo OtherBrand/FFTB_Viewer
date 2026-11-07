@@ -108,7 +108,9 @@ implements Callable<Bet> {
 	protected void ensureBetIsWithinParameters(Bet bet) {
 		if(bet == null) {
 			//bet = new Bet(this.left, GambleUtil.MINIMUM_BET);
-			log.warn("The bot {} provided a null bet", this.getName());
+			if(!this.isEvaluationOnly()) {
+				log.warn("The bot {} provided a null bet", this.getName());
+			}
 		} else if (bet.getType() == BetType.VALUE) {
 			if(bet.getAmount() == null) {
 				bet.setAmount(GambleUtil.getMinimumBetForBettor(this.isBotSubscriber));
@@ -116,16 +118,24 @@ implements Callable<Bet> {
 				log.warn("The bot {} provided a bet over the maximum value", this.getName());
 				bet.setAmount(GambleUtil.MAX_BET);
 			} else if (bet.getAmount() < GambleUtil.getMinimumBetForBettor(this.isBotSubscriber)) {
-				log.warn("The bot {} provided a bet under the minimum value", this.getName());
+				//evaluation-only stakes are advisory (their result has no consumer), so the warn is noise
+				if(!this.isEvaluationOnly()) {
+					log.warn("The bot {} provided a bet under the minimum value", this.getName());
+				}
 				if(this instanceof BotCanBetBelowMinimum) {
 					BotCanBetBelowMinimum bot = (BotCanBetBelowMinimum) this;
 					bet.setAmount(bot.handleMinimumBet(this.isBotSubscriber));
 				} else {
 					bet.setAmount(GambleUtil.getMinimumBetForBettor(this.isBotSubscriber));
 				}
-				
+
 			}
 		}
+	}
+
+	/** Evaluation-only bots (explain mode) never bet for real: parameter warnings on their stakes are journal noise. */
+	protected boolean isEvaluationOnly() {
+		return false;
 	}
 	
 	/**

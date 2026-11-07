@@ -70,6 +70,15 @@ public class PlayerPageDataServiceImpl implements PlayerPageDataService {
 	
 	@Autowired
 	private BotCache botCache;
+
+	@Autowired
+	private fft_battleground.repo.repository.BettorEloRepo bettorEloRepo;
+
+	@Autowired
+	private fft_battleground.repo.repository.FighterEloRepo fighterEloRepo;
+
+	@Autowired
+	private fft_battleground.skill.PrestigeProgressService prestigeProgressService;
 	
 	@Autowired
 	private PlayerLeaderboardCache playerLeaderboardCache;
@@ -123,7 +132,26 @@ public class PlayerPageDataServiceImpl implements PlayerPageDataService {
 			Integer fightPercentile = this.getFightPercentile(fightRatio);
 			playerData.setBetPercentile(betPercentile);
 			playerData.setFightPercentile(fightPercentile);
-			
+
+			//bet ELO card: unrated players show the 1500 start, provisional
+			fft_battleground.repo.model.BettorElo bettorElo = this.bettorEloRepo.findById(record.getPlayer()).orElse(null);
+			playerData.setElo(bettorElo != null
+					? new fft_battleground.controller.response.model.BettorEloSummary(bettorElo.getElo(), bettorElo.getPickWins(),
+							bettorElo.getPickLosses(), bettorElo.isBot(), bettorElo.isProvisional(), bettorElo.getMatches())
+					: fft_battleground.controller.response.model.BettorEloSummary.unrated());
+
+			//prestige checklist: missing skills before prestige (universe mirrors SkillUtils)
+			playerData.setPrestigeProgress(this.prestigeProgressService.progressFor(record.getPlayer(),
+					record.getPlayerSkills() != null
+							? record.getPlayerSkills().stream().map(ps -> ps != null ? ps.getSkill() : null).collect(java.util.stream.Collectors.toList())
+							: java.util.List.of()));
+
+			//fighter ELO card: same shape, combat rating
+			fft_battleground.repo.model.FighterElo fighterEloRow = this.fighterEloRepo.findById(record.getPlayer()).orElse(null);
+			playerData.setFighterElo(fighterEloRow != null
+					? new fft_battleground.controller.response.model.FighterEloSummary(fighterEloRow.getElo(), fighterEloRow.getFightWins(),
+							fighterEloRow.getFightLosses(), fighterEloRow.isBot(), fighterEloRow.isProvisional(), fighterEloRow.getMatches())
+					: fft_battleground.controller.response.model.FighterEloSummary.unrated());
 			
 			boolean containsPrestige = false;
 			int prestigeLevel = 0;

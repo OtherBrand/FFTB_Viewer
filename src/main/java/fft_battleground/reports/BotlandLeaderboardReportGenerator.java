@@ -44,6 +44,9 @@ public class BotlandLeaderboardReportGenerator extends AbstractReportGenerator<B
 	@Autowired
 	private BotsRepo botsRepo;
 
+	@Autowired
+	private fft_battleground.botland.BetBotFactory betBotFactory;
+
 	// shared across refreshes: creating a pool per generateReport() call leaked 8 threads per refresh
 	private final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(8);
 
@@ -115,7 +118,12 @@ public class BotlandLeaderboardReportGenerator extends AbstractReportGenerator<B
 					.collect(Collectors.groupingBy(Pair<String, Integer>::getLeft, HashMap<String, Double>::new, 
 							Collectors.averagingInt(Pair<String, Integer>::getRight)));
 			
-			leaderboard = new BotlandLeaderboard(botList.get(), dateStringWinnersMap, botHighestOfAllTimeMap, botWinCountMap, oldestBotEntryMap, winCountsPerBot,
+			//ghost bots (visible="false", e.g. the advisor) stay off the public leaderboard
+			List<Bots> todaysBots = new java.util.ArrayList<>(botList.get());
+			java.util.Set<String> hiddenBots = this.betBotFactory.getHiddenBotNames();
+			todaysBots.removeIf(bot -> hiddenBots.contains(StringUtils.lowerCase(bot.getPlayer())));
+
+			leaderboard = new BotlandLeaderboard(todaysBots, dateStringWinnersMap, botHighestOfAllTimeMap, botWinCountMap, oldestBotEntryMap, winCountsPerBot,
 					lossCountsPerBot, averageBalancePerBot, averagePeakBalancePerBotMap, averageWinsPerDay, averageLossesPerDay, averageWinRatePerDay, daysParticipatingPerBotMap);
 		} catch (InterruptedException|ExecutionException e) {
 			String errorMessage = "Error building Botland Leaderboard cache";

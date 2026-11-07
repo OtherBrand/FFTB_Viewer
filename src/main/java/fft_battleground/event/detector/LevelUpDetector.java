@@ -11,8 +11,10 @@ public class LevelUpDetector implements EventDetector<LevelUpEvent> {
 
 	private static final String findString = "you advanced to Level ";
 	private static final String endCharacter = "!";
-	private static final String findString_2 = " Your Gil Floor has increased to 368! You learned the skill:";
-	
+	//real stream wording is "Your gil floor has increased to <N>!" with any floor value;
+	//the old hardcoded "Gil Floor ... 368" probe never matched (wrong case, fixed value)
+	private static final String skillFindString = "you learned the skill: ";
+
 	@Override
 	public LevelUpEvent detect(ChatMessage message) {
 		LevelUpEvent event = null;
@@ -22,17 +24,21 @@ public class LevelUpDetector implements EventDetector<LevelUpEvent> {
 			String levelString = StringUtils.replace(StringUtils.substringBetween(message.getMessage(), findString, endCharacter), ",", "");
 			Short level = Short.valueOf(levelString);
 			PlayerSkillEvent skillEvent = null;
-			if(StringUtils.contains(message.getMessage(), findString_2)) {
-				String skill = StringUtils.trim(StringUtils.substringBetween(message.getMessage(), findString_2, endCharacter));
-				skillEvent = new PlayerSkillEvent(username, skill);
+			int skillIndex = StringUtils.indexOfIgnoreCase(message.getMessage(), skillFindString);
+			if(skillIndex >= 0) {
+				String tail = message.getMessage().substring(skillIndex + skillFindString.length());
+				String skill = StringUtils.trim(StringUtils.substringBefore(tail, endCharacter));
+				if(StringUtils.isNotEmpty(skill)) {
+					skillEvent = new PlayerSkillEvent(username, skill);
+				}
 			}
-			
+
 			event = new LevelUpEvent(username, level);
 			if(skillEvent != null) {
 				event.setSkill(skillEvent);
 			}
 		}
-		
+
 		return event;
 	}
 

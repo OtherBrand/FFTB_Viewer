@@ -71,6 +71,12 @@ public class BalanceHistoryServiceImpl implements BalanceHistoryService {
 
 		// dynamically pick best hours to find entries for one week
 		int hoursToTrack = 168;
+		//168 hourly buckets is this method's ceiling (hour-granularity matching over a 1-week window);
+		//a larger count made hoursPerSlice divide to zero, collapsing every slice to "now" and
+		//returning the same single entry repeated for every requested point
+		if(count > hoursToTrack) {
+			count = hoursToTrack;
+		}
 		int hoursPerSlice = hoursToTrack / count;
 		List<Date> dateSlices = new ArrayList<>();
 		for (int i = 0; i < count; i++) {

@@ -70,12 +70,12 @@ public class Config {
 	@Bean
 	@SneakyThrows
     public Twirk ircChatBot(@Value("${irc.username}") String username, @Value("${irc.password}") String password, @Value("${irc.channel}") String channel, 
-    		Router<ChatMessage> chatMessageRouter) {
+    		Router<ChatMessage> chatMessageRouter, fft_battleground.metrics.StatusService statusService) {
 		
 		final Twirk twirk = new TwirkBuilder("#" +channel, username, password)
 								.build();				//Create the Twirk object
 		
-		twirk.addIrcListener(new TwirkChatListenerAdapter(chatMessageRouter, channel));
+		twirk.addIrcListener(new TwirkChatListenerAdapter(chatMessageRouter, channel, statusService));
 		
 		return twirk;
 	}

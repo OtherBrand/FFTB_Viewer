@@ -22,14 +22,12 @@ public class GambleUtil {
 	public static final Integer MAX_BET = 1000;
 	
 	public static Float bettingOdds(Integer thisTeamAmount, Integer otherTeamAmount) {
-		Float odds = 1f;
-		try {
-			odds = (float) otherTeamAmount / thisTeamAmount;  
-		} catch(ArithmeticException e) {
-			odds = 1f;
+		//a zero/null own pot cannot set a price — guard to 1.0. (The old try/catch was dead code:
+		//the float cast makes this float division, which returns Infinity instead of throwing.)
+		if(thisTeamAmount == null || thisTeamAmount <= 0) {
+			return 1f;
 		}
-		
-		return odds;
+		return (float) otherTeamAmount / thisTeamAmount;
 	}
 	
 	public static Float bettingPercentage(Integer thisTeamAmount, Integer otherTeamAmount) {

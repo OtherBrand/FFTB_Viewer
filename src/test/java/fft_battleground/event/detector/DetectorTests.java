@@ -1,15 +1,15 @@
-package fft_battleground.repo;
+package fft_battleground.event.detector;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import fft_battleground.botland.bot.model.BetType;
 import fft_battleground.event.detector.AllegianceDetector;
@@ -69,8 +69,15 @@ import fft_battleground.util.GambleUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Stream-wording detector pins (ported from the JUnit-4-era file that never
+ * ran under the JUnit 5 engine): every test feeds real stream-bot chat lines
+ * through a detector and asserts the parsed event. All parsing in this app
+ * is exact-substring against stream wording — these tests are the tripwire
+ * for wording drift.
+ */
 @Slf4j
-public class DetectorTests { 
+public class DetectorTests {
 
 	@Test
 	public void testLevelUpDetector() {
@@ -85,7 +92,7 @@ public class DetectorTests {
 		message = this.createBotChatMessage("Bilabrin, your balance is: 292G (Spendable: 0G).");
 		event = detector.detect(message);
 		assertNull(event);
-		
+
 		message = this.createBotChatMessage("Smugzug, you advanced to Level 67! Your gil floor has increased to 368! You learned the skill: ArchaicDemon!");
 		event = detector.detect(message);
 		assertNotNull(event.getSkill());
@@ -147,28 +154,28 @@ public class DetectorTests {
 		event = (BetEvent) detector.detect(message4);
 		assertTrue(event != null);
 		assertTrue(event.getBetType() == BetType.ALLIN);
-		
+
 		event = (BetEvent) detector.detect(message5);
 		assertTrue(event != null);
 		assertTrue(event.getBetType() == BetType.FLOOR);
-		
+
 		event = (BetEvent) detector.detect(message6);
 		assertTrue(event != null);
 		assertTrue(event.getBetType() == BetType.FLOOR);
-		
+
 		event = (BetEvent) detector.detect(message7);
 		assertTrue(event != null);
 		assertTrue(event.isAllinbutFlag());
 		assertTrue(event.getBetType() == BetType.PERCENTAGE);
-		
+
 		event = (BetEvent) detector.detect(message8);
 		assertTrue(event == null);
-		
+
 		event = (BetEvent) detector.detect(smokebowlingtonbotMessage);
 		assertNotNull(event);
 		assertEquals("smokebowlingtonbot", event.getPlayer());
 		assertEquals(BattleGroundTeam.PURPLE, event.getTeam());
-		
+
 		event = (BetEvent) detector.detect(allbutFloor);
 		assertTrue(event != null);
 		assertEquals("ab0.57f", event.getBetAmount());
@@ -178,7 +185,7 @@ public class DetectorTests {
 		int expectedAmount = balance - BigDecimal.valueOf(GambleUtil.getMinimumBetForLevel(testRecord.getLastKnownLevel(), (int) testRecord.getLastKnownPrestige(), testRecord.getIsSubscriber()))
 				.multiply(BigDecimal.valueOf(0.57f)).setScale(0, RoundingMode.HALF_UP).intValue();
 		assertEquals(expectedAmount, amount);
-		
+
 		event = (BetEvent) detector.detect(doublePercentage);
 		assertTrue(event != null);
 		assertEquals("5.07%", event.getBetAmount());
@@ -214,7 +221,7 @@ public class DetectorTests {
 		BattleGroundEvent event = detector.detect(message);
 		assertTrue(event != null && event instanceof BuySkillEvent);
 	}
-	
+
 	@Test
 	public void testBuySkillRandomDetector() {
 		String test1 = "OtherBrand, you rolled the dice and bought the Perfume skill for 5,000G. Your new balance is 12,560G.";
@@ -255,9 +262,9 @@ public class DetectorTests {
 		BattleGroundEvent event = detector.detect(message);
 		SkillDropEvent skillDropEvent = (SkillDropEvent) event;
 		assertTrue(event != null && skillDropEvent.getSkill() != null && skillDropEvent.getSkillDescription() != null);
-		
+
 		String test2 = "The current Skill Drop is: FloatingEye (Allows you to use the monster: FloatingEye. Use !class to get info on the monster's stats. This is a normal monster (costs 200G). Rarity: Common.).";
-		ChatMessage message2 = new ChatMessage("fftbattleground", test2); 
+		ChatMessage message2 = new ChatMessage("fftbattleground", test2);
 		event = detector.detect(message2);
 		skillDropEvent = (SkillDropEvent) event;
 		assertTrue(event != null && skillDropEvent.getSkill() != null);
@@ -273,7 +280,7 @@ public class DetectorTests {
 		PortraitEvent portraitEvent = (PortraitEvent) event;
 		assertTrue(portraitEvent.getPlayer() != null && portraitEvent.getPortrait() != null
 				&& portraitEvent.getPlayer().equals("otherbrand") && portraitEvent.getPortrait().equals("Chocobo"));
-		
+
 		message = this.createBotChatMessage("OtherBrand, your Cheer Portrait is set to Black Chocobo.");
 		event = detector.detect(message);
 		assertTrue(event != null);
@@ -281,25 +288,25 @@ public class DetectorTests {
 		assertTrue(StringUtils.equals("otherbrand", portraitEvent.getPlayer()));
 		assertTrue(StringUtils.equals("Black Chocobo", portraitEvent.getPortrait()));
 	}
-	
+
 	@Test
 	public void testAllegianceDetector() {
 		String test1 = "nhammen, you are currently allied with the Brown Team. In the current tournament, you will earn 5 EXP each time Purple Team wins.";
 		ChatMessage message = new ChatMessage("fftbattleground", test1);
 		AllegianceDetector detector = new AllegianceDetector();
-		
+
 		AllegianceEvent event = detector.detect(message);
 		assertNotNull(event);
 		assertEquals(event.getPlayer(), "nhammen");
 		assertEquals(event.getTeam(), BattleGroundTeam.BROWN);
-		
+
 		String test2 = "king_smashington, you are currently allied with the Black Team. In the current tournament, you will earn 12 EXP each time White Team wins.";
 		message = new ChatMessage("fftbattleground", test2);
 		event = detector.detect(message);
 		assertNotNull(event);
 		assertEquals(event.getPlayer(), "king_smashington");
 		assertEquals(event.getTeam(), BattleGroundTeam.BLACK);
-		
+
 	}
 
 	@Test
@@ -345,7 +352,7 @@ public class DetectorTests {
 		assertTrue(betInfoEvent.getPercentage() != null && betInfoEvent.getPercentage().equals("5.0"));
 		assertTrue(betInfoEvent.getPossibleEarnings() != null && betInfoEvent.getPossibleEarnings().equals(617));
 	}
-	
+
 	@Test
 	public void testBettingBeginsEventDetector() {
 		String test1 = "Betting is open for Blue vs White. Use the !bet command to place a wager!";
@@ -355,7 +362,7 @@ public class DetectorTests {
 		assertNotNull(event.getTeam1());
 		assertNotNull(event.getTeam2());
 	}
-	
+
 	@Test
 	public void testBettingEndsEventDetector() {
 		String test1 = "Betting is closed. The final bets were: Green - 7 bets for 7,003G (54.1%, x0.85), Yellow - 8 bets for 5,939G (45.9%, x1.18)";
@@ -400,7 +407,7 @@ public class DetectorTests {
 		assertTrue(prestigeAscensionEvent.getPrestigeSkillsEvent().getSkills().size() == 1);
 		assertTrue(prestigeAscensionEvent.getPrestigeSkillsEvent().getSkills().get(0).equals("Teleport2"));
 	}
-	
+
 	@Test
 	public void testMusicDetector() {
 		String test1 = "Finewax, your skills: Minotaur, Dryad, Fly, TalkSkill, Jump+3, AbsorbUsedMP, DarkBehemoth, Throw.; OtherBrand, the current track is: Mega Man 7 - Wily Stage 4. It will play for another 35 seconds.; AllInBot, your bet is 277G on white. You hold a 4.6% share of your team's winnings, and stand to win 195G if you win.";
@@ -411,14 +418,14 @@ public class DetectorTests {
 		MusicEvent musicEvent = (MusicEvent) event;
 		assertTrue(musicEvent.getDurationInSeconds() == 35);
 		assertTrue(StringUtils.equals(musicEvent.getSongName(), "Mega Man 7 - Wily Stage 4"));
-		
+
 		message = this.createBotChatMessage("The track is now: Clubhouse Games 51 Worldwide Classics - Four-in-a-Row, Sliding Puzzle. It will play for 170 seconds.");
 		musicEvent = detector.detect(message);
 		assertTrue(musicEvent != null);
 		assertTrue(StringUtils.equalsIgnoreCase("Clubhouse Games 51 Worldwide Classics - Four-in-a-Row, Sliding Puzzle", musicEvent.getSongName()));
 		assertTrue(musicEvent.getDurationInSeconds() == 170);
 	}
-	
+
 	@Test
 	public void testRiserSkillWinEvent() {
 		String test1 = "TheKillerNacho, you learned the skill: BladeGrasp!";
@@ -432,36 +439,36 @@ public class DetectorTests {
 		assertTrue(riserSkillEvent.getSkillEvents().get(0).getSkills().size() > 0);
 		assertTrue(StringUtils.equals("BladeGrasp", riserSkillEvent.getSkillEvents().get(0).getSkills().get(0)));
 	}
-	
+
 	@Test
 	public void testFightEntryDetector() {
 		ChatMessage message = new ChatMessage("OtherBrand", "!fight");
 		FightEntryDetector detector = new FightEntryDetector();
 		FightEntryEvent event = detector.detect(message);
 		assertTrue(StringUtils.equals(event.getPlayer(), "otherbrand"));
-		
+
 		message = new ChatMessage("OtherBrand", "!fight UltimaDemon");
 		event = detector.detect(message);
 		assertTrue(StringUtils.equals(event.getClassName(), "UltimaDemon"));
-		
+
 		message = new ChatMessage("OtherBrand", "!fight Squire BasicSkill");
 		event = detector.detect(message);
 		assertTrue(StringUtils.equals(event.getClassName(), "Squire"));
 		assertTrue(StringUtils.equals(event.getSkill(), "BasicSkill"));
-		
+
 		message = new ChatMessage("OtherBrand", "!fight Squire BasicSkill - PunchArt");
 		event = detector.detect(message);
 		assertTrue(StringUtils.equals(event.getClassName(), "Squire"));
 		assertTrue(StringUtils.equals(event.getSkill(), "BasicSkill"));
 		assertTrue(StringUtils.equals(event.getExclusionSkill(), "PunchArt"));
-		
+
 		message = new ChatMessage("OtherBrand", "!fight Monk Female BraveSave -Parry");
 		event = detector.detect(message);
 		assertTrue(StringUtils.equals(event.getClassName(), "Monk"));
 		assertTrue(StringUtils.equals(event.getSkill(), "BraveSave"));
 		assertTrue(StringUtils.equals(event.getExclusionSkill(), "Parry"));
 	}
-	
+
 	@Test
 	public void testOtherPlayerInvalidFightCombinationDetector() {
 		ChatMessage message = this.createBotChatMessage("tripaplex, your bettable balance is: 4,738G (Spendable: 4,390G).; OtherBrand, invalid combination! Can only have one skill and one excluded skill, and exclusions must be prefixed with -.");
@@ -470,7 +477,7 @@ public class DetectorTests {
 		assertTrue(event.getEvents().size() == 1);
 		assertTrue(StringUtils.equals(event.getEvents().get(0).getPlayer(), "otherbrand"));
 	}
-	
+
 	@Test
 	public void testOtherPlayerInvalidFightEntryClassDetector() {
 		ChatMessage message = this.createBotChatMessage("OtherBrand, Chem is not a valid Human or Monster class. Use !classes for a list.");
@@ -480,7 +487,7 @@ public class DetectorTests {
 		assertTrue(StringUtils.equals(event.getEvents().get(0).getPlayer(), "otherbrand"));
 		assertTrue(StringUtils.equals(event.getEvents().get(0).getClassName(), "Chem"));
 	}
-	
+
 	@Test
 	public void testOtherPlayerUnownedSkillDetector() {
 		ChatMessage message = this.createBotChatMessage("OtherBrand, you don't own the skill Pnchart! Type !skills to see your list of skills.; SkylerBunny, you already own the Teleport skill!; reinoe, you'll earn a +7 EXP bonus for entering as a random unit, or one of these classes: Knight, Wizard, Mime. Also, you'll earn a +2 EXP bonus for using this skill: MPRestore.");
@@ -490,7 +497,7 @@ public class DetectorTests {
 		assertTrue(StringUtils.equals(event.getUnownedSkillEvents().get(0).getPlayer(), "otherbrand"));
 		assertTrue(StringUtils.equals(event.getUnownedSkillEvents().get(0).getSkill(), "Pnchart"));
 	}
-	
+
 	@Test
 	public void testBonusDetector() {
 		ChatMessage message = this.createBotChatMessage("OtherBrand, you'll earn a +7 EXP bonus for entering as a random unit, or one of these classes: Knight, Thief, Calculator. Also, you'll earn a +2 EXP bonus for using this skill: EquipSword.");
@@ -505,7 +512,7 @@ public class DetectorTests {
 		ChatMessage chatMessage = new ChatMessage("fftbattleground", message);
 		return chatMessage;
 	}
-	
+
 	protected PlayerRecord createRelevantPlayerRecord(String player, int level, int prestige, int amount, boolean subscriber) {
 		PlayerRecord playerRecord = new PlayerRecord();
 		playerRecord.setPlayer(player);
@@ -513,7 +520,7 @@ public class DetectorTests {
 		playerRecord.setLastKnownPrestige((short) prestige);
 		playerRecord.setLastKnownAmount(amount);
 		playerRecord.setIsSubscriber(subscriber);
-		
+
 		return playerRecord;
 	}
 }

@@ -86,6 +86,12 @@ public class BetBotFactory {
 	
 	@Autowired
 	private PersonalityModuleFactory personalityModuleFactory;
+
+	@Autowired
+	private fft_battleground.metrics.StatusService statusService;
+
+	//counted per createBotLand cycle (EventManager calls it single-threaded on BETTING_BEGINS)
+	private int currentCycleInitFailures = 0;
 	
 	@Autowired
 	private TournamentService tournamentService;
@@ -139,11 +145,14 @@ public class BetBotFactory {
 	}
 	
 	public BotLand createBotLand(Integer currentAmountToBetWith, List<BetEvent> otherPlayerBets, Set<UnitInfoEvent> currentUnits, BettingBeginsEvent beginEvent) {
+		this.currentCycleInitFailures = 0;
+		this.statusService.markBettingBegins();
 		BotLand land = new BotLand(currentAmountToBetWith, beginEvent, otherPlayerBets, currentUnits, this.tournamentService.getCurrentTournament());
 		
 		land.setChatMessageRouterRef(this.getMessageSenderRouter());
 		land.setBotsRepo(this.botsRepo);
 		land.setBotBetDataRepo(this.botBetDataRepo);
+		land.setStatusService(this.statusService);
 		land.setBattleGroundEventBackPropagationRef(this.battleGroundEventBackPropagation);
 		land.setIrcName(this.ircName);
 		land.setEnableBetting(this.enableBetting);
@@ -173,23 +182,29 @@ public class BetBotFactory {
 		List<BotData> botData = this.getBotConfig();
 		String botDateString = this.botsRepo.currentDateString();
 		List<BetterBetBot> secondaryBots = this.createSecondaryBots(otherPlayerBets, beginEvent, botData, botDateString);
-		
+
 		Optional<BotData> maybePrimaryBotData = botData.stream().filter(botDataEntry -> StringUtils.equalsIgnoreCase(botDataEntry.getName(), this.primaryBotName)).findFirst();
 		BetterBetBot primaryBot = null;
 		if(!maybePrimaryBotData.isPresent() ) {
 			log.error("No primary bot configuration found!");
+			this.currentCycleInitFailures++;
+			this.errorWebhookManager.sendException(new BotConfigException("No primary bot configuration found for " + this.primaryBotName), "roster init failure");
 		} else {
 			try {
 				primaryBot = this.createBot(otherPlayerBets, beginEvent, maybePrimaryBotData.get(), botDateString);
 			} catch (BotConfigException e) {
 				log.error("primary bot was unabled to be created, please fix!", e);
+				this.currentCycleInitFailures++;
+				this.errorWebhookManager.sendException(e, "failed to initialize primary bot " + this.primaryBotName);
 			}
-			log.info("primary bot is {}", primaryBot.getName());
+			log.info("primary bot is {}", primaryBot != null ? primaryBot.getName() : "MISSING");
 		}
-		
+
 		botland.setPrimaryBot(primaryBot);
 		botland.setSubordinateBots(secondaryBots);
-		
+
+		this.statusService.recordRosterInitCycle(this.currentCycleInitFailures);
+
 		return;
 	}
 	
@@ -198,6 +213,22 @@ public class BetBotFactory {
 		return botDataMap;
 	}
 	
+	/** Roster entries with visible="false" (lowercased) — ghost bots hidden from /botland and the leaderboard. */
+	public Set<String> getHiddenBotNames() {
+		return this.getBotConfig().stream()
+				.filter(botData -> !botData.isVisible())
+				.map(botData -> StringUtils.lowerCase(botData.getName()))
+				.collect(Collectors.toSet());
+	}
+
+	/** Visible roster names (lowercased) — the set the persistence self-check expects to be tracking. */
+	public Set<String> getVisibleBotNames() {
+		return this.getBotConfig().stream()
+				.filter(botData -> botData.isVisible())
+				.map(botData -> StringUtils.lowerCase(botData.getName()))
+				.collect(Collectors.toSet());
+	}
+
 	private List<BotData> getBotConfig() {
 		SecondaryBotConfig botConfig = new SecondaryBotConfig(this.botFile);
 		List<BotData> botData = botConfig.parseXmlFile();
@@ -213,8 +244,14 @@ public class BetBotFactory {
 			try {
 				newBot = this.createBot(otherPlayerBets, beginEvent, data, botDateString);
 				secondaryBots.add(newBot);
-			} catch (BotConfigException e) {} //only add bot if the exception is not thrown
-			
+			} catch (BotConfigException e) {
+				//previously an empty catch: a broken roster entry silently vanished from the sim every cycle.
+				//persist via the error webhook (error_message row + Discord) so the hourly sweep catches it
+				log.error("failed to initialize bot {}", data.getName(), e);
+				this.currentCycleInitFailures++;
+				this.errorWebhookManager.sendException(e, "failed to initialize bot " + data.getName());
+			}
+
 		}
 		return secondaryBots;
 	}

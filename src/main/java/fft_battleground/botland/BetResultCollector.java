@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
+import fft_battleground.botland.bot.GeneticBotV2;
 import fft_battleground.botland.bot.model.BetResults;
 import fft_battleground.botland.bot.util.BetterBetBot;
 import fft_battleground.event.detector.model.BetEvent;
@@ -28,7 +29,9 @@ public class BetResultCollector {
 		
 		List<BetterBetBot> subordinateBotsWithResults = new ArrayList<>();
 		for(BetterBetBot bot : this.subordinateBots) {
-			if(bot.getResult() != null) {
+			//evaluation-only (explain) bots never sim-bet: their result exists for the advisor capture only
+			boolean evaluationOnly = bot instanceof GeneticBotV2 && ((GeneticBotV2) bot).isExplain();
+			if(bot.getResult() != null && !evaluationOnly) {
 				subordinateBotsWithResults.add(bot);
 			}
 		}

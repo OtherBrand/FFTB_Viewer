@@ -1,6 +1,7 @@
 package fft_battleground.botland.bot;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import fft_battleground.botland.bot.util.BotCanInverse;
 import fft_battleground.botland.bot.util.BotContainsPersonality;
 import fft_battleground.botland.bot.util.BotParameterReader;
 import fft_battleground.botland.bot.util.BotUsesGeneFile;
+import fft_battleground.botland.bot.model.ScoreBreakdown;
 import fft_battleground.botland.model.BotParam;
 import fft_battleground.discord.WebhookManager;
 import fft_battleground.event.detector.model.BetEvent;
@@ -48,12 +50,23 @@ public class GeneticBotV2
 extends BetterBetBot
 implements BotCanBetBelowMinimum, BotContainsPersonality, BotCanInverse, BotUsesGeneFile {
 	private static final String USE_BET_GENES_PARAM = "use_bet_genes";
+	private static final String EXPLAIN_PARAM = "explain";
+	private static final String COMPOSITION_ONLY_PARAM = "compositionOnly";
 	
 	private String name;
 	protected BotGenome genes;
 	private String filename;
 	@Getter private boolean canBetBelowMinimum;
 	@Getter private boolean useBetGenes;
+	@Getter protected boolean explain;
+	/** explain-mode only: score fighters + teamAttributes, skip bet/pot sections (the advisor redesign) */
+	@Getter protected boolean compositionOnly;
+
+	//explain-mode capture (Team Advisor): per-side section values + gene terms, recorded
+	//alongside the normal evaluation. Left side evaluates first, so its generator resets the capture
+	protected final List<ScoreBreakdown.GeneTerm> explainGeneTerms = new ArrayList<>();
+	protected Double lastLeftFighters, lastLeftTeamAttributes, lastLeftTeamBets, lastLeftPot;
+	protected Double lastRightFighters, lastRightTeamAttributes, lastRightTeamBets, lastRightPot;
 	
 	protected GeneFileCache<GeneTrainerV2BotData> geneFileCache;
 	protected Collection<String> bots;
@@ -78,6 +91,13 @@ implements BotCanBetBelowMinimum, BotContainsPersonality, BotCanInverse, BotUses
 		this.inverse = this.readInverseParameter(reader);
 		this.canBetBelowMinimum = this.readCanBetBelowMinimumParameter(reader);
 		this.useBetGenes = reader.readOptionalBooleanParam(USE_BET_GENES_PARAM);
+		this.explain = reader.readOptionalBooleanParam(EXPLAIN_PARAM);
+		boolean compositionOnly = reader.readOptionalBooleanParam(COMPOSITION_ONLY_PARAM);
+		if(compositionOnly && !this.explain) {
+			log.warn("compositionOnly is only meaningful with explain=true; ignoring for bot {}", this.name);
+			compositionOnly = false;
+		}
+		this.compositionOnly = compositionOnly;
 		
 		GeneTrainerV2BotData botData = this.geneFileCache.getGeneData(this.filename);
 		this.genes = botData.getGenome();
@@ -102,21 +122,84 @@ implements BotCanBetBelowMinimum, BotContainsPersonality, BotCanInverse, BotUses
 	@Override
 	protected Float generateLeftScore() throws BotConfigException {
 		Double score = 0d;
-		score+= this.scoreFighters(this.teamData.getLeftTeamData());
-		score+= this.scoreTeamAttributes(this.left);
-		score+=this.scoreTeamBets(this.getBetsBySide().getLeft());
-		score+=this.scorePot(this.getBetsBySide().getLeft(), this.getBetsBySide().getRight());
+		if(this.explain) {
+			this.explainGeneTerms.clear();
+		}
+		Double fighters = this.scoreFighters(this.teamData.getLeftTeamData());
+		Double teamAttributes = this.scoreTeamAttributes(this.left);
+		Double teamBets = this.compositionOnly ? null : this.scoreTeamBets(this.getBetsBySide().getLeft());
+		Double pot = this.compositionOnly ? null : this.scorePot(this.getBetsBySide().getLeft(), this.getBetsBySide().getRight());
+		if(this.explain) {
+			this.lastLeftFighters = fighters;
+			this.lastLeftTeamAttributes = teamAttributes;
+			this.lastLeftTeamBets = teamBets;
+			this.lastLeftPot = pot;
+		}
+		score+= fighters;
+		score+= teamAttributes;
+		if(!this.compositionOnly) {
+			score+= teamBets;
+			score+= pot;
+		}
 		return score.floatValue();
 	}
 
 	@Override
 	protected Float generateRightScore() throws BotConfigException {
 		Double score = 0d;
-		score+= this.scoreFighters(this.teamData.getRightTeamData());
-		score+= this.scoreTeamAttributes(this.right);
-		score+=this.scoreTeamBets(this.getBetsBySide().getRight());
-		score+=this.scorePot(this.getBetsBySide().getRight(), this.getBetsBySide().getLeft());
+		Double fighters = this.scoreFighters(this.teamData.getRightTeamData());
+		Double teamAttributes = this.scoreTeamAttributes(this.right);
+		Double teamBets = this.compositionOnly ? null : this.scoreTeamBets(this.getBetsBySide().getRight());
+		Double pot = this.compositionOnly ? null : this.scorePot(this.getBetsBySide().getRight(), this.getBetsBySide().getLeft());
+		if(this.explain) {
+			this.lastRightFighters = fighters;
+			this.lastRightTeamAttributes = teamAttributes;
+			this.lastRightTeamBets = teamBets;
+			this.lastRightPot = pot;
+		}
+		score+= fighters;
+		score+= teamAttributes;
+		if(!this.compositionOnly) {
+			score+= teamBets;
+			score+= pot;
+		}
 		return score.floatValue();
+	}
+
+	public String getGeneFileName() {
+		return this.filename;
+	}
+
+	@Override
+	protected boolean isEvaluationOnly() {
+		return this.explain;
+	}
+
+	/** Explain-mode capture of the latest evaluation; null when the bot is not in explain mode. */
+	public ScoreBreakdown buildScoreBreakdown() {
+		if(!this.explain) {
+			return null;
+		}
+		ScoreBreakdown breakdown = new ScoreBreakdown();
+		breakdown.setLeftScore(this.leftScore);
+		breakdown.setRightScore(this.rightScore);
+		breakdown.setLeftFighters(this.lastLeftFighters);
+		breakdown.setLeftTeamAttributes(this.lastLeftTeamAttributes);
+		breakdown.setLeftTeamBets(this.lastLeftTeamBets);
+		breakdown.setLeftPot(this.lastLeftPot);
+		breakdown.setRightFighters(this.lastRightFighters);
+		breakdown.setRightTeamAttributes(this.lastRightTeamAttributes);
+		breakdown.setRightTeamBets(this.lastRightTeamBets);
+		breakdown.setRightPot(this.lastRightPot);
+		breakdown.setPModelWinProb(this.computeModelWinProb());
+		breakdown.setGeneTerms(new ArrayList<>(this.explainGeneTerms));
+		breakdown.setComputedAt(System.currentTimeMillis());
+		return breakdown;
+	}
+
+	/** Calibrated win probability for the score-argmax side; null when the genome provides no calibration anchors. */
+	protected Double computeModelWinProb() {
+		return null;
 	}
 
 	@Override

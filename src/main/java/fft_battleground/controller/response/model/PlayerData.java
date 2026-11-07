@@ -23,6 +23,9 @@ public class PlayerData {
 	private boolean notFound = false;
 	private Integer betPercentile;
 	private Integer fightPercentile;
+	private BettorEloSummary elo;
+	private fft_battleground.skill.PrestigeProgressService.PrestigeProgress prestigeProgress;
+	private FighterEloSummary fighterElo;
 	private Set<String> classBonuses;
 	private Set<String> skillBonuses;
 	private Set<String> prestigeSkills;

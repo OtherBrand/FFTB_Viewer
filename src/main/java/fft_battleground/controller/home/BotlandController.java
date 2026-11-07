@@ -3,7 +3,10 @@ package fft_battleground.controller.home;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,12 +32,14 @@ import fft_battleground.botland.bot.genetic.model.GeneTrainerV2BotData;
 import fft_battleground.botland.bot.genetic.model.ResultData;
 import fft_battleground.botland.personality.PersonalityModuleFactory;
 import fft_battleground.controller.response.model.botland.BotlandData;
+import fft_battleground.controller.response.model.botland.BotProgressData;
 import fft_battleground.exception.CacheMissException;
 import fft_battleground.metrics.AccessTracker;
 import fft_battleground.repo.model.BotHourlyData;
 import fft_battleground.repo.model.Bots;
 import fft_battleground.repo.repository.BotsHourlyDataRepo;
 import fft_battleground.repo.repository.BotsRepo;
+import fft_battleground.repo.repository.BalanceHistoryRepo;
 import fft_battleground.reports.BotlandLeaderboardReportGenerator;
 import fft_battleground.reports.model.BotlandLeaderboard;
 import fft_battleground.reports.model.BotlandLeaderboardEntry;
@@ -60,7 +65,10 @@ public class BotlandController extends AbstractHomeController {
 	
 	@Autowired
 	private BotsHourlyDataRepo botsHourlyDataRepo;
-	
+
+	@Autowired
+	private BalanceHistoryRepo balanceHistoryRepo;
+
 	@Autowired
 	public BotlandController(AccessTracker accessTracker) {
 		super(accessTracker);
@@ -74,18 +82,37 @@ public class BotlandController extends AbstractHomeController {
 			this.logAccess("botland", userAgent, request);
 		}
 		List<Bots> botData = this.botsRepo.getBotsForToday();
+		//ghost bots (visible="false", e.g. the advisor) stay off the public roster
+		Set<String> hiddenBots = this.betBotFactory.getHiddenBotNames();
+		botData.removeIf(bot -> hiddenBots.contains(StringUtils.lowerCase(bot.getPlayer())));
 		Collections.sort(botData, Collections.reverseOrder());
 		
 		List<String> botNames = botData.parallelStream().map(bots -> bots.getPlayer()).collect(Collectors.toList());
 		Map<String, List<GenericElementOrdering<BotHourlyData>>> botHourlyDataMap = this.botsHourlyDataRepo.getOrderedBotHourlyDataForBots(botNames);
 		
 		Map<String, String> botResponses = this.personalityModuleFactory.getLastBotPersonalityResponses();
-		
-		BotlandData data = new BotlandData(botData, this.betBotFactory.getIrcName(), this.betBotFactory.getPrimaryBotName(), this.betBotFactory.getBotDataMap(), 
+
+		//filter the config inventory through a copy — the factory's map is cached and shared
+		Map<String, fft_battleground.botland.model.BotData> botConfigData = this.betBotFactory.getBotDataMap().entrySet().stream()
+				.filter(entry -> !hiddenBots.contains(StringUtils.lowerCase(entry.getKey())))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+		BotlandData data = new BotlandData(botData, this.betBotFactory.getIrcName(), this.betBotFactory.getPrimaryBotName(), botConfigData,
 				botHourlyDataMap, botResponses);
 		return GenericResponse.createGenericResponseEntity(data);
 	}
-	
+
+	//real-account progress for the botland progress tab: SQL rollup of the player's full balance_history
+	//(all update types) rather than bet-level rows. Daily = all days; hourly = trailing 7 days
+	@ApiIgnore
+	@GetMapping("/botland/progress")
+	public @ResponseBody ResponseEntity<GenericResponse<BotProgressData>> botlandProgress(@RequestParam(name="player", required=true) String player) {
+		BotProgressData data = new BotProgressData(
+				this.balanceHistoryRepo.getDailyBalanceBuckets(player),
+				this.balanceHistoryRepo.getHourlyBalanceBuckets(player));
+		return GenericResponse.createGenericResponseEntity(data);
+	}
+
 	@GetMapping("/botlandleaderboard")
 	@ApiIgnore
 	public ResponseEntity<GenericResponse<BotlandLeaderboard>> getBotlandLeaderboard() throws CacheMissException {

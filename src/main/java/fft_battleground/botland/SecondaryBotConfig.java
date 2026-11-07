@@ -73,7 +73,10 @@ public class SecondaryBotConfig {
 						paramMap.put(paramName, new BotParam(paramName, parameter, paramDescription));
 					}
 				}
-				botData.add(new BotData(name, classname, paramMap, canPrimary, botDescription));
+				BotData newBotData = new BotData(name, classname, paramMap, canPrimary, botDescription);
+				String visibleString = StringUtils.trim(element.getAttribute("visible"));
+				newBotData.setVisible(StringUtils.isEmpty(visibleString) ? true : Boolean.valueOf(visibleString));
+				botData.add(newBotData);
 			}
 			
 		}

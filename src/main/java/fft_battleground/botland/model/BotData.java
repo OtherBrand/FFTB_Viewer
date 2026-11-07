@@ -16,6 +16,10 @@ public class BotData {
 	private String classname;
 	private boolean canPrimary;
 	private String description;
+
+	/** visible="false" roster entries are hidden from /botland and the leaderboard (ghost bots, e.g. the advisor) */
+	@JsonIgnore
+	private boolean visible = true;
 	
 	@JsonIgnore
 	private Map<String, BotParam> params;

@@ -36,6 +36,12 @@ public class EmbeddedPostgresInitializer implements EnvironmentPostProcessor {
 	private static final String ENABLE_FLAG = "fft_battleground.embeddedPostgres";
 	private static final String DATABASE_NAME = "FFT_BattleGround";
 	private static final int PORT = 5432;
+	//overridable so TESTS can boot an isolated instance (separate port/database/dataDir) —
+	//the defaults share ./pgdata with local dev runs, and a test context's create-drop
+	//would otherwise drop the dev database's schema on shutdown
+	private static final String PORT_OVERRIDE = "fft_battleground.embeddedPostgres.port";
+	private static final String DATABASE_OVERRIDE = "fft_battleground.embeddedPostgres.database";
+	private static final String DATA_DIR_OVERRIDE = "fft_battleground.embeddedPostgres.dataDir";
 
 	private EmbeddedPostgres postgres;
 
@@ -50,17 +56,20 @@ public class EmbeddedPostgresInitializer implements EnvironmentPostProcessor {
 		}
 
 		try {
-			log.info("Starting embedded PostgreSQL on port {}...", PORT);
+			int port = this.overrideOrDefault(environment, PORT_OVERRIDE, PORT);
+			String databaseName = this.overrideOrDefault(environment, DATABASE_OVERRIDE, DATABASE_NAME);
+			String dataDir = this.overrideOrDefault(environment, DATA_DIR_OVERRIDE, "pgdata");
+			log.info("Starting embedded PostgreSQL on port {}...", port);
 			this.postgres = EmbeddedPostgres.builder()
-					.setPort(PORT)
-					.setDataDirectory(Paths.get("pgdata"))
+					.setPort(port)
+					.setDataDirectory(Paths.get(dataDir))
 					.setCleanDataDirectory(false)
 					.start();
-			this.createDatabaseIfMissing();
-			log.info("Embedded PostgreSQL ready on port {}", PORT);
+			this.createDatabaseIfMissing(databaseName);
+			log.info("Embedded PostgreSQL ready on port {}", port);
 
 			Map<String, Object> props = new HashMap<>();
-			props.put("spring.datasource.url", "jdbc:postgresql://localhost:" + PORT + "/" + DATABASE_NAME);
+			props.put("spring.datasource.url", "jdbc:postgresql://localhost:" + port + "/" + databaseName);
 			props.put("spring.datasource.username", "postgres");
 			props.put("spring.datasource.password", "postgres");
 			environment.getPropertySources().addFirst(new MapPropertySource("embeddedPostgres", props));
@@ -71,7 +80,17 @@ public class EmbeddedPostgresInitializer implements EnvironmentPostProcessor {
 		}
 	}
 
-	private void createDatabaseIfMissing() throws Exception {
+	private String overrideOrDefault(ConfigurableEnvironment environment, String key, String defaultValue) {
+		String value = environment.getProperty(key);
+		return value != null ? value : defaultValue;
+	}
+
+	private int overrideOrDefault(ConfigurableEnvironment environment, String key, int defaultValue) {
+		String value = environment.getProperty(key);
+		return value != null ? Integer.parseInt(value) : defaultValue;
+	}
+
+	private void createDatabaseIfMissing(String databaseName) throws Exception {
 		try (Connection conn = this.postgres.getPostgresDatabase().getConnection();
 				Statement stmt = conn.createStatement()) {
 			conn.setAutoCommit(true);
@@ -80,10 +99,10 @@ public class EmbeddedPostgresInitializer implements EnvironmentPostProcessor {
 					stmt.execute("CREATE ROLE postgres LOGIN SUPERUSER");
 				}
 			}
-			try (ResultSet rs = stmt.executeQuery("SELECT 1 FROM pg_database WHERE datname = '" + DATABASE_NAME + "'")) {
+			try (ResultSet rs = stmt.executeQuery("SELECT 1 FROM pg_database WHERE datname = '" + databaseName + "'")) {
 				if (!rs.next()) {
-					log.info("Creating database {}", DATABASE_NAME);
-					stmt.execute("CREATE DATABASE \"" + DATABASE_NAME + "\"");
+					log.info("Creating database {}", databaseName);
+					stmt.execute("CREATE DATABASE \"" + databaseName + "\"");
 				}
 			}
 		}

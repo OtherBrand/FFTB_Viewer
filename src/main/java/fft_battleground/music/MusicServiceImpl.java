@@ -52,6 +52,9 @@ public class MusicServiceImpl implements MusicService {
 	
 	@Autowired
 	private DumpDataProvider dumpDataProvider;
+
+	@Autowired
+	private fft_battleground.metrics.StatusService statusService;
 	
 	@Autowired
 	private MusicOccurencesCache occurencesCache;
@@ -210,11 +213,13 @@ public class MusicServiceImpl implements MusicService {
 			try {
 				Set<Music> musicSet = this.parseMusicXml(this.dumpDataProvider.getMusicXmlString());
 				if(!musicSet.isEmpty()) {
+					this.statusService.markDumpFetchSuccess();
 					return musicSet;
 				}
 				log.warn("playlist.xml returned no songs (attempt {})", attempt);
 			} catch (IOException|SAXException|ParserConfigurationException e) {
 				log.error("error updating music data from cache (attempt {})", attempt, e);
+				this.statusService.markDumpFetchFailure();
 				lastFailure = new DumpException(e, "error updating music data from cache (attempt " + attempt + ")");
 			}
 			try {
@@ -224,6 +229,7 @@ public class MusicServiceImpl implements MusicService {
 				break;
 			}
 		}
+		this.statusService.markDumpFetchFailure();
 		throw lastFailure != null ? lastFailure : new DumpException("playlist.xml returned no usable data after 3 attempts");
 	}
 

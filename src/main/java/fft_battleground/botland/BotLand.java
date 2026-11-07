@@ -58,10 +58,13 @@ public class BotLand extends TimerTask {
 	protected Router<ChatMessage> chatMessageRouterRef;
 	protected BotsRepo botsRepo;
 	protected BotBetDataRepo botBetDataRepo;
+
 	protected BattleGroundEventBackPropagation battleGroundEventBackPropagationRef;
 	protected PersonalityModuleFactory personalityModuleFactoryRef;
 	protected Timer botlandTimerRef;
 	protected WebhookManager errorWebhookManager;
+
+	protected fft_battleground.metrics.StatusService statusService;
 	protected WebhookManager noisyWebhookManager;
 	private Map<String, Integer> balanceCacheRef;
 	
@@ -76,6 +79,24 @@ public class BotLand extends TimerTask {
 
 	@Override
 	public void run() {
+		//the ENTIRE cycle is Throwable-guarded: an uncaught kill here executes the
+		//betting Timer thread permanently (Timer-3, 2026-10-26: personality NPE after
+		//a caught bet failure — the same silent-thread-death class as the tracker fix)
+		try {
+			this.runCycle();
+		} catch(Throwable t) {
+			String errorMessage = "BotLand cycle failed; timer thread survived";
+			log.error(errorMessage, t);
+			if(this.errorWebhookManager != null) {
+				this.errorWebhookManager.sendException(new RuntimeException(t), errorMessage);
+			}
+			if(this.statusService != null) {
+				this.statusService.markBotlandCycleFailed();
+			}
+		}
+	}
+
+	protected void runCycle() {
 		Pair<List<BetEvent>, List<BetEvent>> betsBySide = this.helper.sortBetsBySide();
 		this.helper.setUnitsBySide(this.helper.sortUnitsBySide());
 		if (this.primaryBot != null) {
@@ -94,16 +115,23 @@ public class BotLand extends TimerTask {
 			} catch (Exception e) {
 				String errorMessage = "Error executing primary bot";
 				log.error(errorMessage, e);
-				this.errorWebhookManager.sendException(e, errorMessage);
-			}
-			// get personality
-			PersonalityResponse personalityMessage = this.primaryBot.generatePersonalityResponse();
-			if (personalityMessage != null && personalityMessage.isDisplay()) {
-				this.personalityModuleFactoryRef.addBotResponse(this.primaryBot.getName(),
-						personalityMessage.getResponse());
-				if (this.enablePersonality) {
-					this.sendPersonalityMessage(personalityMessage.getResponse());
+				if(this.errorWebhookManager != null) {
+					this.errorWebhookManager.sendException(e, errorMessage);
 				}
+			}
+			// get personality — guarded: after a failed evaluation the scores are null and
+			// flavor generation must skip, never kill the cycle downstream of the bet catch
+			try {
+				PersonalityResponse personalityMessage = this.primaryBot.generatePersonalityResponse();
+				if (personalityMessage != null && personalityMessage.isDisplay()) {
+					this.personalityModuleFactoryRef.addBotResponse(this.primaryBot.getName(),
+							personalityMessage.getResponse());
+					if (this.enablePersonality) {
+						this.sendPersonalityMessage(personalityMessage.getResponse());
+					}
+				}
+			} catch(Throwable t) {
+				log.warn("personality generation skipped after evaluation trouble", t);
 			}
 		}
 		
@@ -113,16 +141,13 @@ public class BotLand extends TimerTask {
 			for (int i = 0; i < this.subordinateBots.size(); i++) {
 				try {
 					currentSubordinateBot = this.subordinateBots.get(i);
-					currentSubordinateBot.setOtherPlayerBets(this.helper.getOtherPlayerBets());
-					currentSubordinateBot.setBetsBySide(betsBySide);
-					currentSubordinateBot.setUnitsBySide(this.helper.getUnitsBySide());
-					currentSubordinateBot.setTeamData(this.helper.getTeamData());
-					currentSubordinateBot.setMatchInfo(this.helper.getMatchInfo());
+					this.wireSubordinateBot(currentSubordinateBot, betsBySide);
 					Bots botDataFromDatabase = this.botsRepo.getBotByDateStringAndName(currentSubordinateBot.getDateFormat(), currentSubordinateBot.getName());
 					currentSubordinateBot.setCurrentAmountToBetWith(botDataFromDatabase.getBalance());
 					Bet secondaryBet = currentSubordinateBot.call();
-					String secondaryPersonalityMessage = currentSubordinateBot.generatePersonalityResponse().getResponse();
-					log.info("Subordinate bot {} created bet with {} and replies \"{}\"", currentSubordinateBot.getName(), secondaryBet.generateBetString(), 
+					fft_battleground.botland.personality.model.PersonalityResponse personalityResponse = currentSubordinateBot.generatePersonalityResponse();
+					String secondaryPersonalityMessage = personalityResponse != null ? personalityResponse.getResponse() : null;
+					log.info("Subordinate bot {} created bet with {} and replies \"{}\"", currentSubordinateBot.getName(), secondaryBet.generateBetString(),
 							secondaryPersonalityMessage != null ? secondaryPersonalityMessage : "none");
 					if(secondaryPersonalityMessage != null) {
 						this.personalityModuleFactoryRef.addBotResponse(currentSubordinateBot.getName(), secondaryPersonalityMessage);
@@ -136,7 +161,7 @@ public class BotLand extends TimerTask {
 		} else {
 			log.warn("no secondary bots found");
 		}
-		
+
 		//send all data to repo manager
 		try {
 			this.saveBotBetData();
@@ -144,6 +169,10 @@ public class BotLand extends TimerTask {
 			String errorMessage = "Error handling saving bot data";
 			log.error(errorMessage, e);
 			this.errorWebhookManager.sendException(e, errorMessage);
+		}
+
+		if(this.statusService != null) {
+			this.statusService.markBotlandCycle();
 		}
 	}
 	
@@ -222,6 +251,15 @@ public class BotLand extends TimerTask {
 	public void setMatchInfo(MatchInfoEvent event) {
 		this.helper.setMatchInfo(event);
 	}
+
+	/** the per-bot input wiring shared across subordinate-bot call sites */
+	protected void wireSubordinateBot(BetterBetBot bot, Pair<List<BetEvent>, List<BetEvent>> betsBySide) {
+		bot.setOtherPlayerBets(this.helper.getOtherPlayerBets());
+		bot.setBetsBySide(betsBySide);
+		bot.setUnitsBySide(this.helper.getUnitsBySide());
+		bot.setTeamData(this.helper.getTeamData());
+		bot.setMatchInfo(this.helper.getMatchInfo());
+	}
 	
 	@SneakyThrows
 	protected void sendBet(Bet bet) {
@@ -267,12 +305,9 @@ public class BotLand extends TimerTask {
 				balance = this.balanceCacheRef.get(player);
 			}
 			
-			if(balance != null) {
-				BotReceivedBet betData = new BotReceivedBet(player, betAmount, balance);
-				bets.add(betData);
-			} else {
-				log.warn("No player bet data for {} recorded", player);
-			}
+			//store the bet even without a known balance (the house account's bets were
+			//silently dropped here for years — its stakes belong in the per-match record)
+			bets.add(new BotReceivedBet(player, betAmount, balance));
 		});
 		return new BotReceivedBets(bets);
 		

@@ -11,6 +11,7 @@ import fft_battleground.botland.bot.genetic.GeneFileCache;
 import fft_battleground.botland.bot.genetic.model.BraveFaithAttributes;
 import fft_battleground.botland.bot.genetic.model.GeneTrainerV2BotData;
 import fft_battleground.botland.bot.genetic.model.PolicyGeneAttributes;
+import fft_battleground.botland.bot.model.ScoreBreakdown;
 import fft_battleground.botland.bot.model.Bet;
 import fft_battleground.botland.bot.util.BotParameterReader;
 import fft_battleground.discord.WebhookManager;
@@ -90,7 +91,8 @@ extends GeneticBotV2 {
 	 */
 	@Override
 	public fft_battleground.botland.personality.model.PersonalityResponse generatePersonalityResponse() {
-		if (this.inverse) {
+		if (this.inverse || this.explain) {
+			//inverse: the mirror's bets speak for it; explain: the advisor is data-only, no output
 			return null;
 		}
 		return super.generatePersonalityResponse();
@@ -214,8 +216,9 @@ extends GeneticBotV2 {
 		return Math.max(lo, Math.min(hi, v));
 	}
 
-	/** Confidence percentile 1..100 from the score margin (shared by both modes). */
-	private static int confidencePercentile(float winnerScore, float loserScore) {
+	/** Confidence percentile 1..100 from the score margin (shared by both
+	 * modes). Package-visible for the Rust-parity test. */
+	static int confidencePercentile(float winnerScore, float loserScore) {
 		double scoreRatio = ((double) (winnerScore - loserScore + 1)) / ((double) winnerScore + 1);
 		int ratioRounded = (int) Math.round(scoreRatio * 100);
 		return Math.max(1, Math.min(100, ratioRounded));
@@ -241,12 +244,34 @@ extends GeneticBotV2 {
 	}
 
 	@Override
+	protected Double computeModelWinProb() {
+		if (this.genes == null || this.leftScore == null || this.rightScore == null) {
+			return null;
+		}
+		PolicyGeneAttributes policy = this.genes.getPolicyGeneAttributes();
+		if (policy == null) {
+			return null;
+		}
+		float winnerScore = Math.max(this.leftScore, this.rightScore);
+		float loserScore = Math.min(this.leftScore, this.rightScore);
+		int pct = confidencePercentile(winnerScore, loserScore);
+		// same calibration read policyDetermineBet uses for pModelPick
+		return clamp(PolicyGeneAttributes.anchorAt(policy.calAnchors(), pct) / 100.0, 0.02, 0.98);
+	}
+
+	@Override
 	protected Double scoreTeamAttributes(BattleGroundTeam actualTeam) throws BotConfigException {
 		Double score = 0d;
 		BattleGroundTeam side = actualTeam == this.left ? BattleGroundTeam.LEFT : BattleGroundTeam.RIGHT;
 		// One color term; V3 files carry no LEFT/RIGHT side genes.
-		score += this.genes.getSideGeneAttributes().getAttributeByTeam(actualTeam);
-		score += this.scoreMap(matchInfo, side);
+		Double sideColor = this.genes.getSideGeneAttributes().getAttributeByTeam(actualTeam);
+		Double mapTerm = this.scoreMap(matchInfo, side);
+		if (this.explain) {
+			this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm("SideColor", actualTeam, sideColor));
+			this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm("Map", actualTeam, mapTerm));
+		}
+		score += sideColor;
+		score += mapTerm;
 
 		List<Unit> units = side == BattleGroundTeam.LEFT ? this.unitsBySide.getLeft() : this.unitsBySide.getRight();
 		score += units.stream().map(this.unitAttributeClassifier::getUnitGeneAbilityElements)
@@ -258,14 +283,32 @@ extends GeneticBotV2 {
 					}
 					return containsGene;
 				})
-				.mapToDouble(this.genes.getMissingGeneAttributes()::getGene)
+				.mapToDouble(gene -> {
+					double value = this.genes.getMissingGeneAttributes().getGene(gene);
+					if (this.explain) {
+						this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm(gene, actualTeam, value));
+					}
+					return value;
+				})
 				.sum();
 
 		BraveFaithAttributes braveFaithAttributes = this.genes.getBraveFaithAttributes();
+		double braveSum = 0d, faithSum = 0d, raidBossSum = 0d;
 		for (Unit unit : units) {
-			score += unit.getFaith() * braveFaithAttributes.faith();
-			score += unit.getBrave() * braveFaithAttributes.brave();
-			score += unit.isRaidBoss() ? braveFaithAttributes.raidBoss() : 0d;
+			double faithTerm = unit.getFaith() * braveFaithAttributes.faith();
+			double braveTerm = unit.getBrave() * braveFaithAttributes.brave();
+			double raidBossTerm = unit.isRaidBoss() ? braveFaithAttributes.raidBoss() : 0d;
+			score += faithTerm;
+			score += braveTerm;
+			score += raidBossTerm;
+			braveSum += braveTerm;
+			faithSum += faithTerm;
+			raidBossSum += raidBossTerm;
+		}
+		if (this.explain && !units.isEmpty()) {
+			this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm("Brave", actualTeam, braveSum));
+			this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm("Faith", actualTeam, faithSum));
+			this.explainGeneTerms.add(new ScoreBreakdown.GeneTerm("RaidBoss", actualTeam, raidBossSum));
 		}
 		return score;
 	}

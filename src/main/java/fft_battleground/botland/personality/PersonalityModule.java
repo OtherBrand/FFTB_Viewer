@@ -10,6 +10,11 @@ public abstract class PersonalityModule {
 
 	public PersonalityResponse getPersonalityResponse(String botName, Float leftScore, BattleGroundTeam leftTeam, Float rightScore, BattleGroundTeam rightTeam, 
 			Map<Integer, Integer> percentiles) {
+		//after a failed evaluation the scores are null — skip the flavor, never NPE
+		//(FactsPersonality killed the betting timer this way, 2026-10-26)
+		if(leftScore == null || rightScore == null) {
+			return null;
+		}
 		Integer percentile = null;
 		if(percentiles != null && percentiles.size() > 0) {
 			percentile = GambleUtil.calculatePercentile(leftScore, rightScore, percentiles);
